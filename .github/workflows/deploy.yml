@@ -34,5 +34,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_CUSTOMDEV }}
           protocol: ftp
           port: 21
-          local-dir: ./build/
+          local-dir: ./dist/
           server-dir: /funtology-global-institute/
