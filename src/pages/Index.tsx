@@ -65,6 +65,20 @@ const Index = () => {
               <Testimonials />
               <FAQSection />
               <CTASection />
+              {/* Important Notice / Accreditation Status Disclaimer */}
+              <section
+                className="my-8 mx-auto max-w-7xl rounded-xl bg-yellow-100 border border-yellow-300 px-6 py-5 flex items-center justify-center shadow-md"
+                aria-label="Accreditation Status"
+              >
+                <div className="w-full text-center">
+                  <div className="font-heading text-lg md:text-xl font-bold text-yellow-900 mb-2">
+                    Important Notice
+                  </div>
+                  <div className="font-bold text-yellow-900 text-base md:text-lg">
+                    Pending Approval of IACET – International Accreditors for Continuing Education & Training
+                  </div>
+                </div>
+              </section>
             </main>
             <Footer />
           </motion.div>
