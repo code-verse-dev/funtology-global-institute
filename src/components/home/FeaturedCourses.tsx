@@ -96,7 +96,7 @@ const FeaturedCourses = () => {
             Explore Our Courses
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            IACET-accredited programs designed to advance your professional skills 
+           Programs designed to advance your professional skills 
             and earn recognized continuing education credits.
           </p>
         </motion.div>

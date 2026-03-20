@@ -13,7 +13,7 @@ const steps = [
   {
     icon: BookOpen,
     title: "Enroll",
-    description: "Browse our IACET-accredited courses and enroll via payment or access code",
+    description: "Browse our courses and enroll via payment or access code",
     color: "from-purple-500 to-purple-600",
   },
   {

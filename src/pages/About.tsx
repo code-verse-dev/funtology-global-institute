@@ -35,7 +35,7 @@ const team = [
 const accreditations = [
   {
     title: "Standards-Aligned Provider",
-    description: "Designed and implemented using ANSI/IACET 1-2018 as a guiding framework while preparing to apply",
+    description: "Designed and implemented using ANSI 1-2018 as a guiding framework while preparing to apply",
     icon: Award,
   },
   {

@@ -59,7 +59,7 @@ const Register = () => {
           </h2>
           <p className="text-primary-foreground/80 text-lg mb-8">
             Join thousands of professionals advancing their careers with 
-            IACET-accredited continuing education courses.
+            continuing education courses.
           </p>
           
           <div className="space-y-4 text-left bg-primary-foreground/10 rounded-xl p-6">
@@ -73,7 +73,7 @@ const Register = () => {
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-bold shrink-0">✓</span>
-                IACET-accredited certificates
+               Certificates
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-bold shrink-0">✓</span>

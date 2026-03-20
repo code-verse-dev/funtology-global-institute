@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { Award, Shield, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Shield } from "lucide-react";
 
 const partners = [
-  { name: "IACET Accredited", icon: Award },
+  
   { name: "ANSI Certified", icon: Shield },
   { name: "Industry Recognized", icon: CheckCircle2 },
 ];
