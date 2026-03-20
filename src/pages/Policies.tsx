@@ -439,7 +439,7 @@ FGI supports continuous improvement through regular program evaluations, analysi
     content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining accuracy, transparency, and ethical standards in all marketing, promotional, and informational communications related to its educational programs.
 
 Accreditation Representation
-FGI will not represent itself as an IACET Accredited Provider unless and until official accreditation has been granted by the International Accreditors for Continuing Education and Training. Until accreditation is formally approved, all references to IACET will clearly indicate the institute's status in a manner that avoids misrepresentation.
+FGI will not represent itself as  unless and until official accreditation has been granted by the International Accreditors for Continuing Education and Training. Until accreditation is formally approved, all references to IACET will clearly indicate the institute's status in a manner that avoids misrepresentation.
 
 All marketing materials must accurately describe:
 • Course titles and descriptions

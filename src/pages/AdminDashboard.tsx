@@ -1,27 +1,55 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import {
-  BookOpen, Users, Award, TrendingUp, FileText, BarChart3, Settings, Bell, User, LogOut,
-  Plus, Eye, Edit, Download, CheckCircle2, XCircle, Clock, Shield, Search, Filter,
-  Upload, Trash2, MoreVertical, Activity, DollarSign, UserCheck, AlertTriangle,
-  GraduationCap, ClipboardList, Building2, MessageSquare, Scale, History, Briefcase, CreditCard,
-} from "lucide-react";
+import fgiLogo from "@/assets/fgi-logo.png";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
   DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
-import fgiLogo from "@/assets/fgi-logo.png";
+import { motion } from "framer-motion";
+import {
+  Activity,
+  AlertTriangle,
+  Award,
+  BarChart3,
+  Bell,
+  BookOpen,
+  Briefcase,
+  CheckCircle2,
+  ClipboardList,
+  Clock,
+  CreditCard,
+  DollarSign,
+  Download,
+  Edit,
+  Eye,
+  FileText,
+  Filter,
+  GraduationCap,
+  History,
+  LogOut,
+  MessageSquare,
+  MoreVertical,
+  Plus,
+  Scale,
+  Search,
+  Settings,
+  Shield,
+  Trash2,
+  Upload,
+  User,
+  UserCheck,
+  Users,
+  XCircle
+} from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const adminData = { name: "Admin User", email: "admin@fgi.edu", role: "Administrator" };
 
@@ -605,7 +633,7 @@ const AdminDashboard = () => {
                       { label: "Record Retention", desc: "Minimum data retention", value: "7 years" },
                       { label: "Time-on-Task Tracking", desc: "Prevent auto-completion", value: "Enabled" },
                       { label: "Mandatory Evaluations", desc: "Required before certificate", value: "Enabled" },
-                      { label: "IACET Accredited", desc: "Feature flag for accreditation claims", value: "No" },
+                      
                     ].map(s => (
                       <div key={s.label} className="flex items-center justify-between p-4 bg-muted rounded-lg">
                         <div><p className="font-medium text-sm">{s.label}</p><p className="text-xs text-muted-foreground">{s.desc}</p></div>

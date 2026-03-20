@@ -1,28 +1,8 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import {
-  BookOpen,
-  Award,
-  Clock,
-  TrendingUp,
-  Calendar,
-  ChevronRight,
-  Play,
-  Download,
-  Bell,
-  Settings,
-  User,
-  LogOut,
-  GraduationCap,
-  Target,
-  CheckCircle2,
-} from "lucide-react";
+import fgiLogo from "@/assets/fgi-logo.png";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +11,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import fgiLogo from "@/assets/fgi-logo.png";
+import { Progress } from "@/components/ui/progress";
+import { motion } from "framer-motion";
+import {
+  Award,
+  Bell,
+  BookOpen,
+  Calendar,
+  CheckCircle2,
+  ChevronRight,
+  Clock,
+  Download,
+  GraduationCap,
+  LogOut,
+  Play,
+  Settings,
+  Target,
+  TrendingUp,
+  User,
+} from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const userData = {
   name: "Sarah Johnson",
@@ -432,19 +432,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            {/* CE Hours Summary */}
-            <Card className="bg-gradient-hero text-primary-foreground">
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <Award className="w-12 h-12 text-secondary mx-auto mb-3" />
-                  <p className="text-4xl font-bold text-secondary">{userData.totalCeHours}</p>
-                  <p className="text-primary-foreground/80">CE Hours Earned</p>
-                  <p className="text-xs text-primary-foreground/60 mt-2">
-                    IACET Accredited
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+           
           </div>
         </div>
       </main>

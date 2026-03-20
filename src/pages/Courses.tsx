@@ -183,7 +183,7 @@ const Courses = () => {
               >
                 <Sparkles className="w-4 h-4 text-secondary" />
                 <span className="text-sm font-medium text-secondary">
-                  {courses.length}+ IACET-Accredited Courses
+                  {courses.length}+ Courses
                 </span>
               </motion.div>
 
@@ -191,7 +191,7 @@ const Courses = () => {
                 Course Catalog
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
-                Browse our IACET-accredited continuing education courses designed to advance your career
+                Browse our continuing education courses designed to advance your career
                 and earn recognized professional certifications.
               </p>
               
@@ -395,7 +395,7 @@ const Courses = () => {
                 Ready to Advance Your Career?
               </h2>
               <p className="text-primary-foreground/80 text-lg mb-8">
-                Join thousands of professionals who have earned IACET-accredited certifications with FGI.
+                Join thousands of professionals who have earned certifications with FGI.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="secondary" size="lg" className="font-heading font-semibold" asChild>

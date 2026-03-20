@@ -11,7 +11,7 @@ import {
 
 const faqs = [
   {
-    question: "What is IACET accreditation and why does it matter?",
+    question: "What is and why does it matter?",
     answer: "IACET (International Accreditors for Continuing Education and Training) accreditation is the gold standard for continuing education providers. It ensures our programs meet rigorous quality standards, our CE hours are recognized industry-wide, and your certifications carry legitimate professional weight.",
   },
   {
@@ -32,7 +32,7 @@ const faqs = [
   },
   {
     question: "Are your certificates recognized by employers and licensing boards?",
-    answer: "Our IACET-accredited certificates are professionally recognized credentials. While we recommend checking with your specific licensing board for CE hour acceptance, our accreditation ensures the highest quality standards.",
+    answer: "Our  certificates are professionally recognized credentials. While we recommend checking with your specific licensing board for CE hour acceptance, our accreditation ensures the highest quality standards.",
   },
   {
     question: "Can I access courses on mobile devices?",
