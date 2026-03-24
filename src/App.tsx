@@ -18,6 +18,7 @@ import OrganizationDashboard from "./pages/OrganizationDashboard";
 import CertificateVerification from "./pages/CertificateVerification";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./pages/protectedRoute";
+import { getBasename } from "./utils/Functions";
 
 
 const queryClient = new QueryClient();
@@ -27,7 +28,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={getBasename()}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/courses" element={<Courses />} />
