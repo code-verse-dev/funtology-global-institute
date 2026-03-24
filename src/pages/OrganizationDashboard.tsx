@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Users, BookOpen, Award, TrendingUp, Download, Upload, Bell, Settings, User, LogOut,
   Plus, CheckCircle2, XCircle, Clock, Search, Building2, DollarSign, FileText, ChevronRight,
@@ -20,6 +20,9 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import fgiLogo from "@/assets/fgi-logo.png";
+import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
+import { useDispatch } from "react-redux";
+import { removeUser } from "@/redux/services/Slices/userSlice";
 
 const orgData = {
   name: "Acme Healthcare Corp",
@@ -62,14 +65,23 @@ const billing = [
 type OrgTab = "overview" | "learners" | "courses" | "billing" | "certificates";
 
 const OrganizationDashboard = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<OrgTab>("overview");
   const [learnerSearch, setLearnerSearch] = useState("");
+  const [logout] = useLogoutMutation();
 
   const filteredLearners = learners.filter((l) =>
     l.name.toLowerCase().includes(learnerSearch.toLowerCase()) ||
     l.email.toLowerCase().includes(learnerSearch.toLowerCase()) ||
     l.department.toLowerCase().includes(learnerSearch.toLowerCase())
   );
+  const dispatch = useDispatch(); 
+
+  const onLogout = async () => {
+    const res = await logout().unwrap();
+    dispatch(removeUser());
+    navigate("/login", { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-muted">
@@ -112,7 +124,7 @@ const OrganizationDashboard = () => {
                   <DropdownMenuItem><Settings className="mr-2 h-4 w-4" />Settings</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="text-destructive" asChild>
-                    <Link to="/login"><LogOut className="mr-2 h-4 w-4" />Log out</Link>
+                    <button onClick={onLogout} className="cursor-pointer"><LogOut className="mr-2 h-4 w-4 cursor-pointer" />Log out</button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

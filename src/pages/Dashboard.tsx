@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Progress } from "@/components/ui/progress";
+import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
+import { removeUser } from "@/redux/services/Slices/userSlice";
 import { motion } from "framer-motion";
 import {
   Award,
@@ -31,7 +33,8 @@ import {
   User,
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const userData = {
   name: "Sarah Johnson",
@@ -99,6 +102,14 @@ const recentActivity = [
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<"courses" | "certificates" | "progress">("courses");
+  const [logout] = useLogoutMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onLogout = async () => {
+    const res = await logout().unwrap();
+    dispatch(removeUser());
+    navigate("/login", { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-muted">
@@ -149,10 +160,11 @@ const Dashboard = () => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="text-destructive" asChild>
-                    <Link to="/login">
-                      <LogOut className="mr-2 h-4 w-4" />
+                    <button onClick={onLogout} className="cursor-pointer">
+                      <LogOut className="mr-2 h-4 w-4 cursor-pointer"
+                      />
                       Log out
-                    </Link>
+                    </button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -220,11 +232,10 @@ const Dashboard = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                    activeTab === tab.id
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === tab.id
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground"
-                  }`}
+                    }`}
                 >
                   <tab.icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{tab.label}</span>
@@ -432,7 +443,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-           
+
           </div>
         </div>
       </main>

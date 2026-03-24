@@ -49,7 +49,10 @@ import {
   XCircle
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
+import { removeUser } from "@/redux/services/Slices/userSlice";
 
 const adminData = { name: "Admin User", email: "admin@fgi.edu", role: "Administrator" };
 
@@ -121,7 +124,14 @@ const sidebarNav = [
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<AdminTab>("overview");
   const [userSearch, setUserSearch] = useState("");
-
+  const [logout] = useLogoutMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onLogout = async () => {
+    const res = await logout().unwrap();
+    dispatch(removeUser());
+    navigate("/login", { replace: true });
+  };
   const filteredUsers = recentUsers.filter(
     (u) => u.name.toLowerCase().includes(userSearch.toLowerCase()) || u.email.toLowerCase().includes(userSearch.toLowerCase())
   );
@@ -192,7 +202,7 @@ const AdminDashboard = () => {
                   <DropdownMenuItem><User className="mr-2 h-4 w-4" />Profile</DropdownMenuItem>
                   <DropdownMenuItem><Settings className="mr-2 h-4 w-4" />Settings</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive" asChild><Link to="/login"><LogOut className="mr-2 h-4 w-4" />Log out</Link></DropdownMenuItem>
+                  <DropdownMenuItem className="text-destructive" asChild><button className="cursor-pointer" onClick={onLogout}><LogOut className="mr-2 h-4 w-4 cursor-pointer" />Log out</button></DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
