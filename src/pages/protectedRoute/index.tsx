@@ -5,16 +5,18 @@ import Cookies from "js-cookie";
 
 interface UserAuthCheckProps {
   children: ReactNode;
+  allowedRoles: string[];
 }
 
 interface JwtPayload {
   _id: string;
   email?: string;
   firstName?: string;
+  role?: string;
   [key: string]: any;
 }
 
-const ProtectedRoute: React.FC<UserAuthCheckProps> = ({ children }) => {
+const ProtectedRoute: React.FC<UserAuthCheckProps> = ({ children, allowedRoles }) => {
   const token = Cookies.get("accessToken");
 
   if (!token) {
@@ -33,6 +35,10 @@ const ProtectedRoute: React.FC<UserAuthCheckProps> = ({ children }) => {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     Cookies.remove("accessToken");
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!allowedRoles.includes(decoded.role)) {
     return <Navigate to="/login" replace />;
   }
 

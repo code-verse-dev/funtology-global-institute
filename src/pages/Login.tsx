@@ -10,9 +10,8 @@ import fgiLogo from "@/assets/fgi-logo.png";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { addUser } from "@/redux/services/Slices/userSlice";
-import { useForgetPasswordMutation, useLoginMutation } from "@/redux/services/apiSlices/authSlice";
-
-type LoginRole = "learner" | "admin" | "organization";
+import { useLoginMutation } from "@/redux/services/apiSlices/authSlice";
+import type { LoginRole } from "@/types/loginRole";
 
 const roleOptions = [
   { id: "learner" as LoginRole, label: "Learner", icon: GraduationCap, desc: "Access courses & certificates", route: "/dashboard" },
@@ -116,9 +115,13 @@ const Login = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <button type="button" className="text-sm text-secondary hover:underline">
+                <Link
+                  to="/forgot-password"
+                  state={{ role: selectedRole }}
+                  className="text-sm text-secondary hover:underline"
+                >
                   Forgot password?
-                </button>
+                </Link>
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
