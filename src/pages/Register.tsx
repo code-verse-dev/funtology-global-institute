@@ -1,18 +1,33 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User, Phone, Building } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Mail, Lock, User, Phone, Building, ImagePlus } from "lucide-react";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import fgiLogo from "@/assets/fgi-logo.png";
 import { toast } from "sonner";
+import { useRegisterMutation } from "@/redux/services/apiSlices/authSlice";
+
+function signupErrorMessage(error: unknown): string {
+  if (error && typeof error === "object" && "data" in error) {
+    const data = (error as FetchBaseQueryError).data;
+    if (data && typeof data === "object" && "message" in data) {
+      return String((data as { message: string }).message);
+    }
+  }
+  return "Registration failed. Please try again.";
+}
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [register, { isLoading }] = useRegisterMutation();
   const [showPassword, setShowPassword] = useState(false);
-  const [accountType, setAccountType] = useState("individual");
+  const [accountType, setAccountType] = useState<"learner" | "organization">("learner");
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -24,7 +39,7 @@ const Register = () => {
     agreeTerms: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
@@ -34,7 +49,38 @@ const Register = () => {
       toast.error("Please agree to the Terms of Service and Privacy Policy");
       return;
     }
-    toast.info("Registration functionality requires backend setup.");
+    if (!profileImage) {
+      toast.error("Please upload a profile image");
+      return;
+    }
+    if (accountType === "organization" && !formData.organizationName.trim()) {
+      toast.error("Organization name is required");
+      return;
+    }
+
+    const fd = new FormData();
+    fd.append("email", formData.email.trim());
+    fd.append("password", formData.password);
+    fd.append("firstName", formData.firstName.trim());
+    fd.append("lastName", formData.lastName.trim());
+    fd.append("phoneNumber", formData.phone.trim());
+    fd.append("role", accountType === "learner" ? "learner" : "organization");
+    if (accountType === "organization") {
+      fd.append("organizationName", formData.organizationName.trim());
+    }
+    fd.append("image", profileImage);
+
+    try {
+      const res = await register(fd).unwrap();
+      if (res.status) {
+        toast.success(res.message || "Account created successfully");
+        navigate("/login");
+      } else {
+        toast.error(res.message || "Registration failed");
+      }
+    } catch (err) {
+      toast.error(signupErrorMessage(err));
+    }
   };
 
   return (
@@ -107,9 +153,13 @@ const Register = () => {
             Join FGI and start earning professional certifications
           </p>
 
-          <Tabs value={accountType} onValueChange={setAccountType} className="mb-6">
+          <Tabs
+            value={accountType}
+            onValueChange={(v) => setAccountType(v as "learner" | "organization")}
+            className="mb-6"
+          >
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="individual">Individual</TabsTrigger>
+              <TabsTrigger value="learner">Individual</TabsTrigger>
               <TabsTrigger value="organization">Organization</TabsTrigger>
             </TabsList>
           </Tabs>
@@ -169,8 +219,29 @@ const Register = () => {
                   className="pl-10"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  required
                 />
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="profileImage">Profile image</Label>
+              <div className="relative">
+                <ImagePlus className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                <Input
+                  id="profileImage"
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+                  className="pl-10 cursor-pointer file:mr-3 file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1 file:text-sm file:font-medium file:text-secondary-foreground"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] ?? null;
+                    setProfileImage(file);
+                  }}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                PNG, JPEG, GIF, or WebP. Required for signup.
+              </p>
             </div>
 
             {accountType === "organization" && (
@@ -250,8 +321,14 @@ const Register = () => {
               </Label>
             </div>
 
-            <Button type="submit" variant="secondary" size="lg" className="w-full">
-              Create Account
+            <Button
+              type="submit"
+              variant="secondary"
+              size="lg"
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? "Creating account…" : "Create Account"}
             </Button>
           </form>
 

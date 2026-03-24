@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import fgiLogo from "@/assets/fgi-logo.png";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { addUser } from "@/redux/services/Slices/userSlice";
+import { useForgetPasswordMutation, useLoginMutation } from "@/redux/services/apiSlices/authSlice";
 
 type LoginRole = "learner" | "admin" | "organization";
 
@@ -19,7 +22,9 @@ const roleOptions = [
 
 const Login = () => {
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
   const [selectedRole, setSelectedRole] = useState<LoginRole>("learner");
   const [formData, setFormData] = useState({
     email: "",
@@ -27,11 +32,27 @@ const Login = () => {
     rememberMe: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const role = roleOptions.find((r) => r.id === selectedRole);
-    toast.success(`Welcome! Redirecting to ${role?.label} Dashboard...`);
-    setTimeout(() => navigate(role?.route || "/dashboard"), 500);
+    try {
+      const res: any = await login({
+        identifier: formData.email, password: formData.password,
+        role: selectedRole === "learner" ? "learner" : selectedRole === "organization" ? "organization" : "admin"
+      }).unwrap();
+      if (res?.status) {
+        toast.success("Signed in successfully");
+        dispatch(addUser({ user: res?.data?.user }));
+        navigate(selectedRole === "learner" ? "/dashboard" : selectedRole === "organization" ? "/organization" : "/admin")
+      }
+      else {
+        toast.error(res?.message || "Something went wrong");
+      }
+    } catch (err: any) {
+      console.log("error----", err);
+      let message = err?.data?.message || err?.message;
+      toast.error(message || "Login failed");
+    }
   };
 
   return (
@@ -61,11 +82,10 @@ const Login = () => {
               <button
                 key={role.id}
                 onClick={() => setSelectedRole(role.id)}
-                className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 text-center transition-all ${
-                  selectedRole === role.id
-                    ? "border-secondary bg-secondary/10"
-                    : "border-border hover:border-secondary/40"
-                }`}
+                className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 text-center transition-all ${selectedRole === role.id
+                  ? "border-secondary bg-secondary/10"
+                  : "border-border hover:border-secondary/40"
+                  }`}
               >
                 <role.icon className={`w-5 h-5 shrink-0 ${selectedRole === role.id ? "text-secondary" : "text-muted-foreground"}`} />
                 <div>
@@ -167,10 +187,10 @@ const Login = () => {
             Advancing Levels. Elevating Futures.
           </h2>
           <p className="text-primary-foreground/80 text-lg">
-            Access your continuing education courses, track your progress, and earn 
+            Access your continuing education courses, track your progress, and earn
             professional certifications that advance your career.
           </p>
-          
+
           <div className="mt-12 grid grid-cols-3 gap-6 text-center">
             <div>
               <p className="font-heading text-3xl font-bold text-secondary">50+</p>

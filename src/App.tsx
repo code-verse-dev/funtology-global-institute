@@ -17,6 +17,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import OrganizationDashboard from "./pages/OrganizationDashboard";
 import CertificateVerification from "./pages/CertificateVerification";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./pages/protectedRoute";
+
 
 const queryClient = new QueryClient();
 
