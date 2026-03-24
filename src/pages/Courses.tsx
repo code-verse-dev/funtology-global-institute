@@ -143,14 +143,14 @@ const Courses = () => {
     const matchesCategory = selectedCategory === "All" || course.category === selectedCategory;
     const matchesLevel = selectedLevel === "All Levels" || course.level === selectedLevel;
     const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          course.description.toLowerCase().includes(searchQuery.toLowerCase());
+      course.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesLevel && matchesSearch;
   });
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      
+
       <main className="flex-1 pt-20">
         {/* Hero Section */}
         <section className="bg-gradient-hero py-16 md:py-24 relative overflow-hidden">
@@ -194,7 +194,7 @@ const Courses = () => {
                 Browse our continuing education courses designed to advance your career
                 and earn recognized professional certifications.
               </p>
-              
+
               {/* Search Bar */}
               <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
                 <div className="relative flex-1">
@@ -224,11 +224,10 @@ const Courses = () => {
                   <motion.button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      selectedCategory === category
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedCategory === category
                         ? "bg-primary text-primary-foreground shadow-md"
                         : "bg-background text-muted-foreground hover:bg-primary/10 hover:text-primary border border-border"
-                    }`}
+                      }`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.03 }}
@@ -244,11 +243,10 @@ const Courses = () => {
                   <button
                     key={level}
                     onClick={() => setSelectedLevel(level)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                      selectedLevel === level
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedLevel === level
                         ? "bg-secondary text-secondary-foreground"
                         : "bg-background text-muted-foreground hover:bg-secondary/10 border border-border"
-                    }`}
+                      }`}
                   >
                     {level}
                   </button>
@@ -289,7 +287,7 @@ const Courses = () => {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    
+
                     {/* Badges */}
                     <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                       <Badge className="bg-secondary text-secondary-foreground font-semibold">
@@ -320,7 +318,7 @@ const Courses = () => {
                       <span className="text-sm font-semibold">{course.rating}</span>
                     </div>
                   </div>
-                  
+
                   <div className="p-5 md:p-6">
                     <h3 className="font-heading text-lg md:text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
                       {course.title}
@@ -328,7 +326,7 @@ const Courses = () => {
                     <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
                       {course.description}
                     </p>
-                    
+
                     <div className="flex items-center gap-4 mb-5 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
@@ -343,7 +341,7 @@ const Courses = () => {
                         <span>Flipbook</span>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center justify-between pt-5 border-t border-border">
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-bold text-foreground">${course.price}</span>
@@ -401,9 +399,9 @@ const Courses = () => {
                 <Button variant="secondary" size="lg" className="font-heading font-semibold" asChild>
                   <Link to="/register">Get Started Today</Link>
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
+                <Button
+                  variant="outline"
+                  size="lg"
                   className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 font-heading"
                   asChild
                 >
@@ -414,7 +412,7 @@ const Courses = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );
