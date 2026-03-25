@@ -15,22 +15,35 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyOtp from "./pages/VerifyOtp";
 import RecoverPassword from "./pages/RecoverPassword";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import DashboardLayout from "./pages/DashboardLayout";
+import DashboardHome from "./pages/DashboardHome";
+import LearnerCourses from "./pages/learner/LearnerCourses";
+import LearnerCourseDetail from "./pages/learner/LearnerCourseDetail";
 import AdminDashboardLayout from "./pages/AdminDashboardLayout";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminUserDetail from "./pages/admin/AdminUserDetail";
 import AdminCourses from "./pages/admin/AdminCourses";
+import AdminCourseContent from "./pages/admin/AdminCourseContent";
+import AdminCourseQuestionBank from "./pages/admin/AdminCourseQuestionBank";
 import AdminSme from "./pages/admin/AdminSme";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminComplaints from "./pages/admin/AdminComplaints";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminAudit from "./pages/admin/AdminAudit";
 import AdminSettings from "./pages/admin/AdminSettings";
-import OrganizationDashboard from "./pages/OrganizationDashboard";
+import OrganizationDashboardLayout from "./pages/OrganizationDashboardLayout";
+import OrganizationOverview from "./pages/organization/OrganizationOverview";
+import OrganizationLearners from "./pages/organization/OrganizationLearners";
+import OrganizationCourses from "./pages/organization/OrganizationCourses";
+import OrganizationCourseDetail from "./pages/organization/OrganizationCourseDetail";
+import OrganizationBilling from "./pages/organization/OrganizationBilling";
+import OrganizationCertificates from "./pages/organization/OrganizationCertificates";
 import CertificateVerification from "./pages/CertificateVerification";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./pages/protectedRoute";
+import SubscriptionRequiredRoute from "./pages/protectedRoute/SubscriptionRequiredRoute";
+import Payment from "./pages/stripePayment";
 import { getBasename } from "./utils/Functions";
 
 
@@ -57,7 +70,28 @@ const App = () => (
           <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute allowedRoles={["learner", "organization"]}>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <SubscriptionRequiredRoute>
+                  <DashboardLayout />
+                </SubscriptionRequiredRoute>
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<DashboardHome />} />
+            <Route path="courses" element={<LearnerCourses />} />
+            <Route path="courses/:courseId" element={<LearnerCourseDetail />} />
+          </Route>
           <Route path="/admin" element={
             <ProtectedRoute allowedRoles={["admin"]}>
               <AdminDashboardLayout />
@@ -76,6 +110,8 @@ const App = () => (
               </ProtectedRoute>
             } />
             <Route path="courses" element={<AdminCourses />} />
+            <Route path="courses/:courseId/content" element={<AdminCourseContent />} />
+            <Route path="courses/:courseId/question-bank" element={<AdminCourseQuestionBank />} />
             <Route path="sme" element={<AdminSme />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="complaints" element={<AdminComplaints />} />
@@ -83,7 +119,24 @@ const App = () => (
             <Route path="audit" element={<AdminAudit />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
-          <Route path="/organization" element={<OrganizationDashboard />} />
+          <Route
+            path="/organization"
+            element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <SubscriptionRequiredRoute>
+                  <OrganizationDashboardLayout />
+                </SubscriptionRequiredRoute>
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate to="overview" replace />} />
+            <Route path="overview" element={<OrganizationOverview />} />
+            <Route path="learners" element={<OrganizationLearners />} />
+            <Route path="courses/:courseId" element={<OrganizationCourseDetail />} />
+            <Route path="courses" element={<OrganizationCourses />} />
+            <Route path="billing" element={<OrganizationBilling />} />
+            <Route path="certificates" element={<OrganizationCertificates />} />
+          </Route>
           <Route path="/verify" element={<CertificateVerification />} />
           <Route path="/faq" element={<Index />} />
           <Route path="/support" element={<Contact />} />

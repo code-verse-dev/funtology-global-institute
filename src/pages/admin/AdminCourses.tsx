@@ -48,6 +48,7 @@ import {
   Upload,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const PAGE_SIZE = 10;
@@ -326,7 +327,7 @@ const AdminCourses = () => {
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setEditId(course._id)}>
                               <Edit className="w-4 h-4 mr-2" />
-                              Edit / Needs Analysis
+                              Edit 
                             </DropdownMenuItem>
                             <DropdownMenuSub>
                               <DropdownMenuSubTrigger>Change status</DropdownMenuSubTrigger>
@@ -347,13 +348,17 @@ const AdminCourses = () => {
                                 ))}
                               </DropdownMenuSubContent>
                             </DropdownMenuSub>
-                            <DropdownMenuItem>
-                              <Upload className="w-4 h-4 mr-2" />
-                              Upload Content
+                            <DropdownMenuItem asChild>
+                              <Link to={`/admin/courses/${course._id}/content`}>
+                                <Upload className="w-4 h-4 mr-2" />
+                                Upload content
+                              </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <ClipboardList className="w-4 h-4 mr-2" />
-                              Question Bank
+                            <DropdownMenuItem asChild>
+                              <Link to={`/admin/courses/${course._id}/question-bank`}>
+                                <ClipboardList className="w-4 h-4 mr-2" />
+                                Question bank
+                              </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                               <Scale className="w-4 h-4 mr-2" />
