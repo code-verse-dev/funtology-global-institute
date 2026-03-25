@@ -129,6 +129,14 @@ export const courseApiSlice = createApi({
         { type: "Course", id: "LIST" },
       ],
     }),
+
+    getAllCourses: builder.query<any, void>({
+      query: () => ({
+        url: "/course/getAllCourses",
+        method: "GET",
+      }),
+      providesTags: ["Course"],
+    }),
   }),
 });
 
@@ -138,4 +146,5 @@ export const {
   useGetCourseByIdQuery,
   useUpdateCourseMutation,
   useUpdateCourseStatusMutation,
+  useGetAllCoursesQuery,
 } = courseApiSlice;
