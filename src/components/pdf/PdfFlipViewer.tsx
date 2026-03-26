@@ -4,7 +4,13 @@ import HTMLFlipBook from "react-pageflip";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Columns2, Download, FileText, Maximize2 } from "lucide-react";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+const bundledWorkerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+const cdnWorkerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+const envWorkerSrc = import.meta.env.VITE_PDF_WORKER_SRC?.trim();
+
+// Production servers sometimes miss a MIME mapping for .mjs. Use CDN worker in prod by default,
+// and allow overriding via VITE_PDF_WORKER_SRC for custom hosting.
+pdfjs.GlobalWorkerOptions.workerSrc = envWorkerSrc || (import.meta.env.PROD ? cdnWorkerSrc : bundledWorkerSrc);
 
 export type PdfFlipViewerProps = {
   fileUrl: string;
@@ -285,3 +291,5 @@ export default function PdfFlipViewer({
     </div>
   );
 }
+
+
