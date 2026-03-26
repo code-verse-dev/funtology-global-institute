@@ -50,6 +50,48 @@ export default function PdfFlipViewer({
   const [isLoading, setIsLoading] = React.useState(true);
   const [loadError, setLoadError] = React.useState(false);
   const [pageWidth, setPageWidth] = React.useState(0);
+  /** In-memory PDF bytes so we load with credentials (cookies) and avoid worker cross-origin quirks */
+  const [fileData, setFileData] = React.useState<ArrayBuffer | null>(null);
+  const [fetchError, setFetchError] = React.useState(false);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    setLoadError(false);
+    setFetchError(false);
+    setIsLoading(true);
+    setNumPages(0);
+    setCurrentPage(0);
+    setFileData(null);
+
+    const isDirect =
+      fileUrl.startsWith("blob:") || fileUrl.startsWith("data:");
+
+    if (isDirect) {
+      setFileData(null);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    (async () => {
+      try {
+        const res = await fetch(fileUrl, { credentials: "include", mode: "cors" });
+        if (!res.ok) throw new Error(String(res.status));
+        const buf = await res.arrayBuffer();
+        if (cancelled) return;
+        setFileData(buf);
+      } catch {
+        if (!cancelled) {
+          setFetchError(true);
+          setIsLoading(false);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [fileUrl]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bookRef = React.useRef<any>(null);
@@ -67,7 +109,7 @@ export default function PdfFlipViewer({
     const ro = new ResizeObserver(measure);
     if (containerRef.current) ro.observe(containerRef.current);
     return () => ro.disconnect();
-  }, [maxPageWidth]);
+  }, [maxPageWidth, fileUrl, fileData]);
 
   const pageHeight = pageWidth > 0 ? Math.round(pageWidth * 1.414) : 0;
   const flipMaxHeight = layoutExpanded ? 900 : 640;
@@ -80,6 +122,10 @@ export default function PdfFlipViewer({
 
   const totalSpreads = numPages > 0 ? Math.ceil(numPages / 2) : 0;
   const currentSpread = Math.ceil((currentPage + 1) / 2);
+
+  const directUrl =
+    fileUrl.startsWith("blob:") || fileUrl.startsWith("data:") ? fileUrl : null;
+  const readyFile: string | ArrayBuffer | null = directUrl ?? fileData;
 
   return (
     <div className={`flex flex-col w-full overflow-hidden ${className}`}>
@@ -129,14 +175,14 @@ export default function PdfFlipViewer({
         className="relative w-full bg-muted flex items-center justify-center"
         style={{ minHeight: pageHeight > 0 ? pageHeight + 48 : 400 }}
       >
-        {isLoading && !loadError ? (
+        {isLoading && !loadError && !fetchError ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-10 bg-muted">
             <div className="h-10 w-10 rounded-full border-4 border-primary border-t-transparent animate-spin" />
             <p className="text-sm text-muted-foreground">Loading PDF…</p>
           </div>
         ) : null}
 
-        {loadError ? (
+        {loadError || fetchError ? (
           <div className="absolute inset-0 flex items-center justify-center z-10 bg-muted px-4">
             <p className="text-sm text-destructive text-center">Failed to load PDF.</p>
           </div>
@@ -165,54 +211,57 @@ export default function PdfFlipViewer({
           </>
         ) : null}
 
-        <Document
-          file={fileUrl}
-          onLoadSuccess={({ numPages: n }) => {
-            setNumPages(n);
-            setIsLoading(false);
-          }}
-          onLoadError={() => {
-            setLoadError(true);
-            setIsLoading(false);
-          }}
-          loading=""
-        >
-          {numPages > 0 && pageWidth > 0 && pageHeight > 0 ? (
-            <div className="py-6 drop-shadow-2xl">
-              <HTMLFlipBook
-                ref={bookRef}
-                width={pageWidth}
-                height={pageHeight}
-                className=""
-                style={{}}
-                size="fixed"
-                minWidth={200}
-                maxWidth={maxPageWidth}
-                minHeight={280}
-                maxHeight={flipMaxHeight}
-                startPage={0}
-                drawShadow
-                flippingTime={650}
-                usePortrait={false}
-                startZIndex={10}
-                autoSize={false}
-                maxShadowOpacity={0.5}
-                showCover={false}
-                mobileScrollSupport
-                clickEventForward
-                useMouseEvents
-                swipeDistance={30}
-                showPageCorners
-                disableFlipByClick={false}
-                onFlip={(e: { data: number }) => setCurrentPage(e.data)}
-              >
-                {Array.from({ length: numPages }, (_, i) => (
-                  <FlipPage key={i} pageNumber={i + 1} width={pageWidth} height={pageHeight} />
-                ))}
-              </HTMLFlipBook>
-            </div>
-          ) : null}
-        </Document>
+        {readyFile ? (
+          <Document
+            file={readyFile}
+            onLoadSuccess={({ numPages: n }) => {
+              setNumPages(n);
+              setIsLoading(false);
+              setLoadError(false);
+            }}
+            onLoadError={() => {
+              setLoadError(true);
+              setIsLoading(false);
+            }}
+            loading=""
+          >
+            {numPages > 0 && pageWidth > 0 && pageHeight > 0 ? (
+              <div className="py-6 drop-shadow-2xl">
+                <HTMLFlipBook
+                  ref={bookRef}
+                  width={pageWidth}
+                  height={pageHeight}
+                  className=""
+                  style={{}}
+                  size="fixed"
+                  minWidth={200}
+                  maxWidth={maxPageWidth}
+                  minHeight={280}
+                  maxHeight={flipMaxHeight}
+                  startPage={0}
+                  drawShadow
+                  flippingTime={650}
+                  usePortrait={false}
+                  startZIndex={10}
+                  autoSize={false}
+                  maxShadowOpacity={0.5}
+                  showCover={false}
+                  mobileScrollSupport
+                  clickEventForward
+                  useMouseEvents
+                  swipeDistance={30}
+                  showPageCorners
+                  disableFlipByClick={false}
+                  onFlip={(e: { data: number }) => setCurrentPage(e.data)}
+                >
+                  {Array.from({ length: numPages }, (_, i) => (
+                    <FlipPage key={i} pageNumber={i + 1} width={pageWidth} height={pageHeight} />
+                  ))}
+                </HTMLFlipBook>
+              </div>
+            ) : null}
+          </Document>
+        ) : null}
       </div>
 
       {numPages > 0 && !isLoading ? (

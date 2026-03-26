@@ -197,24 +197,33 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
       {lessonsError ? (
         <p className="text-sm text-destructive">Could not load course content (lessons).</p>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card className="overflow-hidden">
-            <CardHeader>
+        <div className="space-y-6">
+          {/* Full-width PDF matches learner dashboard so react-pdf / flipbook get stable layout (half-grid was failing to load) */}
+          <Card className="flex flex-col overflow-hidden border shadow-sm min-h-[min(78dvh,880px)] p-0">
+            <CardHeader className="px-6 pt-6 pb-2">
               <div className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-secondary" />
                 <CardTitle className="font-heading text-base">PDF material</CardTitle>
               </div>
               <CardDescription>Flip through the reference document like a book.</CardDescription>
             </CardHeader>
-            <CardContent className="p-0 sm:p-0">
-              {!pdfLesson ? (
-                <p className="text-sm text-muted-foreground px-6 pb-6">No PDF lesson is configured for this course.</p>
-              ) : pdfSrc ? (
-                <PdfFlipViewer fileUrl={pdfSrc} title={course.title} onDownload={handlePdfDownload} maxPageWidth={520} />
-              ) : (
-                <p className="text-sm text-muted-foreground px-6 pb-6">No PDF file has been uploaded yet.</p>
-              )}
-            </CardContent>
+            {!pdfLesson ? (
+              <CardContent>
+                <p className="text-sm text-muted-foreground">No PDF lesson is configured for this course.</p>
+              </CardContent>
+            ) : !pdfSrc ? (
+              <CardContent>
+                <p className="text-sm text-muted-foreground">No PDF file has been uploaded yet.</p>
+              </CardContent>
+            ) : (
+              <PdfFlipViewer
+                fileUrl={pdfSrc}
+                title={course.title}
+                onDownload={handlePdfDownload}
+                maxPageWidth={720}
+                className="flex-1 min-h-0 border-t border-border"
+              />
+            )}
           </Card>
 
           <Card>
