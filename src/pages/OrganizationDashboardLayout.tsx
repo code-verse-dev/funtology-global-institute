@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
-import { Award, BarChart3, Bell, BookOpen, Building2, CreditCard, LogOut, Settings, User, Users } from "lucide-react";
+import { Award, BarChart3, Bell, BookOpen, Building2, CreditCard, LogOut, RefreshCw, Settings, User, Users } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -23,6 +23,7 @@ const orgNavItems = [
   { to: "overview", label: "Overview", icon: BarChart3 },
   { to: "learners", label: "Learners", icon: Users },
   { to: "courses", label: "Courses", icon: BookOpen },
+  { to: "retake-requests", label: "Retake Requests", icon: RefreshCw },
   { to: "billing", label: "Billing", icon: CreditCard },
   { to: "certificates", label: "Certificates", icon: Award },
 ] as const;

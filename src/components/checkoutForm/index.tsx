@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import type { RootState } from "@/redux/store";
 import {
   useGetSavedPaymentMethodsQuery,
+  useQuizRetakePaymentMutation,
   useSubscriptionPaymentMutation,
 } from "@/redux/services/apiSlices/paymentSlice";
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
@@ -11,7 +12,7 @@ import Cookies from "js-cookie";
 import { CheckCircle2, CreditCard, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 function effectiveRole(userRole: unknown): string {
@@ -30,6 +31,8 @@ function effectiveRole(userRole: unknown): string {
 
 interface CheckoutFormProps {
   type?: string;
+  lessonId?: string;
+  courseIds?: string[];
   amount?: number;
   clientSecret?: string;
   subscriptionType?: string;
@@ -41,6 +44,8 @@ interface CheckoutFormProps {
 
 const CheckoutForm = ({
   type,
+  lessonId,
+  courseIds = [],
   clientSecret,
   isProcessing,
   setIsProcessing,
@@ -48,12 +53,14 @@ const CheckoutForm = ({
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((state: RootState) => state.user.userData) as { role?: string } | undefined;
 
   const [message, setMessage] = useState("");
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
   const [createSubscription] = useSubscriptionPaymentMutation();
+  const [confirmQuizRetakePayment] = useQuizRetakePaymentMutation();
 
   const { data: paymentData, isLoading: cardsLoading } = useGetSavedPaymentMethodsQuery();
   const savedCards: unknown[] = paymentData?.data?.data ?? [];
@@ -77,11 +84,27 @@ const CheckoutForm = ({
           data: {
             paymentIntentId: paymentIntent.id,
             type: "SUBSCRIPTION",
+            courseIds,
           },
         }).unwrap();
         if (res?.status) {
           toast.success(res?.message || "Subscription activated.");
           navigateAfterSubscription();
+        } else {
+          toast.error(res?.data?.error?.message || res?.error?.message || res?.message || "Something went wrong");
+        }
+      } else if (type === "QUIZ_RETAKE") {
+        const res = await confirmQuizRetakePayment({
+          data: { paymentIntentId: paymentIntent.id },
+        }).unwrap();
+        if (res?.status) {
+          toast.success(res?.message || "Quiz retake payment completed.");
+          const from = (location.state as { from?: string } | null)?.from;
+          if (typeof from === "string" && from.length > 0) {
+            navigate(from, { replace: true, state: { retakePaid: true } });
+          } else {
+            navigate("/dashboard/courses", { replace: true });
+          }
         } else {
           toast.error(res?.data?.error?.message || res?.error?.message || res?.message || "Something went wrong");
         }

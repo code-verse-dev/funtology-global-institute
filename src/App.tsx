@@ -19,6 +19,7 @@ import DashboardLayout from "./pages/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
 import LearnerCourses from "./pages/learner/LearnerCourses";
 import LearnerCourseDetail from "./pages/learner/LearnerCourseDetail";
+import LearnerQuizAttempt from "./pages/learner/LearnerQuizAttempt";
 import AdminDashboardLayout from "./pages/AdminDashboardLayout";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminUsers from "./pages/admin/AdminUsers";
@@ -39,6 +40,7 @@ import OrganizationCourses from "./pages/organization/OrganizationCourses";
 import OrganizationCourseDetail from "./pages/organization/OrganizationCourseDetail";
 import OrganizationBilling from "./pages/organization/OrganizationBilling";
 import OrganizationCertificates from "./pages/organization/OrganizationCertificates";
+import OrganizationRetakeRequests from "./pages/organization/OrganizationRetakeRequests";
 import CertificateVerification from "./pages/CertificateVerification";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./pages/protectedRoute";
@@ -91,6 +93,7 @@ const App = () => (
             <Route index element={<DashboardHome />} />
             <Route path="courses" element={<LearnerCourses />} />
             <Route path="courses/:courseId" element={<LearnerCourseDetail />} />
+            <Route path="courses/:courseId/quiz" element={<LearnerQuizAttempt />} />
           </Route>
           <Route path="/admin" element={
             <ProtectedRoute allowedRoles={["admin"]}>
@@ -130,10 +133,17 @@ const App = () => (
             }
           >
             <Route index element={<Navigate to="overview" replace />} />
-            <Route path="overview" element={<OrganizationOverview />} />
+            <Route path="overview" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <SubscriptionRequiredRoute>
+                  <OrganizationOverview />
+                </SubscriptionRequiredRoute>
+              </ProtectedRoute>
+            } />
             <Route path="learners" element={<OrganizationLearners />} />
             <Route path="courses/:courseId" element={<OrganizationCourseDetail />} />
             <Route path="courses" element={<OrganizationCourses />} />
+            <Route path="retake-requests" element={<OrganizationRetakeRequests />} />
             <Route path="billing" element={<OrganizationBilling />} />
             <Route path="certificates" element={<OrganizationCertificates />} />
           </Route>

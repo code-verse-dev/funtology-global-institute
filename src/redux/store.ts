@@ -11,6 +11,7 @@ import { ticketSlice } from "./services/apiSlices/ticketSlice";
 import { paymentSlice } from "./services/apiSlices/paymentSlice";
 import { learnerSlice } from "./services/apiSlices/learnerSlice";
 import { certificateSlice } from "./services/apiSlices/certificateSlice";
+import { retakeSlice } from "./services/apiSlices/retakeSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -22,12 +23,13 @@ const rootReducer = combineReducers({
   [paymentSlice.reducerPath]: paymentSlice.reducer,
   [learnerSlice.reducerPath]: learnerSlice.reducer,
   [certificateSlice.reducerPath]: certificateSlice.reducer,
+  [retakeSlice.reducerPath]: retakeSlice.reducer,
 });
 
 const persistConfig = {
   key: "global_institute",
   storage,
-  blacklist: [authSlice.reducerPath, userApiSlice.reducerPath, courseApiSlice.reducerPath, lessonSlice.reducerPath, ticketSlice.reducerPath, paymentSlice.reducerPath, learnerSlice.reducerPath, certificateSlice.reducerPath],
+  blacklist: [authSlice.reducerPath, userApiSlice.reducerPath, courseApiSlice.reducerPath, lessonSlice.reducerPath, ticketSlice.reducerPath, paymentSlice.reducerPath, learnerSlice.reducerPath, certificateSlice.reducerPath, retakeSlice.reducerPath],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -38,7 +40,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-    .concat(authSlice.middleware, userApiSlice.middleware, courseApiSlice.middleware, lessonSlice.middleware, ticketSlice.middleware, paymentSlice.middleware, learnerSlice.middleware, certificateSlice.middleware )
+    .concat(authSlice.middleware, userApiSlice.middleware, courseApiSlice.middleware, lessonSlice.middleware, ticketSlice.middleware, paymentSlice.middleware, learnerSlice.middleware, certificateSlice.middleware, retakeSlice.middleware)
 });
 
 setupListeners(store.dispatch);
