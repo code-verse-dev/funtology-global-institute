@@ -18,17 +18,5 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-  },
-  optimizeDeps: {
-    include: ['react-pdf', 'pdfjs-dist']
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          pdfjs: ['pdfjs-dist/build/pdf.worker.min.js']
-        }
-      }
-    }
   }
 }));
