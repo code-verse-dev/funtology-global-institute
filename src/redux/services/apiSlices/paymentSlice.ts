@@ -21,8 +21,8 @@ export const paymentSlice = createApi({
             }),
             transformResponse: (res: any) => res?.data,
         }),
-        paymentIntent: builder.mutation<any, { amount: number; currency: string; learnerId?: string; lessonId?: string }>({
-            query: ({ amount, currency, learnerId, lessonId }) => ({
+        paymentIntent: builder.mutation<any, { amount: number; currency: string; learnerId?: string; lessonId?: string; type?: string; kind?: string }>({
+            query: ({ amount, currency, learnerId, lessonId, type, kind }) => ({
                 url: "/payment/create-payment-intent",
                 method: "POST",
                 body: {
@@ -30,6 +30,8 @@ export const paymentSlice = createApi({
                     currency,
                     learnerId,
                     lessonId,
+                    type,
+                    kind,
                 },
             }),
             transformResponse: (res: any) => res?.data,
@@ -41,6 +43,13 @@ export const paymentSlice = createApi({
                 body: data,
             }),
             invalidatesTags: ["Subscription"],
+        }),
+        quizRetakePayment: builder.mutation<any, { data: { paymentIntentId: string } }>({
+            query: ({ data }) => ({
+                url: "/payment/quiz-retake-payment",
+                method: "POST",
+                body: data,
+            }),
         }),
         getSavedPaymentMethods: builder.query<any, void>({
             query: () => ({
@@ -67,4 +76,13 @@ export const paymentSlice = createApi({
     }),
 });
 
-export const { useGetPaymentsQuery, usePaymentConfigQuery, usePaymentIntentMutation, useSubscriptionPaymentMutation, useGetSavedPaymentMethodsQuery, useGetMySubscriptionQuery, useGetMyPaymentsQuery } = paymentSlice;
+export const {
+    useGetPaymentsQuery,
+    usePaymentConfigQuery,
+    usePaymentIntentMutation,
+    useSubscriptionPaymentMutation,
+    useQuizRetakePaymentMutation,
+    useGetSavedPaymentMethodsQuery,
+    useGetMySubscriptionQuery,
+    useGetMyPaymentsQuery,
+} = paymentSlice;

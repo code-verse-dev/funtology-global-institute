@@ -2,7 +2,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { OrganizationCoursesList } from "@/pages/organization/OrganizationCoursesList";
+import { useGetMyCertificatesQuery } from "@/redux/services/apiSlices/certificateSlice";
 import type { RootState } from "@/redux/store";
 import { motion } from "framer-motion";
 import {
@@ -17,9 +19,9 @@ import {
   Target,
   TrendingUp,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function learnerFirstName(user: Record<string, unknown> | null | undefined) {
   if (!user || typeof user !== "object") return "there";
@@ -34,25 +36,8 @@ const userData = {
   enrolledCourses: 4,
   completedCourses: 2,
   totalCeHours: 12,
-  certificates: 2,
+  certificates: 0,
 };
-
-const certificates = [
-  {
-    id: 1,
-    courseTitle: "Business Management for Professionals",
-    issueDate: "December 15, 2024",
-    ceHours: 6,
-    certificateId: "FGI-2024-001234",
-  },
-  {
-    id: 2,
-    courseTitle: "Customer Service Excellence",
-    issueDate: "November 28, 2024",
-    ceHours: 3,
-    certificateId: "FGI-2024-001156",
-  },
-];
 
 const recentActivity = [
   { action: "Completed lesson", course: "Infection Control", time: "2 hours ago" },
@@ -60,10 +45,38 @@ const recentActivity = [
   { action: "Downloaded certificate", course: "Business Management", time: "2 days ago" },
 ];
 
+type LearnerCertificate = {
+  _id: string;
+  certificateUrl?: string;
+  createdAt?: string;
+  course?: { _id?: string; title?: string; image?: string } | string;
+  student?: string;
+  quizResponse?: string;
+  lesson?: { _id?: string; type?: string; order?: number };
+};
+
+type MyCertificatesResponse = { data?: LearnerCertificate[] };
+
+function formatIssuedDate(iso?: string) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString();
+}
+
 const DashboardHome = () => {
+  const location = useLocation();
+  const stateTab = (location.state as { activeTab?: "courses" | "certificates" | "progress" } | null)?.activeTab;
   const [activeTab, setActiveTab] = useState<"courses" | "certificates" | "progress">("courses");
   const userFromStore = useSelector((s: RootState) => s.user.userData) as Record<string, unknown> | undefined;
   const welcomeName = learnerFirstName(userFromStore);
+  const { data: myCertificates, refetch } = useGetMyCertificatesQuery();
+  const certificates = (myCertificates as MyCertificatesResponse | undefined)?.data ?? [];
+
+  useEffect(() => {
+    if (!stateTab) return;
+    setActiveTab(stateTab);
+    void refetch();
+  }, [stateTab, refetch]);
 
   return (
     <>
@@ -84,7 +97,7 @@ const DashboardHome = () => {
           { icon: BookOpen, label: "Enrolled Courses", value: userData.enrolledCourses, color: "text-primary" },
           { icon: CheckCircle2, label: "Completed", value: userData.completedCourses, color: "text-green-600" },
           { icon: Clock, label: "CE Hours Earned", value: userData.totalCeHours, color: "text-secondary" },
-          { icon: Award, label: "Certificates", value: userData.certificates, color: "text-purple-600" },
+          { icon: Award, label: "Certificates", value: certificates.length || userData.certificates, color: "text-purple-600" },
         ].map((stat, index) => (
           <motion.div
             key={stat.label}
@@ -145,38 +158,53 @@ const DashboardHome = () => {
 
           {activeTab === "certificates" && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-              {certificates.map((cert, index) => (
-                <motion.div
-                  key={cert.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="hover:shadow-md transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
-                            <GraduationCap className="w-6 h-6 text-secondary" />
-                          </div>
-                          <div>
-                            <h3 className="font-heading font-semibold text-foreground mb-1">{cert.courseTitle}</h3>
-                            <p className="text-sm text-muted-foreground">Issued: {cert.issueDate}</p>
-                            <div className="flex items-center gap-4 mt-2 text-sm">
-                              <span className="text-secondary font-medium">{cert.ceHours} CE Hours</span>
-                              <span className="text-muted-foreground">ID: {cert.certificateId}</span>
+              {certificates.length === 0 ? (
+                <Card>
+                  <CardContent className="p-8 text-sm text-muted-foreground text-center">
+                    No certificates found yet.
+                  </CardContent>
+                </Card>
+              ) : (
+                certificates.map((cert, index) => {
+                  const courseTitle =
+                    cert.course && typeof cert.course === "object" ? cert.course.title || "Course certificate" : "Course certificate";
+                  const downloadUrl = lessonFileUrl(cert.certificateUrl);
+
+                  return (
+                    <motion.div
+                      key={cert._id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Card className="hover:shadow-md transition-shadow">
+                        <CardContent className="p-6">
+                          <div className="flex items-start justify-between">
+                            <div className="flex items-start gap-4">
+                              <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
+                                <GraduationCap className="w-6 h-6 text-secondary" />
+                              </div>
+                              <div>
+                                <h3 className="font-heading font-semibold text-foreground mb-1">{courseTitle}</h3>
+                                <p className="text-sm text-muted-foreground">Issued: {formatIssuedDate(cert.createdAt)}</p>
+                                <div className="flex items-center gap-4 mt-2 text-sm">
+                                  <span className="text-muted-foreground">ID: {cert._id}</span>
+                                </div>
+                              </div>
                             </div>
+                            <Button variant="outline" size="sm" className="gap-2" asChild disabled={!downloadUrl}>
+                              <a href={downloadUrl ?? "#"} target="_blank" rel="noopener noreferrer" download>
+                                <Download className="w-4 h-4" />
+                                Download
+                              </a>
+                            </Button>
                           </div>
-                        </div>
-                        <Button variant="outline" size="sm" className="gap-2">
-                          <Download className="w-4 h-4" />
-                          Download
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  );
+                })
+              )}
             </motion.div>
           )}
 

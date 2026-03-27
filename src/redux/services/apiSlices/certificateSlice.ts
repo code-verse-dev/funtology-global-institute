@@ -44,7 +44,14 @@ export const certificateSlice = createApi({
       }),
       providesTags: ["Certificates"],
     }),
+    getMyCertificates: builder.query<any, void>({
+      query: () => ({
+        url: "/certificate/my-certificates",
+        method: "GET",
+      }),
+      providesTags: ["Certificates"],
+    }),
   }),
 });
 
-export const { useGetOrganizationCertificatesQuery } = certificateSlice;
+export const { useGetOrganizationCertificatesQuery, useGetMyCertificatesQuery } = certificateSlice;

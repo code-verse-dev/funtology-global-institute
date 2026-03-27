@@ -161,9 +161,9 @@ export const lessonSlice = createApi({
         const lid = q?.lesson != null ? String(q.lesson) : null;
         return lid
           ? [
-              { type: "QuizQuestions", id: lid },
-              { type: "QuizResponses", id: `list-${lid}` },
-            ]
+            { type: "QuizQuestions", id: lid },
+            { type: "QuizResponses", id: `list-${lid}` },
+          ]
           : [{ type: "QuizQuestions" }];
       },
     }),
@@ -190,6 +190,22 @@ export const lessonSlice = createApi({
         { type: "Lessons", id: arg.id },
       ],
     }),
+    submitQuizResponse: builder.mutation<any, { lessonId: string; answers: any[] }>({
+      query: ({ lessonId, answers }) => ({
+        url: `/lesson-quiz-response/${lessonId}`,
+        method: "POST",
+        body: { answers },
+      }),
+      invalidatesTags: ["QuizResponses", "QuizQuestions"],
+    }),
+    getMyLatestQuizResponse: builder.query<any, { lessonId: string }>({
+      query: ({ lessonId }) => ({
+        url: `/lesson-quiz-response/${lessonId}/me`,
+        method: "GET",
+      }),
+      providesTags: ["QuizResponses"],
+    }),
+
   }),
 });
 
@@ -202,4 +218,6 @@ export const {
   useCreateLessonQuizQuestionsMutation,
   useUpdateQuizQuestionMutation,
   useUpdateLessonMutation,
+  useSubmitQuizResponseMutation,
+  useGetMyLatestQuizResponseQuery
 } = lessonSlice;

@@ -7,7 +7,6 @@ import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { SUBSCRIPTION_PRICE_USD } from "@/constants/subscription";
 
 /**
  * Interprets GET /subscription/my envelope: { status, data }.
@@ -83,7 +82,6 @@ const SubscriptionRequiredRoute = ({ children }: { children: React.ReactNode }) 
       replace: true,
       state: {
         type: "SUBSCRIPTION",
-        total: SUBSCRIPTION_PRICE_USD,
         from: location.pathname,
       },
     });

@@ -1,14 +1,16 @@
 import CheckoutForm from "@/components/checkoutForm";
 import { Button } from "@/components/ui/button";
-import { SUBSCRIPTION_PRICE_USD } from "@/constants/subscription";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
+import { useGetAllCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
 import { usePaymentConfigQuery, usePaymentIntentMutation } from "@/redux/services/apiSlices/paymentSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
+import { RootState } from "@/redux/store";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
+import { CheckCircle2 } from "lucide-react";
 import { Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -17,19 +19,52 @@ const Payment = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
+  const lessonId = location.state?.lessonId;
+  const learnerId = location.state?.learnerId;
 
   const type = location.state?.type as string | undefined;
   const totalFromState = location.state?.total as number | undefined;
+  const isSubscription = type === "SUBSCRIPTION";
+  const { data: allCoursesRes, isLoading: coursesLoading } = useGetAllCoursesQuery(undefined, {
+    skip: !isSubscription,
+  });
+  const [selectedCourseIds, setSelectedCourseIds] = useState<string[]>([]);
+
+  const allCourses = useMemo(() => {
+    const raw = allCoursesRes?.data;
+    return Array.isArray(raw) ? (raw as Array<Record<string, unknown>>) : [];
+  }, [allCoursesRes?.data]);
+
+  const courseAmount = (course: Record<string, unknown>) => {
+    const candidates = [course.amount, course.price, course.subscriptionAmount, course.fee];
+    for (const value of candidates) {
+      if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
+      if (typeof value === "string") {
+        const parsed = Number(value);
+        if (Number.isFinite(parsed) && parsed > 0) return parsed;
+      }
+    }
+    return 0;
+  };
+
+  const selectedCourses = useMemo(
+    () =>
+      allCourses.filter((c) => {
+        const id = String(c._id ?? "");
+        return id && selectedCourseIds.includes(id);
+      }),
+    [allCourses, selectedCourseIds]
+  );
 
   const total = useMemo(() => {
+    if (isSubscription) {
+      return selectedCourses.reduce((sum, c) => sum + courseAmount(c), 0);
+    }
     if (typeof totalFromState === "number" && !Number.isNaN(totalFromState) && totalFromState > 0) {
       return totalFromState;
     }
-    if (type === "SUBSCRIPTION") {
-      return SUBSCRIPTION_PRICE_USD;
-    }
     return undefined;
-  }, [totalFromState, type]);
+  }, [isSubscription, selectedCourses, totalFromState]);
 
   const courseType = location.state?.courseType;
   const numberOfSeats = location.state?.numberOfSeats;
@@ -40,6 +75,7 @@ const Payment = () => {
 
   const { data: paymentData } = usePaymentConfigQuery({});
   const [createPaymentIntent] = usePaymentIntentMutation();
+  const user = useSelector((state: RootState) => state.user.userData);
 
   useEffect(() => {
     if (paymentData?.publishableKey) {
@@ -50,8 +86,7 @@ const Payment = () => {
   useEffect(() => {
     if (total == null || Number.isNaN(total) || total <= 0) {
       if (type === "SUBSCRIPTION") {
-        toast.error("Invalid subscription checkout. Please try signing in again.");
-        navigate("/login", { replace: true });
+        setClientSecret("");
         return;
       }
       toast.error("Invalid payment amount");
@@ -62,11 +97,17 @@ const Payment = () => {
     let cancelled = false;
 
     const createIntent = async () => {
+      const intentPayload: Record<string, unknown> = {
+        amount: total,
+        currency: "usd",
+      };
+      if (type === "QUIZ_RETAKE") {
+        intentPayload.lessonId = lessonId;
+        intentPayload.learnerId = learnerId;
+        intentPayload.kind = "QUIZ_RETAKE";
+      }
       try {
-        const res = await createPaymentIntent({
-          amount: Math.round(total * 100),
-          currency: "usd",
-        }).unwrap();
+        const res = await createPaymentIntent(intentPayload as any).unwrap();
 
         if (!cancelled && res?.clientSecret) {
           setClientSecret(res.clientSecret);
@@ -89,11 +130,15 @@ const Payment = () => {
     return () => {
       cancelled = true;
     };
-  }, [total, type, createPaymentIntent, navigate]);
+  }, [total, type, lessonId, user, createPaymentIntent, navigate]);
 
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const isSubscription = type === "SUBSCRIPTION";
+  const toggleCourse = (courseId: string) => {
+    setSelectedCourseIds((prev) =>
+      prev.includes(courseId) ? prev.filter((id) => id !== courseId) : [...prev, courseId]
+    );
+  };
 
   const handleSignOut = async () => {
     try {
@@ -115,7 +160,7 @@ const Payment = () => {
             </h1>
             {isSubscription ? (
               <p className="text-sm text-muted-foreground mt-1">
-                Complete your ${SUBSCRIPTION_PRICE_USD} USD subscription to continue using FGI as a learner or organization account.
+                Select courses for your subscription. Total is calculated from selected course amounts.
               </p>
             ) : null}
           </div>
@@ -123,6 +168,45 @@ const Payment = () => {
             Sign out
           </Button>
         </div>
+
+        {isSubscription ? (
+          <div className="rounded-xl border border-border bg-card p-4 space-y-3">
+            <p className="text-sm font-medium text-foreground">Select courses</p>
+            {coursesLoading ? (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Loading courses…
+              </div>
+            ) : allCourses.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No courses available for subscription.</p>
+            ) : (
+              <div className="space-y-2 max-h-[320px] overflow-auto pr-1">
+                {allCourses.map((course) => {
+                  const id = String(course._id ?? "");
+                  if (!id) return null;
+                  const title = String(course.title ?? "Untitled course");
+                  const amount = courseAmount(course);
+                  const selected = selectedCourseIds.includes(id);
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => toggleCourse(id)}
+                      className={`w-full rounded-lg border px-3 py-2 text-left transition flex items-center justify-between ${selected ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
+                        }`}
+                    >
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{title}</p>
+                        <p className="text-xs text-muted-foreground">${amount.toFixed(2)} USD</p>
+                      </div>
+                      {selected ? <CheckCircle2 className="h-4 w-4 text-primary" /> : null}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        ) : null}
 
         {total != null ? (
           <p className="text-lg font-semibold text-foreground">
@@ -142,8 +226,14 @@ const Payment = () => {
                 courseType={courseType}
                 numberOfSeats={numberOfSeats}
                 subscriptionType={subscriptionType}
+                lessonId={lessonId}
+                courseIds={selectedCourseIds}
               />
             </Elements>
+          </div>
+        ) : isSubscription && (!total || total <= 0) ? (
+          <div className="flex flex-col items-center justify-center gap-2 py-8 text-muted-foreground">
+            <p className="text-sm">Select at least one course to continue.</p>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-3 py-16 text-muted-foreground">
