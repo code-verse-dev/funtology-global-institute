@@ -259,7 +259,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
             <Badge variant="outline" className="capitalize">
               {course.status}
             </Badge>
-            {/*{quizLessonId ? (
+            {/* {quizLessonId ? (
               <Button
                 type="button"
                 variant="secondary"

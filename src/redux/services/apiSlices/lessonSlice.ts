@@ -205,6 +205,13 @@ export const lessonSlice = createApi({
       }),
       providesTags: ["QuizResponses"],
     }),
+    getMyPassedCourses: builder.query<any, void>({
+      query: () => ({
+        url: `/lesson-quiz-response/me/passed-courses`,
+        method: "GET",
+      }),
+      providesTags: ["QuizResponses"],
+    }),
 
   }),
 });
@@ -219,5 +226,6 @@ export const {
   useUpdateQuizQuestionMutation,
   useUpdateLessonMutation,
   useSubmitQuizResponseMutation,
-  useGetMyLatestQuizResponseQuery
+  useGetMyLatestQuizResponseQuery,  
+  useGetMyPassedCoursesQuery,
 } = lessonSlice;

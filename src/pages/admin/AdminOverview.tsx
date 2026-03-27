@@ -78,12 +78,12 @@ const AdminOverview = () => (
                 View Payments
               </Link>
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2" asChild>
+            {/* <Button variant="outline" className="w-full justify-start gap-2" asChild>
               <Link to="/admin/reports">
                 <Download className="w-4 h-4" />
                 Export Reports
               </Link>
-            </Button>
+            </Button> */}
           </CardContent>
         </Card>
         <Card className="bg-gradient-hero text-primary-foreground">
