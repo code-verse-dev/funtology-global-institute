@@ -515,10 +515,10 @@ const CourseLearn = () => {
                   This is a professional credential, not an academic degree.
                 </p>
                 <div className="mt-8 flex justify-center gap-4">
-                  <Button variant="secondary" size="lg" className="gap-2">
+                  {/* <Button variant="secondary" size="lg" className="gap-2">
                     <FileText className="w-4 h-4" />
                     Download PDF
-                  </Button>
+                  </Button> */}
                   <Button variant="outline" size="lg" asChild>
                     <Link to="/dashboard">Back to Dashboard</Link>
                   </Button>

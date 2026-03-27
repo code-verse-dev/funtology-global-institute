@@ -1,10 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { OrganizationCoursesList } from "@/pages/organization/OrganizationCoursesList";
 import { useGetMyCertificatesQuery } from "@/redux/services/apiSlices/certificateSlice";
+import { useGetMyPassedCoursesQuery } from "@/redux/services/apiSlices/lessonSlice";
 import type { RootState } from "@/redux/store";
 import { motion } from "framer-motion";
 import {
@@ -16,7 +16,6 @@ import {
   Clock,
   Download,
   GraduationCap,
-  Target,
   TrendingUp,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -56,7 +55,14 @@ type LearnerCertificate = {
 };
 
 type MyCertificatesResponse = { data?: LearnerCertificate[] };
-
+type PassedCourseItem = {
+  lessonId?: string;
+  passedAt?: string;
+  percentage?: number;
+  quizResponseId?: string;
+  course?: { _id?: string; title?: string; image?: string };
+};
+type MyPassedCoursesResponse = { data?: { courses?: PassedCourseItem[]; passThresholdPercent?: number } };
 function formatIssuedDate(iso?: string) {
   if (!iso) return "—";
   const d = new Date(iso);
@@ -65,18 +71,23 @@ function formatIssuedDate(iso?: string) {
 
 const DashboardHome = () => {
   const location = useLocation();
-  const stateTab = (location.state as { activeTab?: "courses" | "certificates" | "progress" } | null)?.activeTab;
-  const [activeTab, setActiveTab] = useState<"courses" | "certificates" | "progress">("courses");
+  const stateTab = (location.state as { activeTab?: "courses" | "certificates" | "progress" | "passedCourses" } | null)?.activeTab;
+  const [activeTab, setActiveTab] = useState<"courses" | "certificates" | "passedCourses">("courses");
   const userFromStore = useSelector((s: RootState) => s.user.userData) as Record<string, unknown> | undefined;
   const welcomeName = learnerFirstName(userFromStore);
   const { data: myCertificates, refetch } = useGetMyCertificatesQuery();
   const certificates = (myCertificates as MyCertificatesResponse | undefined)?.data ?? [];
-
+  const { data: myPassedCourses, refetch: refetchMyPassedCourses } = useGetMyPassedCoursesQuery();
+  const passedCoursesData = (myPassedCourses as MyPassedCoursesResponse | undefined)?.data;
+  const passedCourses = passedCoursesData?.courses ?? [];
+  const passThresholdPercent = passedCoursesData?.passThresholdPercent ?? 0;
+  
   useEffect(() => {
     if (!stateTab) return;
-    setActiveTab(stateTab);
+    setActiveTab(stateTab === "progress" ? "passedCourses" : stateTab);
     void refetch();
-  }, [stateTab, refetch]);
+    void refetchMyPassedCourses();
+  }, [stateTab, refetch, refetchMyPassedCourses]);
 
   return (
     <>
@@ -126,7 +137,7 @@ const DashboardHome = () => {
             {[
               { id: "courses" as const, label: "My Courses", icon: BookOpen },
               { id: "certificates" as const, label: "Certificates", icon: Award },
-              { id: "progress" as const, label: "Progress", icon: TrendingUp },
+              { id: "passedCourses" as const, label: "Passed Courses", icon: TrendingUp },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -208,35 +219,43 @@ const DashboardHome = () => {
             </motion.div>
           )}
 
-          {activeTab === "progress" && (
+          {activeTab === "passedCourses" && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <Card>
                 <CardHeader>
                   <CardTitle className="font-heading flex items-center gap-2">
-                    <Target className="w-5 h-5 text-secondary" />
-                    Your Learning Goals
+                    <TrendingUp className="w-5 h-5 text-secondary" />
+                    Passed Courses
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-muted-foreground">Monthly CE Hours Goal</span>
-                      <span className="font-semibold">12 / 20 hours</span>
-                    </div>
-                    <Progress value={60} className="h-3" />
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-muted-foreground">Courses to Complete This Month</span>
-                      <span className="font-semibold">2 / 3 courses</span>
-                    </div>
-                    <Progress value={66} className="h-3" />
-                  </div>
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-sm text-muted-foreground">
-                      Keep up the great work! You&apos;re on track to meet your learning goals this month.
-                    </p>
-                  </div>
+                <CardContent className="space-y-4">
+                  {passedCourses.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">No passed courses yet.</p>
+                  ) : (
+                    passedCourses.map((item, idx) => {
+                      const title = item.course?.title || "Course";
+                      const score = Number(item.percentage ?? 0);
+                      const image = lessonFileUrl(item.course?.image);
+                      return (
+                        <div key={item.quizResponseId ?? item.lessonId ?? idx} className="flex items-center gap-3 rounded-lg border border-border p-3">
+                          {image ? (
+                            <img src={image} alt={title} className="h-12 w-16 rounded object-cover border border-border" />
+                          ) : (
+                            <div className="h-12 w-16 rounded border border-border bg-muted flex items-center justify-center text-xs text-muted-foreground">
+                              No image
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm text-foreground truncate">{title}</p>
+                            <p className="text-xs text-muted-foreground">Passed on {formatIssuedDate(item.passedAt)}</p>
+                          </div>
+                          <Badge variant="secondary" className="whitespace-nowrap">
+                            {score}% (pass {passThresholdPercent}%)
+                          </Badge>
+                        </div>
+                      );
+                    })
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
@@ -265,9 +284,9 @@ const DashboardHome = () => {
                 <Award className="w-4 h-4 mr-2" />
                 View All Certificates
               </Button>
-              <Button variant="outline" className="w-full justify-start" onClick={() => setActiveTab("progress")}>
+              <Button variant="outline" className="w-full justify-start" onClick={() => setActiveTab("passedCourses")}>
                 <Calendar className="w-4 h-4 mr-2" />
-                View CE Transcript
+                View Passed Courses
               </Button>
             </CardContent>
           </Card>
@@ -299,3 +318,8 @@ const DashboardHome = () => {
 };
 
 export default DashboardHome;
+
+
+
+
+

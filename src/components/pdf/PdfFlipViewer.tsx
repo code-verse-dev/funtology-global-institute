@@ -146,12 +146,12 @@ export default function PdfFlipViewer({
               {currentSpread} / {totalSpreads}
             </span>
           ) : null}
-          {onDownload ? (
+          {/* {onDownload ? (
             <Button size="sm" variant="outline" className="h-7 text-xs rounded-full gap-1" type="button" onClick={onDownload}>
               <Download className="h-3 w-3" />
               Download
             </Button>
-          ) : null}
+          ) : null} */}
           {showLayoutToggle && onLayoutExpandedChange ? (
             <Button
               size="sm"
