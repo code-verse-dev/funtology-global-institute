@@ -90,10 +90,26 @@ const App = () => (
               </ProtectedRoute>
             }
           >
-            <Route index element={<DashboardHome />} />
-            <Route path="courses" element={<LearnerCourses />} />
-            <Route path="courses/:courseId" element={<LearnerCourseDetail />} />
-            <Route path="courses/:courseId/quiz" element={<LearnerQuizAttempt />} />
+            <Route index element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <DashboardHome />
+              </ProtectedRoute>
+            } />
+            <Route path="courses" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <LearnerCourses />
+              </ProtectedRoute>
+            } />
+            <Route path="courses/:courseId" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <LearnerCourseDetail />
+              </ProtectedRoute>
+            } />
+            <Route path="courses/:courseId/quiz" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <LearnerQuizAttempt />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route path="/admin" element={
             <ProtectedRoute allowedRoles={["admin"]}>
@@ -101,7 +117,11 @@ const App = () => (
             </ProtectedRoute>
           }>
             <Route index element={<Navigate to="overview" replace />} />
-            <Route path="overview" element={<AdminOverview />} />
+            <Route path="overview" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminOverview />
+              </ProtectedRoute>
+            } />
             <Route path="users" element={
               <ProtectedRoute allowedRoles={["admin"]}>
                 <AdminUsers />
@@ -112,11 +132,27 @@ const App = () => (
                 <AdminUserDetail />
               </ProtectedRoute>
             } />
-            <Route path="courses" element={<AdminCourses />} />
-            <Route path="courses/:courseId/content" element={<AdminCourseContent />} />
-            <Route path="courses/:courseId/question-bank" element={<AdminCourseQuestionBank />} />
+            <Route path="courses" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminCourses />
+              </ProtectedRoute>
+            } />
+            <Route path="courses/:courseId/content" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminCourseContent />
+              </ProtectedRoute>
+            } />
+            <Route path="courses/:courseId/question-bank" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminCourseQuestionBank />
+              </ProtectedRoute>
+            } />
             <Route path="sme" element={<AdminSme />} />
-            <Route path="payments" element={<AdminPayments />} />
+            <Route path="payments" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminPayments />
+              </ProtectedRoute>
+            } />
             <Route path="complaints" element={<AdminComplaints />} />
             <Route path="reports" element={<AdminReports />} />
             <Route path="audit" element={<AdminAudit />} />
@@ -140,12 +176,36 @@ const App = () => (
                 </SubscriptionRequiredRoute>
               </ProtectedRoute>
             } />
-            <Route path="learners" element={<OrganizationLearners />} />
-            <Route path="courses/:courseId" element={<OrganizationCourseDetail />} />
-            <Route path="courses" element={<OrganizationCourses />} />
-            <Route path="retake-requests" element={<OrganizationRetakeRequests />} />
-            <Route path="billing" element={<OrganizationBilling />} />
-            <Route path="certificates" element={<OrganizationCertificates />} />
+            <Route path="learners" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                  <OrganizationLearners />
+              </ProtectedRoute>
+            } />
+            <Route path="courses/:courseId" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationCourseDetail />
+              </ProtectedRoute>
+            } />
+            <Route path="courses" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationCourses />
+              </ProtectedRoute>
+            } />
+            <Route path="retake-requests" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationRetakeRequests />
+              </ProtectedRoute>
+            } />
+            <Route path="billing" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationBilling />
+              </ProtectedRoute>
+            } />
+            <Route path="certificates" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationCertificates />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route path="/verify" element={<CertificateVerification />} />
           <Route path="/faq" element={<Index />} />
