@@ -20,6 +20,13 @@ export const retakeSlice = createApi({
             }),
             invalidatesTags: ["Retake"],
         }),
+        getApprovedRetakeRequest: builder.query<any, { lessonId: string }>({
+            query: ({ lessonId }) => ({
+                url: `/quiz-retake/${lessonId}/request/approved`,
+                method: "GET",
+            }),
+            providesTags: ["Retake"],
+        }),
         getRetakeRequests: builder.query<any, { page?: number; limit?: number; status?: string }>({
             query: ({ page = 1, limit = 10, status } = {}) => ({
                 url: `/quiz-retake/requests`,
@@ -46,4 +53,11 @@ export const retakeSlice = createApi({
     }),
 });
 
-export const { useGetEligibilityQuery, useRequestRetakeMutation, useGetRetakeRequestsQuery, useApproveRetakeRequestMutation, useRejectRetakeRequestMutation } = retakeSlice;
+export const {
+    useGetEligibilityQuery,
+    useRequestRetakeMutation,
+    useGetApprovedRetakeRequestQuery,
+    useGetRetakeRequestsQuery,
+    useApproveRetakeRequestMutation,
+    useRejectRetakeRequestMutation,
+} = retakeSlice;

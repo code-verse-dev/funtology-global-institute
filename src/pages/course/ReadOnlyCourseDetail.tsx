@@ -6,7 +6,11 @@ import PdfFlipViewer from "@/components/pdf/PdfFlipViewer";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { useGetCourseByIdQuery } from "@/redux/services/apiSlices/courseSlice";
 import { useGetLessonsByCourseQuery, useGetQuizQuestionsQuery, type ApiQuizQuestion } from "@/redux/services/apiSlices/lessonSlice";
-import { useRequestRetakeMutation, useGetEligibilityQuery } from "@/redux/services/apiSlices/retakeSlice";
+import {
+  useRequestRetakeMutation,
+  useGetEligibilityQuery,
+  useGetApprovedRetakeRequestQuery,
+} from "@/redux/services/apiSlices/retakeSlice";
 import { ArrowLeft, FileText, GraduationCap, ListOrdered, Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -45,8 +49,15 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
     { lessonId: quizLessonId! },
     { skip: !quizLessonId || !isLearner },
   );
+  const { data: approvedRequestRes } = useGetApprovedRetakeRequestQuery(
+    { lessonId: quizLessonId! },
+    { skip: !quizLessonId || !isLearner },
+  );
+
   const [requestRetake, { isLoading: requestingRetake }] = useRequestRetakeMutation();
   const [confirmRetakeOpen, setConfirmRetakeOpen] = useState(false);
+  const [confirmPaymentOpen, setConfirmPaymentOpen] = useState(false);
+  const [pendingPaymentAmount, setPendingPaymentAmount] = useState<number>(0);
   const eligibility = eligibilityRes?.data as
     | {
         canSubmit?: boolean;
@@ -63,6 +74,8 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
         hasPendingRequest?: boolean;
       }
     | undefined;
+
+  const hasApprovedRequest = !!((approvedRequestRes as { data?: unknown } | undefined)?.data);
   useEffect(() => {
     if (quizLessonId && isLearner) void refetchEligibility();
   }, [quizLessonId, isLearner, refetchEligibility]);
@@ -92,21 +105,20 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
     }
 
     const nextEligible = formatNextEligibleAt(eligibility?.nextEligibleAt);
-    const reason =
-      eligibility?.reason ||
-      (nextEligible ? `You can attempt again on ${nextEligible}.` : "You cannot attempt this quiz right now.");
+    const reason = nextEligible ? `You can attempt again on ${nextEligible}.` : eligibility?.reason || "You cannot attempt this quiz right now.";
+      
 
     if (eligibility?.isOrgLearner) {
-      if (eligibility?.hasPendingRequest) {
-        toast.error(reason);
+      if (eligibility?.hasPendingRequest && eligibility?.canSubmit === false) {
+        toast.error("A retake request is already pending.");
         return;
       }
       if (
-        eligibility?.hasPendingRequest === false &&
         eligibility?.requiresRetakePayment === true &&
-        eligibility?.canSubmit === false
+        eligibility?.canSubmit === false &&
+        hasApprovedRequest
       ) {
-        toast.error("Payment pending for retake request.");
+        toast.error("Retake request is approved but payment is pending.");
         return;
       }
       if (eligibility?.cooldownMet === false || (eligibility?.nextRetakeLevel ?? 0) >= 3 && nextEligible) {
@@ -127,16 +139,23 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
       return;
     }
 
+    setPendingPaymentAmount(priceUsd);
+    setConfirmPaymentOpen(true);
+  };
+
+  const continueToRetakePayment = () => {
+    if (!quizLessonId) return;
     navigate("/payment", {
       state: {
         type: "QUIZ_RETAKE",
-        total: priceUsd,
+        total: pendingPaymentAmount,
         lessonId: quizLessonId,
         learnerId: user?._id,
         from: location.pathname,
         nextRetakeLevel: eligibility?.nextRetakeLevel ?? null,
       },
     });
+    setConfirmPaymentOpen(false);
   };
 
   const submitRetakeRequest = async () => {
@@ -148,14 +167,27 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
         setConfirmRetakeOpen(false);
         void refetchEligibility();
       } else {
-        toast.error(res?.message || "Could not request retake.");
+        const msg = String(res?.message ?? "");
+        if (msg.toLowerCase().includes("approved") || msg.toLowerCase().includes("complete organization payment")) {
+          toast.error("Payment pending for retake request.");
+          setConfirmRetakeOpen(false);
+          void refetchEligibility();
+        } else {
+          toast.error(res?.message || "Could not request retake.");
+        }
       }
     } catch (err: unknown) {
       const msg =
         err && typeof err === "object" && "data" in err && err.data && typeof err.data === "object" && "message" in err.data
           ? String((err.data as { message: string }).message)
           : "Could not request retake.";
-      toast.error(msg);
+      if (msg.toLowerCase().includes("approved") || msg.toLowerCase().includes("complete organization payment")) {
+        toast.error("Payment pending for retake request.");
+        setConfirmRetakeOpen(false);
+        void refetchEligibility();
+      } else {
+        toast.error(msg);
+      }
     }
   };
 
@@ -227,7 +259,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
             <Badge variant="outline" className="capitalize">
               {course.status}
             </Badge>
-            {quizLessonId ? (
+            {/*{quizLessonId ? (
               <Button
                 type="button"
                 variant="secondary"
@@ -248,7 +280,11 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
               <Button type="button" variant="secondary" disabled>
                 Attempt quiz
               </Button>
-            )}
+            )} */}
+            <Button type="button" variant="secondary" disabled>
+                Attempt quiz
+              </Button>
+
           </div>
         </div>
 
@@ -292,6 +328,29 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
               </Button>
               <Button type="button" variant="secondary" onClick={submitRetakeRequest} disabled={requestingRetake}>
                 {requestingRetake ? "Sending..." : "Send request"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={confirmPaymentOpen} onOpenChange={setConfirmPaymentOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="font-heading">Confirm retake payment</DialogTitle>
+              <DialogDescription>
+                You are about to proceed with quiz retake payment.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="rounded-md border border-border bg-muted/30 p-3 text-sm">
+              <p className="text-muted-foreground">Retake amount</p>
+              <p className="text-lg font-semibold text-foreground">${pendingPaymentAmount.toFixed(2)} USD</p>
+            </div>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button type="button" variant="outline" onClick={() => setConfirmPaymentOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="button" variant="secondary" onClick={continueToRetakePayment}>
+                Continue to pay
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -445,3 +504,6 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
     </div>
   );
 }
+
+
+
