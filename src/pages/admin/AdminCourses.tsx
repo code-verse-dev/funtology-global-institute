@@ -360,7 +360,7 @@ const AdminCourses = () => {
                                 Question bank
                               </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            {/* <DropdownMenuItem>
                               <Scale className="w-4 h-4 mr-2" />
                               CE Hour Worksheet
                             </DropdownMenuItem>
@@ -368,7 +368,7 @@ const AdminCourses = () => {
                             <DropdownMenuItem>
                               <BarChart3 className="w-4 h-4 mr-2" />
                               Analytics
-                            </DropdownMenuItem>
+                            </DropdownMenuItem> */}
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>

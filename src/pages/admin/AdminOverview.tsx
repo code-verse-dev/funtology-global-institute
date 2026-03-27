@@ -57,7 +57,7 @@ const AdminOverview = () => (
             <Button variant="secondary" className="w-full justify-start gap-2" asChild>
               <Link to="/admin/courses">
                 <Plus className="w-4 h-4" />
-                Create Course
+                Manage Courses
               </Link>
             </Button>
             <Button variant="outline" className="w-full justify-start gap-2" asChild>
@@ -66,12 +66,12 @@ const AdminOverview = () => (
                 Manage Users
               </Link>
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2" asChild>
+            {/* <Button variant="outline" className="w-full justify-start gap-2" asChild>
               <Link to="/admin/sme">
                 <Briefcase className="w-4 h-4" />
                 SME Repository
               </Link>
-            </Button>
+            </Button> */}
             <Button variant="outline" className="w-full justify-start gap-2" asChild>
               <Link to="/admin/payments">
                 <DollarSign className="w-4 h-4" />
@@ -86,14 +86,14 @@ const AdminOverview = () => (
             </Button> */}
           </CardContent>
         </Card>
-        <Card className="bg-gradient-hero text-primary-foreground">
+        {/* <Card className="bg-gradient-hero text-primary-foreground">
           <CardContent className="pt-6 text-center">
             <Shield className="w-12 h-12 text-secondary mx-auto mb-3" />
             <p className="font-heading text-lg font-bold text-secondary">Accreditation Ready</p>
             <p className="text-xs text-primary-foreground/70 mt-1">ANSI/IACET 1-2018 guiding framework</p>
             <p className="text-xs text-primary-foreground/50 mt-2">All systems audit-ready</p>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </div>
   </motion.div>
