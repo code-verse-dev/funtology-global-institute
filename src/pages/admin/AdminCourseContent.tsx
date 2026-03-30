@@ -9,10 +9,11 @@ import {
   useUpdateLessonMutation,
 } from "@/redux/services/apiSlices/lessonSlice";
 import { FileText, GraduationCap, Loader2, ArrowLeft, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { lessonFileUrl } from "./lessonFileUrl";
+import PdfFlipViewer from "@/components/pdf/PdfFlipViewer";
 
 const AdminCourseContent = () => {
   const { courseId } = useParams<{ courseId: string }>();
@@ -94,6 +95,25 @@ const AdminCourseContent = () => {
       </p>
     );
   }
+  // const handlePdfDownload = useCallback(async () => {
+  //   if (!pdfSrc) return;
+  //   const nameBase = course?.title ?? pdfLesson?.fileUrl?.split("/").pop() ?? "document.pdf";
+  //   try {
+  //     const res = await fetch(pdfSrc);
+  //     const blob = await res.blob();
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = nameBase.endsWith(".pdf") ? nameBase : `${nameBase}.pdf`;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //     URL.revokeObjectURL(url);
+  //   } catch {
+  //     window.open(pdfSrc, "_blank", "noopener,noreferrer");
+  //   }
+  // }, [pdfSrc, course?.title, pdfLesson?.fileUrl]);
+
 
   return (
     <div className="space-y-6">
@@ -119,64 +139,33 @@ const AdminCourseContent = () => {
         )}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
+      <div className="grid gap-6 lg:grid-cols-1">
+
+        <Card className="flex flex-col overflow-hidden border shadow-sm min-h-[min(78dvh,880px)] p-0">
+          <CardHeader className="px-6 pt-6 pb-2">
             <div className="flex items-center gap-2">
               <FileText className="w-5 h-5 text-secondary" />
-              <CardTitle className="font-heading text-base">PDF lesson</CardTitle>
+              <CardTitle className="font-heading text-base">PDF material</CardTitle>
             </div>
-            <CardDescription>Order {pdfLesson?.order ?? "—"} · Learners view this document in the course.</CardDescription>
+            <CardDescription>Flip through the reference document like a book.</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {!pdfLesson ? (
-              <p className="text-sm text-muted-foreground">
-                No PDF lesson found for this course. Create one in the backend if missing.
-              </p>
-            ) : (
-              <>
-                {pdfSrc ? (
-                  <div className="space-y-2">
-                    <div className="rounded-lg border border-border overflow-hidden bg-muted/30 min-h-[320px]">
-                      <iframe title="Course PDF" src={pdfSrc} className="w-full h-[min(55vh,480px)]" />
-                    </div>
-                    <Button variant="link" size="sm" className="px-0 h-auto" asChild>
-                      <a href={pdfSrc} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-1" />
-                        Open PDF in new tab
-                      </a>
-                    </Button>
-                  </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground">No PDF file uploaded yet.</p>
-                )}
-
-                <form onSubmit={onSubmitPdf} className="space-y-3 border-t border-border pt-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="pdf-replace">Replace PDF</Label>
-                    <Input
-                      id="pdf-replace"
-                      key={pdfLesson.fileUrl ?? "no-file"}
-                      type="file"
-                      accept="application/pdf,.pdf"
-                      className="cursor-pointer"
-                      onChange={(e) => setPdfFile(e.target.files?.[0] ?? null)}
-                    />
-                  </div>
-                  <Button type="submit" variant="secondary" disabled={!pdfFile || saving}>
-                    {saving ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Uploading…
-                      </>
-                    ) : (
-                      "Save new PDF"
-                    )}
-                  </Button>
-                </form>
-              </>
-            )}
-          </CardContent>
+          {!pdfLesson ? (
+            <CardContent>
+              <p className="text-sm text-muted-foreground">No PDF lesson is configured for this course.</p>
+            </CardContent>
+          ) : !pdfSrc ? (
+            <CardContent>
+              <p className="text-sm text-muted-foreground">No PDF file has been uploaded yet.</p>
+            </CardContent>
+          ) : (
+            <PdfFlipViewer
+              fileUrl={pdfSrc}
+              title={course.title}
+              // onDownload={handlePdfDownload}
+              maxPageWidth={720}
+              className="flex-1 min-h-0 border-t border-border"
+            />
+          )}
         </Card>
 
         <Card>

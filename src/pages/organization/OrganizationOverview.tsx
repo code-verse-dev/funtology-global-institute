@@ -1,12 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { BookOpen, DollarSign, Download, Plus, Upload } from "lucide-react";
+import { BookOpen, DollarSign, Plus, Upload, Users, Award} from "lucide-react";
 import { Link } from "react-router-dom";
-import { orgData, orgStats } from "./orgDashboardData";
+import { orgData } from "./orgDashboardData";
 import { OrganizationCoursesList } from "./OrganizationCoursesList";
+import { useGetOrganizationStatsQuery } from "@/redux/services/apiSlices/learnerSlice";
 
-const OrganizationOverview = () => (
+const OrganizationOverview = () => {
+  const { data: stats } = useGetOrganizationStatsQuery();
+
+  const orgStats = [
+    { icon: Users, label: "Total Learners", value: stats?.data?.totalLearners, color: "text-primary" },
+    { icon: BookOpen, label: "Active Courses", value: stats?.data?.activeCourses, color: "text-blue-600" },
+    { icon: Award, label: "Certificates Earned", value: stats?.data?.certificatesEarned, color: "text-secondary" },
+    // { icon: TrendingUp, label: "Avg. Completion", value: "82%", color: "text-green-600" },
+  ];
+  return (
   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {orgStats.map((stat, index) => (
@@ -24,6 +34,7 @@ const OrganizationOverview = () => (
           </Card>
         </motion.div>
       ))}
+     
     </div>
 
     <div className="grid lg:grid-cols-3 gap-6">
@@ -68,17 +79,17 @@ const OrganizationOverview = () => (
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-hero text-primary-foreground">
+        {/* <Card className="bg-gradient-hero text-primary-foreground">
           <CardContent className="pt-6 text-center">
             <DollarSign className="w-12 h-12 text-secondary mx-auto mb-3" />
             <p className="text-2xl font-bold text-secondary">{orgData.totalSpent}</p>
             <p className="text-primary-foreground/80 text-sm">Total Investment</p>
             <p className="text-xs text-primary-foreground/50 mt-1">{orgData.plan} Plan</p>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </div>
   </motion.div>
-);
+)};
 
 export default OrganizationOverview;

@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
 import type { RootState } from "@/redux/store";
+import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { Bell, BookOpen, Home, LogOut, Settings, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -34,6 +35,13 @@ function learnerInitials(name: string) {
   return name.slice(0, 2).toUpperCase() || "L";
 }
 
+function userProfileImageSrc(raw: unknown): string | undefined {
+  if (typeof raw !== "string" || !raw.trim()) return undefined;
+  const s = raw.trim();
+  if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("data:")) return s;
+  return lessonFileUrl(s) ?? undefined;
+}
+
 const DashboardLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -41,6 +49,7 @@ const DashboardLayout = () => {
   const userData = useSelector((s: RootState) => s.user.userData) as Record<string, unknown> | undefined;
   const displayName = learnerDisplayName(userData);
   const email = typeof userData?.email === "string" ? userData.email : "";
+  const profileImage = userProfileImageSrc(userData?.image);
 
   const onLogout = async () => {
     await logout().unwrap();
@@ -95,7 +104,7 @@ const DashboardLayout = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={undefined} alt={displayName} />
+                      {profileImage ? <AvatarImage src={profileImage} alt={displayName} /> : null}
                       <AvatarFallback>{learnerInitials(displayName)}</AvatarFallback>
                     </Avatar>
                   </Button>
@@ -108,9 +117,11 @@ const DashboardLayout = () => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />

@@ -216,7 +216,7 @@ const Courses = () => {
         </section>
 
         {/* Categories */}
-        <section className="py-6 md:py-8 border-b border-border bg-muted/50">
+        {/* <section className="py-6 md:py-8 border-b border-border bg-muted/50">
           <div className="container-wide">
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-between">
               <div className="flex flex-wrap gap-2 justify-center">
@@ -254,7 +254,7 @@ const Courses = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Results Count */}
         <section className="py-4 bg-background">

@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, User, LogIn } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Menu, X, ChevronDown, User, LogIn, LogOut } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import fgiLogo from "@/assets/fgi-logo.png";
 import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { removeUser } from "@/redux/services/Slices/userSlice";
+import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 
 const navItems = [
   { label: "Home", href: "/" },
   { label: "Courses", href: "/courses" },
-  { 
-    label: "About", 
+  {
+    label: "About",
     href: "/about",
     children: [
       { label: "Our Mission", href: "/about#mission" },
@@ -25,10 +29,22 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
-
+  const dispatch = useDispatch();
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/";
     return location.pathname.startsWith(href);
+  };
+  const navigate = useNavigate();
+
+  const [logout] = useLogoutMutation();
+
+  const user = useSelector((state: RootState) => state.user.userData);
+
+  const onLogout = async () => {
+    await logout().unwrap();
+    dispatch(removeUser());
+    navigate("/login");
+
   };
 
   return (
@@ -70,11 +86,10 @@ const Header = () => {
               >
                 <Link
                   to={item.href}
-                  className={`flex items-center gap-1 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    isActive(item.href)
+                  className={`flex items-center gap-1 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${isActive(item.href)
                       ? "text-primary bg-primary/5"
                       : "text-foreground/70 hover:text-primary hover:bg-primary/5"
-                  }`}
+                    }`}
                 >
                   {item.label}
                   {item.children && (
@@ -86,7 +101,7 @@ const Header = () => {
                     </motion.div>
                   )}
                 </Link>
-                
+
                 {/* Dropdown */}
                 <AnimatePresence>
                   {item.children && activeDropdown === item.label && (
@@ -122,17 +137,20 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
             <Button variant="ghost" className="font-medium gap-2" asChild>
-              <Link to="/login">
+              {user._id ? <Button variant="ghost" className="font-medium gap-2" onClick={onLogout}>
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </Button> : <Link to="/login">
                 <LogIn className="w-4 h-4" />
                 Sign In
-              </Link>
+              </Link>}
             </Button>
-            <Button variant="secondary" className="font-heading font-semibold shadow-gold gap-2" asChild>
+            {!user._id  && <Button variant="secondary" className="font-heading font-semibold shadow-gold gap-2" asChild>
               <Link to="/register">
                 <User className="w-4 h-4" />
                 Get Started
               </Link>
-            </Button>
+            </Button>}
             <Button variant="outline" className="font-medium gap-2 text-xs" size="sm" asChild>
               <Link to="/dashboard">
                 Dashboard
@@ -194,11 +212,10 @@ const Header = () => {
                 >
                   <Link
                     to={item.href}
-                    className={`block py-3 px-4 rounded-lg font-medium transition-colors ${
-                      isActive(item.href)
+                    className={`block py-3 px-4 rounded-lg font-medium transition-colors ${isActive(item.href)
                         ? "text-primary bg-primary/5"
                         : "text-foreground/80 hover:text-primary hover:bg-muted"
-                    }`}
+                      }`}
                     onClick={() => setIsOpen(false)}
                   >
                     {item.label}

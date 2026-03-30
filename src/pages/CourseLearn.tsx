@@ -248,7 +248,7 @@ const quizQuestions = [
     question: "What is the minimum passing score for this assessment?",
     options: ["50%", "60%", "70%", "80%"],
     correctAnswer: 2,
-    explanation: "A minimum score of 70% is required to pass, as per IACET standards.",
+    explanation: "A minimum score of 70% is required to pass, as per standards.",
   },
   {
     id: 8,

@@ -1,5 +1,7 @@
 import CheckoutForm from "@/components/checkoutForm";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { useGetAllCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
 import { usePaymentConfigQuery, usePaymentIntentMutation } from "@/redux/services/apiSlices/paymentSlice";
@@ -7,12 +9,12 @@ import { removeUser } from "@/redux/services/Slices/userSlice";
 import { RootState } from "@/redux/store";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
-import { CheckCircle2 } from "lucide-react";
-import { Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useGetLearnerSeatFeeQuery } from "@/redux/services/apiSlices/subscriptionSlice";
 
 const Payment = () => {
   const location = useLocation();
@@ -21,10 +23,49 @@ const Payment = () => {
   const [logout] = useLogoutMutation();
   const lessonId = location.state?.lessonId;
   const learnerId = location.state?.learnerId;
+  const user = useSelector((state: RootState) => state.user.userData) as { role?: string } | undefined;
+  const isOrganization = String(user?.role ?? "").toLowerCase().trim() === "organization";
 
   const type = location.state?.type as string | undefined;
   const totalFromState = location.state?.total as number | undefined;
   const isSubscription = type === "SUBSCRIPTION";
+
+  const [totalLearners, setTotalLearners] = useState(0);
+  useEffect(() => {
+    if (isOrganization && isSubscription) {
+      setTotalLearners((n) => (n < 1 ? 1 : n));
+    } else {
+      setTotalLearners(0);
+    }
+  }, [isOrganization, isSubscription]);
+
+  const {
+    data: learnerSeatFeeRes,
+    isLoading: seatFeeLoading,
+    isError: seatFeeError,
+  } = useGetLearnerSeatFeeQuery(undefined, {
+    skip: !isSubscription || !isOrganization,
+  });
+
+  const feeUsd = useMemo(() => {
+    const raw = (learnerSeatFeeRes as { data?: { feeUsd?: unknown } } | undefined)?.data?.feeUsd;
+    if (typeof raw === "number" && Number.isFinite(raw) && raw >= 0) return raw;
+    if (typeof raw === "string") {
+      const parsed = Number(raw);
+      if (Number.isFinite(parsed) && parsed >= 0) return parsed;
+    }
+    return null;
+  }, [learnerSeatFeeRes]);
+
+  const needsSeatFee = isSubscription && isOrganization;
+  const seatFeeResolved = !needsSeatFee || feeUsd !== null;
+
+  useEffect(() => {
+    if (needsSeatFee && seatFeeError) {
+      toast.error("Could not load learner seat fee.");
+    }
+  }, [needsSeatFee, seatFeeError]);
+
   const { data: allCoursesRes, isLoading: coursesLoading } = useGetAllCoursesQuery(undefined, {
     skip: !isSubscription,
   });
@@ -56,15 +97,24 @@ const Payment = () => {
     [allCourses, selectedCourseIds]
   );
 
+  const coursesSubtotal = useMemo(
+    () => selectedCourses.reduce((sum, c) => sum + courseAmount(c), 0),
+    [selectedCourses],
+  );
+
+  const learnersForBilling = needsSeatFee ? Math.max(1, totalLearners) : 0;
+  const seatFeesTotal = needsSeatFee && feeUsd !== null ? feeUsd * learnersForBilling : 0;
+
   const total = useMemo(() => {
     if (isSubscription) {
-      return selectedCourses.reduce((sum, c) => sum + courseAmount(c), 0);
+      if (!seatFeeResolved || coursesSubtotal <= 0) return undefined;
+      return coursesSubtotal + seatFeesTotal;
     }
     if (typeof totalFromState === "number" && !Number.isNaN(totalFromState) && totalFromState > 0) {
       return totalFromState;
     }
     return undefined;
-  }, [isSubscription, selectedCourses, totalFromState]);
+  }, [isSubscription, coursesSubtotal, seatFeesTotal, seatFeeResolved, totalFromState]);
 
   const courseType = location.state?.courseType;
   const numberOfSeats = location.state?.numberOfSeats;
@@ -75,7 +125,6 @@ const Payment = () => {
 
   const { data: paymentData } = usePaymentConfigQuery({});
   const [createPaymentIntent] = usePaymentIntentMutation();
-  const user = useSelector((state: RootState) => state.user.userData);
 
   useEffect(() => {
     if (paymentData?.publishableKey) {
@@ -156,11 +205,11 @@ const Payment = () => {
         <div className="flex items-center justify-between gap-4">
           <div>
             <h1 className="font-heading text-2xl font-bold text-foreground">
-              {isSubscription ? "Platform subscription" : "Payment"}
+              {isSubscription ? "Platform Fees" : "Payment"}
             </h1>
             {isSubscription ? (
               <p className="text-sm text-muted-foreground mt-1">
-                Select courses for your subscription. Total is calculated from selected course amounts.
+                Select courses and applicable fees. The total is calculated based on selected courses and the number of learners.
               </p>
             ) : null}
           </div>
@@ -205,13 +254,60 @@ const Payment = () => {
                 })}
               </div>
             )}
+            {isOrganization && isSubscription ? (
+              <div className="space-y-2 pt-2 border-t border-border">
+                <Label htmlFor="org-learner-count" className="text-sm font-medium text-foreground">
+                  Number of learners
+                </Label>
+                <Input
+                  id="org-learner-count"
+                  type="number"
+                  min={1}
+                  step={1}
+                  className="[-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  value={totalLearners}
+                  onChange={(e) => {
+                    const v = parseInt(e.target.value, 10);
+                    if (Number.isNaN(v)) setTotalLearners(1);
+                    else setTotalLearners(Math.max(1, v));
+                  }}
+                />
+                <p className="text-xs text-muted-foreground">
+                  {feeUsd !== null
+                    ? `Learner fee: $${feeUsd.toFixed(2)} USD per learner × ${learnersForBilling}`
+                    : seatFeeLoading
+                      ? "Loading learner fee…"
+                      : "Learner fee unavailable"}
+                </p>
+              </div>
+            ) : null}
           </div>
         ) : null}
 
+        {isSubscription && isOrganization && seatFeeLoading ? (
+          <p className="text-sm text-muted-foreground">Loading seat pricing…</p>
+        ) : null}
+
         {total != null ? (
-          <p className="text-lg font-semibold text-foreground">
-            Total: <span className="text-secondary">${total.toFixed(2)} USD</span>
-          </p>
+          <div className="space-y-1">
+            {isSubscription ? (
+              <>
+                <p className="text-sm text-muted-foreground">
+                  Courses subtotal:{" "}
+                  <span className="text-foreground font-medium">${coursesSubtotal.toFixed(2)} USD</span>
+                </p>
+                {needsSeatFee && feeUsd !== null ? (
+                  <p className="text-sm text-muted-foreground">
+                    Learner seats ({learnersForBilling} × ${feeUsd.toFixed(2)}):{" "}
+                    <span className="text-foreground font-medium">${seatFeesTotal.toFixed(2)} USD</span>
+                  </p>
+                ) : null}
+              </>
+            ) : null}
+            <p className="text-lg font-semibold text-foreground">
+              Total: <span className="text-secondary">${total.toFixed(2)} USD</span>
+            </p>
+          </div>
         ) : null}
 
         {clientSecret && stripePromise ? (
@@ -228,12 +324,19 @@ const Payment = () => {
                 subscriptionType={subscriptionType}
                 lessonId={lessonId}
                 courseIds={selectedCourseIds}
+                totalLearners={isOrganization ? learnersForBilling : 0}
               />
             </Elements>
           </div>
         ) : isSubscription && (!total || total <= 0) ? (
           <div className="flex flex-col items-center justify-center gap-2 py-8 text-muted-foreground">
-            <p className="text-sm">Select at least one course to continue.</p>
+            <p className="text-sm">
+              {needsSeatFee && seatFeeError
+                ? "Could not load seat pricing. Refresh the page or try again later."
+                : isOrganization && (seatFeeLoading || !seatFeeResolved)
+                  ? "Loading pricing…"
+                  : "Select at least one course to continue."}
+            </p>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-3 py-16 text-muted-foreground">

@@ -120,6 +120,18 @@ export const learnerSlice = createApi({
         { type: "Learners", id: `courses-${learnerId}` },
       ],
     }),
+    getOrganizationStats: builder.query<any, void>({
+      query: () => ({
+        url: "/learners/stats",
+        method: "GET",
+      }),
+    }),
+    getLearnerStats: builder.query<any, void>({
+      query: () => ({
+        url: "/learners/my/stats",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -129,4 +141,6 @@ export const {
   useAssignCourseToLearnerMutation,
   useGetAssignedCoursesQuery,
   useRemoveCourseFromLearnerMutation,
+  useGetOrganizationStatsQuery,
+  useGetLearnerStatsQuery,
 } = learnerSlice;

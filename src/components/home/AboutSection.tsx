@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const benefits = [
-  "Designed using ANSI/IACET 1-2018 as a guiding framework",
+  // "Designed using ANSI/IACET 1-2018 as a guiding framework",
   "Time-tracked learning for compliance verification",
   "Automated certificate generation upon completion",
   "7-year learner record retention",

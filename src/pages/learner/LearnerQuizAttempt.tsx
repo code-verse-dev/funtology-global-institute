@@ -38,10 +38,15 @@ const LearnerQuizAttempt = () => {
   const [submitQuizResponse, { isLoading: submitting }] = useSubmitQuizResponseMutation();
 
   const course = courseRes?.data;
-  const questions = useMemo(
-    () => ((questionsRes?.data ?? []) as ApiQuizQuestion[]).slice().sort((a, b) => a.order - b.order),
-    [questionsRes?.data],
-  );
+  const questions = useMemo(() => {
+    const list = ((questionsRes?.data ?? []) as ApiQuizQuestion[]).slice();
+    // Randomize question order for each quiz page load.
+    for (let i = list.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+    return list;
+  }, [questionsRes?.data]);
 
   const setAnswer = (questionId: string, value: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));

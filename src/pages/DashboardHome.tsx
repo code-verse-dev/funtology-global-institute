@@ -21,6 +21,7 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { useGetLearnerStatsQuery } from "@/redux/services/apiSlices/learnerSlice";
 
 function learnerFirstName(user: Record<string, unknown> | null | undefined) {
   if (!user || typeof user !== "object") return "there";
@@ -60,7 +61,7 @@ type PassedCourseItem = {
   passedAt?: string;
   percentage?: number;
   quizResponseId?: string;
-  course?: { _id?: string; title?: string; image?: string };
+  course?: { _id?: string; title?: string; image?: string; ceHours?: number };
 };
 type MyPassedCoursesResponse = { data?: { courses?: PassedCourseItem[]; passThresholdPercent?: number } };
 function formatIssuedDate(iso?: string) {
@@ -81,7 +82,8 @@ const DashboardHome = () => {
   const passedCoursesData = (myPassedCourses as MyPassedCoursesResponse | undefined)?.data;
   const passedCourses = passedCoursesData?.courses ?? [];
   const passThresholdPercent = passedCoursesData?.passThresholdPercent ?? 0;
-  
+  const { data: learnerStats } = useGetLearnerStatsQuery();
+  const totalCeHours = passedCourses.reduce((acc, curr) => acc + (curr.course?.ceHours ?? 0), 0);
   useEffect(() => {
     if (!stateTab) return;
     setActiveTab(stateTab === "progress" ? "passedCourses" : stateTab);
@@ -105,10 +107,10 @@ const DashboardHome = () => {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { icon: BookOpen, label: "Enrolled Courses", value: userData.enrolledCourses, color: "text-primary" },
-          { icon: CheckCircle2, label: "Completed", value: userData.completedCourses, color: "text-green-600" },
-          { icon: Clock, label: "CE Hours Earned", value: userData.totalCeHours, color: "text-secondary" },
-          { icon: Award, label: "Certificates", value: certificates.length || userData.certificates, color: "text-purple-600" },
+          { icon: BookOpen, label: "Enrolled Courses", value: learnerStats?.data?.assignedCourses, color: "text-primary" },
+          { icon: CheckCircle2, label: "Completed", value: learnerStats?.data?.passedCourses, color: "text-green-600" },
+          { icon: Clock, label: "CE Hours Earned", value: totalCeHours, color: "text-secondary" },
+          { icon: Award, label: "Certificates", value: learnerStats?.data?.passedCourses, color: "text-purple-600" },
         ].map((stat, index) => (
           <motion.div
             key={stat.label}

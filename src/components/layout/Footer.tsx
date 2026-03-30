@@ -23,9 +23,10 @@ const Footer = () => {
   const resources = [
     { label: "Student Portal", href: "/login" },
     { label: "Organization Portal", href: "/login" },
-    { label: "Verify Certificate", href: "/verify" },
-    { label: "FAQ", href: "/#faq" },
-    { label: "Support", href: "/contact" },
+    // { label: "Verify Certificate", href: "/verify" },
+    // { label: "FAQ", href: "/#faq" },
+    // { label: "Contact", href: "/contact" },
+    { label: "Policies", href: "/policies" },
   ];
 
   return (
@@ -107,10 +108,10 @@ const Footer = () => {
           {/* Policies */}
           <div>
             <h4 className="font-heading font-semibold text-lg text-secondary mb-6">
-              Policies
+              Resources
             </h4>
             <ul className="space-y-3">
-              {policies.map((link) => (
+              {resources.map((link) => (
                 <li key={link.label}>
                   <Link
                     to={link.href}
@@ -156,7 +157,7 @@ const Footer = () => {
               </li>
             </ul>
 
-            <div className="mt-6 pt-6 border-t border-primary-foreground/10">
+            {/* <div className="mt-6 pt-6 border-t border-primary-foreground/10">
               <h5 className="font-heading font-semibold text-sm text-secondary mb-2">
                 Resources
               </h5>
@@ -172,7 +173,7 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

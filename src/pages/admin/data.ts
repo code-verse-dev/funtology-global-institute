@@ -33,7 +33,7 @@ export const auditLog = [
 
 export const smeProfiles = [
   { id: 1, name: "Dr. Sarah Mitchell", role: "Subject Matter Expert", credentials: "PhD, RN, CIC", status: "approved", expiry: "Dec 2027", courses: 3 },
-  { id: 2, name: "Prof. James Wilson", role: "Content Developer", credentials: "Ed.D., IACET Admin", status: "approved", expiry: "Aug 2026", courses: 2 },
+  { id: 2, name: "Prof. James Wilson", role: "Content Developer", credentials: "Ed.D.,  Admin", status: "approved", expiry: "Aug 2026", courses: 2 },
   { id: 3, name: "Dr. Emily Chen", role: "Reviewer", credentials: "PhD Curriculum Design", status: "pending", expiry: "N/A", courses: 0 },
 ];
 
