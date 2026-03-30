@@ -15,5 +15,5 @@ export const orgStats = [
   { icon: Users, label: "Total Learners", value: orgData.totalLearners, color: "text-primary" },
   { icon: BookOpen, label: "Active Courses", value: orgData.activeCourses, color: "text-blue-600" },
   { icon: Award, label: "Certificates Earned", value: orgData.completedCerts, color: "text-secondary" },
-  { icon: TrendingUp, label: "Avg. Completion", value: "82%", color: "text-green-600" },
+  // { icon: TrendingUp, label: "Avg. Completion", value: "82%", color: "text-green-600" },
 ];

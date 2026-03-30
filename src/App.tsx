@@ -46,6 +46,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./pages/protectedRoute";
 import SubscriptionRequiredRoute from "./pages/protectedRoute/SubscriptionRequiredRoute";
 import Payment from "./pages/stripePayment";
+import Profile from "./pages/Profile";
 import { getBasename } from "./utils/Functions";
 
 
@@ -77,6 +78,14 @@ const App = () => (
             element={
               <ProtectedRoute allowedRoles={["learner", "organization"]}>
                 <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute allowedRoles={["learner", "organization", "admin"]}>
+                <Profile />
               </ProtectedRoute>
             }
           />

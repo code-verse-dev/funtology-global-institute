@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
 import { CheckCircle, FileText, Scale, Shield, Users } from "lucide-react";
+import { useEffect } from "react";
 
 const policies = [
   // 1
@@ -20,7 +21,7 @@ The Academic Leadership Team is responsible for:
 • Ensuring alignment with workforce development and professional learning standards
 • Monitoring the quality and effectiveness of instructional programs
 • Overseeing learner assessment processes
-• Maintaining compliance with applicable continuing education standards including ANSI/IACET guidelines
+• Maintaining compliance with applicable continuing education standards including our guidelines
 
 All educational programs are developed and reviewed through documented instructional design processes. Policies governing course development, evaluation, and learner achievement are maintained and reviewed periodically to ensure continuous improvement.
 
@@ -116,7 +117,7 @@ FGI does not sell or distribute learner information to third parties except wher
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
     title: "CEU Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Continuing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Continuing Education and Training (IACET). FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized continuing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Continuing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Continuing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized continuing education and training activities that meet defined learning objectives and completion requirements.
 
 All CEU-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
@@ -151,7 +152,7 @@ Contact hours do NOT include:
 FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
 CEU Calculation Formula
-FGI calculates CEUs using the standard formula recognized by IACET:
+FGI calculates CEUs using the standard formula recognized by our standards:
 10 Contact Hours = 1.0 CEU
 The CEU value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
@@ -439,7 +440,7 @@ FGI supports continuous improvement through regular program evaluations, analysi
     content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining accuracy, transparency, and ethical standards in all marketing, promotional, and informational communications related to its educational programs.
 
 Accreditation Representation
-FGI will not represent itself as  unless and until official accreditation has been granted by the International Accreditors for Continuing Education and Training. Until accreditation is formally approved, all references to IACET will clearly indicate the institute's status in a manner that avoids misrepresentation.
+FGI will not represent itself as  unless and until official accreditation has been granted by the International Accreditors for Continuing Education and Training. Until accreditation is formally approved, all references to our standards will clearly indicate the institute's status in a manner that avoids misrepresentation.
 
 All marketing materials must accurately describe:
 • Course titles and descriptions
@@ -579,7 +580,7 @@ FGI does not sell or distribute learner information to third parties except wher
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
     title: "CEU Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Continuing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Continuing Education and Training (IACET). FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized continuing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Continuing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Continuing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized continuing education and training activities that meet defined learning objectives and completion requirements.
 
 All CEU-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
@@ -614,7 +615,7 @@ Contact hours do NOT include:
 FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
 CEU Calculation Formula
-FGI calculates CEUs using the standard formula recognized by IACET:
+FGI calculates CEUs using the standard formula recognized by our standards:
 10 Contact Hours = 1.0 CEU
 The CEU value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
@@ -649,6 +650,9 @@ This CEU Administration Policy is reviewed periodically by the FGI Academic Lead
 ];
 
 const Policies = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />

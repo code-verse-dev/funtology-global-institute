@@ -1,5 +1,5 @@
 import fgiLogo from "@/assets/fgi-logo.png";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,10 +14,11 @@ import { cn } from "@/lib/utils";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
 import { Award, BarChart3, Bell, BookOpen, Building2, CreditCard, LogOut, RefreshCw, Settings, User, Users } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { orgData } from "./organization/orgDashboardData";
+import { RootState } from "@/redux/store";
+import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 
 const orgNavItems = [
   { to: "overview", label: "Overview", icon: BarChart3 },
@@ -27,6 +28,13 @@ const orgNavItems = [
   { to: "billing", label: "Billing", icon: CreditCard },
   { to: "certificates", label: "Certificates", icon: Award },
 ] as const;
+
+function userProfileImageSrc(raw: unknown): string | undefined {
+  if (typeof raw !== "string" || !raw.trim()) return undefined;
+  const s = raw.trim();
+  if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("data:")) return s;
+  return lessonFileUrl(s) ?? undefined;
+}
 
 const OrganizationDashboardLayout = () => {
   const navigate = useNavigate();
@@ -38,6 +46,9 @@ const OrganizationDashboardLayout = () => {
     dispatch(removeUser());
     navigate("/login", { replace: true });
   };
+
+  const user = useSelector((state: RootState) => state.user.userData);
+  const profileImage = userProfileImageSrc(user?.image);
 
   return (
     <div className="min-h-screen bg-muted">
@@ -55,7 +66,8 @@ const OrganizationDashboardLayout = () => {
             <div className="flex items-center gap-2">
               <Badge variant="secondary" className="hidden sm:flex gap-1">
                 <Building2 className="w-3 h-3" />
-                {orgData.name}
+                {/* {orgData.name} */}
+                {user?.organizationName}
               </Badge>
               <Button variant="ghost" size="icon" className="text-primary-foreground relative">
                 <Bell className="w-5 h-5" />
@@ -67,19 +79,30 @@ const OrganizationDashboardLayout = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10 border-2 border-secondary">
-                      <AvatarFallback>JA</AvatarFallback>
+                      {profileImage ? (
+                        <AvatarImage
+                          src={profileImage}
+                          alt={`${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim() || "User"}
+                        />
+                      ) : null}
+                      <AvatarFallback>
+                        {user?.firstName?.charAt(0)}
+                        {user?.lastName?.charAt(0)}
+                      </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end">
                   <DropdownMenuLabel>
-                    <p className="text-sm font-medium">{orgData.admin}</p>
-                    <p className="text-xs text-muted-foreground">{orgData.email}</p>
+                    <p className="text-sm font-medium">{user?.firstName} {user?.lastName}</p>
+                    <p className="text-xs text-muted-foreground">{user?.email}</p>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />

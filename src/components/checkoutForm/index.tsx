@@ -40,6 +40,7 @@ interface CheckoutFormProps {
   courseType?: string;
   isProcessing: boolean;
   setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>;
+  totalLearners?: number;
 }
 
 const CheckoutForm = ({
@@ -49,6 +50,7 @@ const CheckoutForm = ({
   clientSecret,
   isProcessing,
   setIsProcessing,
+  totalLearners,
 }: CheckoutFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -85,6 +87,7 @@ const CheckoutForm = ({
             paymentIntentId: paymentIntent.id,
             type: "SUBSCRIPTION",
             courseIds,
+            totalLearners
           },
         }).unwrap();
         if (res?.status) {

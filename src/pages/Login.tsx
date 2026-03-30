@@ -65,7 +65,7 @@ const Login = () => {
           transition={{ duration: 0.6 }}
         >
           <Link to="/" className="inline-block mb-8">
-            <img src={fgiLogo} alt="FGI Logo" className="h-16 w-16" />
+            <img src={fgiLogo} alt="FGI Logo" className="h-24 w-24" />
           </Link>
 
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-2">

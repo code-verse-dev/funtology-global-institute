@@ -403,7 +403,7 @@ const CourseDetail = () => {
                           <p className="text-muted-foreground leading-relaxed">
                             Dr. Mitchell has over 15 years of experience in infection control and prevention. 
                             She has trained thousands of healthcare and beauty professionals in proper 
-                            infection control protocols and is a certified instructor by IACET.
+                            infection control protocols and is a certified instructor.
                           </p>
                         </div>
                       </div>

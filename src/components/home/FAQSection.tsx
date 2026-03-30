@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/accordion";
 
 const faqs = [
-  {
-    question: "What is and why does it matter?",
-    answer: "IACET (International Accreditors for Continuing Education and Training) accreditation is the gold standard for continuing education providers. It ensures our programs meet rigorous quality standards, our CE hours are recognized industry-wide, and your certifications carry legitimate professional weight.",
-  },
+  // {
+  //   question: "What is and why does it matter?",
+  //   answer: "IACET (International Accreditors for Continuing Education and Training) accreditation is the gold standard for continuing education providers. It ensures our programs meet rigorous quality standards, our CE hours are recognized industry-wide, and your certifications carry legitimate professional weight.",
+  // },
   {
     question: "How do I earn continuing education (CE) credits?",
     answer: "Simply enroll in a course, complete all learning modules, pass the assessment with a minimum 70% score, and submit your course evaluation. Your CE certificate is automatically generated and available for download in your dashboard.",

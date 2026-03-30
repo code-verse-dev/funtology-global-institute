@@ -1,6 +1,6 @@
 import fgiLogo from "@/assets/fgi-logo.png";
 import { AdminDashboardSidebarNav, pageTitleForAdminPath } from "@/components/admin/AdminDashboardSidebarNav";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,16 +12,46 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
+import type { RootState } from "@/redux/store";
+import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { Bell, LogOut, Settings, Shield, User } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { adminData } from "./admin/data";
+
+function adminDisplayName(user: Record<string, unknown> | undefined) {
+  if (!user) return adminData.name;
+  const first = typeof user.firstName === "string" ? user.firstName.trim() : "";
+  const last = typeof user.lastName === "string" ? user.lastName.trim() : "";
+  const combined = `${first} ${last}`.trim();
+  if (combined) return combined;
+  if (typeof user.email === "string" && user.email) return user.email.split("@")[0] ?? adminData.name;
+  return adminData.name;
+}
+
+function adminInitials(name: string) {
+  const parts = name.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  if (parts.length === 1 && parts[0].length >= 2) return parts[0].slice(0, 2).toUpperCase();
+  return name.slice(0, 2).toUpperCase() || "AD";
+}
+
+function userProfileImageSrc(raw: unknown): string | undefined {
+  if (typeof raw !== "string" || !raw.trim()) return undefined;
+  const s = raw.trim();
+  if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("data:")) return s;
+  return lessonFileUrl(s) ?? undefined;
+}
 
 const AdminDashboardLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
+  const userData = useSelector((s: RootState) => s.user.userData) as Record<string, unknown> | undefined;
+  const headerName = adminDisplayName(userData);
+  const headerEmail = typeof userData?.email === "string" ? userData.email : "";
+  const profileImage = userProfileImageSrc(userData?.image);
 
   const onLogout = async () => {
     await logout().unwrap();
@@ -79,16 +109,24 @@ const AdminDashboardLayout = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10">
-                      <AvatarFallback>AD</AvatarFallback>
+                      {profileImage ? <AvatarImage src={profileImage} alt={headerName} /> : null}
+                      <AvatarFallback>{adminInitials(headerName)}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end">
-                  <DropdownMenuLabel>{adminData.name}</DropdownMenuLabel>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium">{headerName}</p>
+                      {headerEmail ? <p className="text-xs text-muted-foreground">{headerEmail}</p> : null}
+                    </div>
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/admin/settings" className="cursor-pointer">

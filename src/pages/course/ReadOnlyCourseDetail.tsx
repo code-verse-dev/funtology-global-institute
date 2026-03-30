@@ -55,6 +55,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
   );
 
   const [requestRetake, { isLoading: requestingRetake }] = useRequestRetakeMutation();
+  const [confirmMaterialOpen, setConfirmMaterialOpen] = useState(false);
   const [confirmRetakeOpen, setConfirmRetakeOpen] = useState(false);
   const [confirmPaymentOpen, setConfirmPaymentOpen] = useState(false);
   const [pendingPaymentAmount, setPendingPaymentAmount] = useState<number>(0);
@@ -141,6 +142,15 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
 
     setPendingPaymentAmount(priceUsd);
     setConfirmPaymentOpen(true);
+  };
+
+  const onLearnerAttemptButtonClick = () => {
+    setConfirmMaterialOpen(true);
+  };
+
+  const onConfirmMaterialCompleted = () => {
+    setConfirmMaterialOpen(false);
+    void onLearnerAttemptClick();
   };
 
   const continueToRetakePayment = () => {
@@ -259,11 +269,11 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
             <Badge variant="outline" className="capitalize">
               {course.status}
             </Badge>
-            {/* {quizLessonId ? (
+            {quizLessonId ? (
               <Button
                 type="button"
                 variant="secondary"
-                onClick={onLearnerAttemptClick}
+                onClick={onLearnerAttemptButtonClick}
                 disabled={requestingRetake || Boolean(eligibility?.lastPassed)}
               >
                 {eligibility?.lastPassed
@@ -280,11 +290,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
               <Button type="button" variant="secondary" disabled>
                 Attempt quiz
               </Button>
-            )} */}
-            <Button type="button" variant="secondary" disabled>
-                Attempt quiz
-              </Button>
-
+            )}
           </div>
         </div>
 
@@ -313,6 +319,25 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
             />
           </Card>
         )}
+
+        <Dialog open={confirmMaterialOpen} onOpenChange={setConfirmMaterialOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="font-heading">Course material</DialogTitle>
+              <DialogDescription>
+                Have you finished reviewing all course material (the PDF) before you attempt the quiz?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button type="button" variant="outline" onClick={() => setConfirmMaterialOpen(false)}>
+                No, not yet
+              </Button>
+              <Button type="button" variant="secondary" onClick={onConfirmMaterialCompleted}>
+                Yes, continue
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         <Dialog open={confirmRetakeOpen} onOpenChange={setConfirmRetakeOpen}>
           <DialogContent className="sm:max-w-md">
@@ -412,7 +437,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
       ) : (
         <div className="space-y-6">
           {/* Full-width PDF matches learner dashboard so react-pdf / flipbook get stable layout (half-grid was failing to load) */}
-          <Card className="flex flex-col overflow-hidden border shadow-sm min-h-[min(78dvh,880px)] p-0">
+          {/* <Card className="flex flex-col overflow-hidden border shadow-sm min-h-[min(78dvh,880px)] p-0">
             <CardHeader className="px-6 pt-6 pb-2">
               <div className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-secondary" />
@@ -437,9 +462,9 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
                 className="flex-1 min-h-0 border-t border-border"
               />
             )}
-          </Card>
+          </Card> */}
 
-          <Card>
+          {/* <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
                 <GraduationCap className="w-5 h-5 text-secondary" />
@@ -498,7 +523,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
                 </ul>
               )}
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       )}
     </div>

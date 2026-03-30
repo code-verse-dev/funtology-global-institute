@@ -16,7 +16,7 @@ const team = [
     name: "James Wilson",
     role: "Director of Education",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop",
-    credentials: "Ed.D., Certified IACET Administrator",
+    credentials: "Ed.D., Certified Administrator",
   },
   {
     name: "Dr. Emily Chen",
@@ -52,6 +52,9 @@ const accreditations = [
 
 const About = () => {
   const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (location.hash) {
