@@ -272,9 +272,9 @@ const CourseDetail = () => {
                 <Tabs value={activeTab} onValueChange={setActiveTab}>
                   <TabsList className="w-full justify-start mb-8 bg-muted rounded-lg p-1">
                     <TabsTrigger value="overview" className="flex-1 md:flex-none">Overview</TabsTrigger>
-                    <TabsTrigger value="curriculum" className="flex-1 md:flex-none">Curriculum</TabsTrigger>
+                    {/* <TabsTrigger value="curriculum" className="flex-1 md:flex-none">Curriculum</TabsTrigger>
                     <TabsTrigger value="instructor" className="flex-1 md:flex-none">Instructor</TabsTrigger>
-                    <TabsTrigger value="reviews" className="flex-1 md:flex-none">Reviews</TabsTrigger>
+                    <TabsTrigger value="reviews" className="flex-1 md:flex-none">Reviews</TabsTrigger> */}
                   </TabsList>
 
                   <TabsContent value="overview" className="space-y-8">

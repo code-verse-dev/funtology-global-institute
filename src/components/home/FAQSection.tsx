@@ -12,10 +12,10 @@ import {
 const faqs = [
   // {
   //   question: "What is and why does it matter?",
-  //   answer: "IACET (International Accreditors for Continuing Education and Training) accreditation is the gold standard for continuing education providers. It ensures our programs meet rigorous quality standards, our CE hours are recognized industry-wide, and your certifications carry legitimate professional weight.",
+  //   answer: "IACET (International Accreditors for Ongoing Education and Training) accreditation is the gold standard for ongoing education providers. It ensures our programs meet rigorous quality standards, our CE hours are recognized industry-wide, and your certifications carry legitimate professional weight.",
   // },
   {
-    question: "How do I earn continuing education (CE) credits?",
+    question: "How do I earn ongoing education credits?",
     answer: "Simply enroll in a course, complete all learning modules, pass the assessment with a minimum 70% score, and submit your course evaluation. Your CE certificate is automatically generated and available for download in your dashboard.",
   },
   {
@@ -70,7 +70,7 @@ const FAQSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Find answers to common questions about our continuing education programs,
+            Find answers to common questions about our ongoing education programs,
             certification process, and platform features.
           </p>
         </motion.div>

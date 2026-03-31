@@ -6,30 +6,32 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 const team = [
+  // {
+  //   name: "Dr. Sarah Mitchell",
+  //   role: "Founder & CEO",
+  //   image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop",
+  //   credentials: "Ph.D. in Education, MBA",
+  // },
   {
-    name: "Dr. Sarah Mitchell",
-    role: "Founder & CEO",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop",
-    credentials: "Ph.D. in Education, MBA",
+    name: "TeQuilla",
+    // role: "Director of Education",
+    // image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg",
+    // credentials: "Ed.D., Certified Administrator",
   },
   {
-    name: "James Wilson",
-    role: "Director of Education",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop",
-    credentials: "Ed.D., Certified Administrator",
+    name: "Frederick",
+    // role: "Chief Academic Officer",
+    // image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg",
+    // credentials: "Ph.D. in Curriculum Design",
   },
-  {
-    name: "Dr. Emily Chen",
-    role: "Chief Academic Officer",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop",
-    credentials: "Ph.D. in Curriculum Design",
-  },
-  {
-    name: "Michael Roberts",
-    role: "Director of Compliance",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop",
-    credentials: "JD, Compliance Specialist",
-  },
+  // {
+  //   name: "Michael Roberts",
+  //   role: "Director of Compliance",
+  //   image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop",
+  //   credentials: "JD, Compliance Specialist",
+  // },
 ];
 
 const accreditations = [
@@ -70,7 +72,7 @@ const About = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      
+
       <main className="flex-1 pt-20">
         {/* Hero Section */}
         <section className="bg-gradient-hero py-16 md:py-24">
@@ -85,7 +87,7 @@ const About = () => {
                 About Funtology Global Institute
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80">
-                Empowering professionals worldwide through quality continuing education
+                Empowering professionals worldwide through quality ongoing education
               </p>
             </motion.div>
           </div>
@@ -108,19 +110,15 @@ const About = () => {
                   </h2>
                 </div>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Funtology Global Institute is committed to delivering high-quality, professional 
-                  continuing education programs designed to enhance workforce competency, promote 
-                  career advancement, and support lifelong learning.
+                  Funtology Global Institute is committed to delivering high-quality, ongoing education programs designed to enhance workforce competency, promote career advancement, and support lifelong learning
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
-                  We believe that education should be accessible, engaging, and directly applicable 
-                  to real-world professional challenges. Our courses are developed by industry experts 
-                  and designed to meet the highest standards of continuing education.
+                  We believe that education should be accessible, engaging, and directly applicable to real-world professional challenges. Our courses are developed by industry experts and designed to meet the highest standards of individuals continuing their education.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-secondary mt-1" />
-                    <span className="text-foreground">CE Standards-Aligned</span>
+                    <span className="text-foreground">Ongoing Education Standards-Aligned</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-secondary mt-1" />
@@ -128,7 +126,7 @@ const About = () => {
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-secondary mt-1" />
-                    <span className="text-foreground">Expert Instructors</span>
+                    <span className="text-foreground">Designed for Individuals & Group Sessions</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-secondary mt-1" />
@@ -136,7 +134,7 @@ const About = () => {
                   </div>
                 </div>
               </motion.div>
-              
+
               <motion.div
                 className="relative"
                 initial={{ opacity: 0, x: 20 }}
@@ -174,7 +172,7 @@ const About = () => {
                 The principles that guide everything we do
               </p>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 { icon: GraduationCap, title: "Excellence", description: "We maintain the highest standards in educational content and delivery" },
@@ -218,7 +216,7 @@ const About = () => {
                 Our commitment to quality is backed by recognized accreditation
               </p>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-3 gap-8">
               {accreditations.map((item, index) => (
                 <motion.div
@@ -258,8 +256,8 @@ const About = () => {
                 Industry experts dedicated to your professional growth
               </p>
             </motion.div>
-            
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8">
               {team.map((member, index) => (
                 <motion.div
                   key={member.name}
@@ -280,15 +278,15 @@ const About = () => {
                   <h3 className="font-heading text-xl font-bold text-foreground mb-1">
                     {member.name}
                   </h3>
-                  <p className="text-secondary font-medium mb-2">{member.role}</p>
-                  <p className="text-sm text-muted-foreground">{member.credentials}</p>
+                  {/* <p className="text-secondary font-medium mb-2">{member.role}</p> */}
+                  {/* <p className="text-sm text-muted-foreground">{member.credentials}</p> */}
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );

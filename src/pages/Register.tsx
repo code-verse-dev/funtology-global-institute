@@ -105,7 +105,7 @@ const Register = () => {
           </h2>
           <p className="text-primary-foreground/80 text-lg mb-8">
             Join thousands of professionals advancing their careers with 
-            continuing education courses.
+            ongoing education courses.
           </p>
           
           <div className="space-y-4 text-left bg-primary-foreground/10 rounded-xl p-6">

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle2, Shield } from "lucide-react";
+import { CheckCircle2, Shield, Sparkles } from "lucide-react";
 
 const partners = [
   
@@ -8,18 +8,18 @@ const partners = [
 ];
 
 const stats = [
-  { value: "15+", label: "Years of Excellence" },
-  { value: "50,000+", label: "Certificates Issued" },
-  { value: "150+", label: "Corporate Partners" },
-  { value: "99.5%", label: "Completion Rate" },
+  { value: "10,000+", label: "Learners Engaged in Career Exploration Programs" },
+  { value: "50+", label: "Career Readiness & Skill-Based Learning Modules" },
+  { value: "98%", label: "Participant Satisfaction Rate" },
+  { value: "10,000+", label: "Certificates Issued" },
 ];
 
 const PartnersSection = () => {
   return (
     <section className="py-16 bg-primary overflow-hidden">
-      <div className="container-wide">
+      <div className="container-wide text-center">
         {/* Trust Badges */}
-        <motion.div
+        {/* <motion.div
           className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-12"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -39,7 +39,17 @@ const PartnersSection = () => {
               <span className="font-heading font-semibold text-lg">{partner.name}</span>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
+        <motion.div
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-secondary/20 text-secondary text-sm font-medium mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <Sparkles className="w-4 h-4" />
+            Program Impact
+          </motion.div>
 
         {/* Animated Stats */}
         <motion.div

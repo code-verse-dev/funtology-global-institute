@@ -28,12 +28,11 @@ const AboutSection = () => {
               About FGI
             </span>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary mb-6">
-              Excellence in Continuing Education
+              Excellence in Ongoing Education
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              Funtology Global Institute for Career Innovation is committed to delivering 
-              high-quality professional continuing education programs. Our standards-aligned 
-              platform ensures you receive recognized credentials that advance your career.
+            <p className="text-md text-muted-foreground leading-relaxed mb-8">
+            Funtology Global Institute for Career Innovation is committed to delivering high-quality, standards-aligned on-going education programs that support career advancement, workforce readiness, and professional growth.
+            Our structured learning platform is designed to provide measurable learning outcomes, documented instructional hours, and competency-based development, ensuring participants earn recognized professional development credentials that strengthen career pathways and demonstrate mastery of essential skills.
             </p>
 
             {/* Benefits List */}
