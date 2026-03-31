@@ -190,13 +190,13 @@ const Login = () => {
             Advancing Levels. Elevating Futures.
           </h2>
           <p className="text-primary-foreground/80 text-lg">
-            Access your continuing education courses, track your progress, and earn
+            Access your ongoing education courses, track your progress, and earn
             professional certifications that advance your career.
           </p>
 
           <div className="mt-12 grid grid-cols-3 gap-6 text-center">
             <div>
-              <p className="font-heading text-3xl font-bold text-secondary">50+</p>
+              <p className="font-heading text-3xl font-bold text-secondary">5+</p>
               <p className="text-sm text-primary-foreground/70">Courses</p>
             </div>
             <div>

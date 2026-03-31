@@ -81,8 +81,12 @@ const HeroSection = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              Elevate your expertise with standards-aligned continuing education programs. 
-              Earn recognized certifications that advance your career and demonstrate mastery.
+              {/* Elevate your expertise with standards-aligned ongoing education programs. 
+              Earn recognized certifications that advance your career and demonstrate mastery. */}
+              Elevate your expertise through standards-aligned, ongoing education programs designed to support career readiness, workforce development, and professional growth.
+              <br />
+              <br />
+              Earn recognized certifications that validate skill development, strengthen resumes, and demonstrate mastery of essential career competencies.
             </motion.p>
 
             {/* Feature List */}
@@ -92,7 +96,7 @@ const HeroSection = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              {["Interactive Flipbook Format", "Earn CE Hours", "Get Certified"].map((feature, index) => (
+              {["Interactive Digital Learning Format", "Earn Documented Learning Hours", "Get Certified", "Explore Career Pathways", "Advance Your Learning Journey"].map((feature, index) => (
                 <motion.div
                   key={feature}
                   className="flex items-center gap-2 text-primary-foreground/80"

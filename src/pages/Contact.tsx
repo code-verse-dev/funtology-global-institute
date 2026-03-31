@@ -182,7 +182,7 @@ const Contact = () => {
                 </div>
 
                 {/* FAQ Teaser */}
-                <div className="mt-8 p-6 bg-muted/50 rounded-xl">
+                {/* <div className="mt-8 p-6 bg-muted/50 rounded-xl">
                   <h3 className="font-heading text-xl font-bold text-foreground mb-3">
                     Frequently Asked Questions
                   </h3>
@@ -193,7 +193,7 @@ const Contact = () => {
                   <Button variant="outline" asChild>
                     <a href="/policies">View FAQs</a>
                   </Button>
-                </div>
+                </div> */}
               </motion.div>
             </div>
           </div>

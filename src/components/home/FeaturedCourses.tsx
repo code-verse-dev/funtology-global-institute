@@ -93,11 +93,15 @@ const FeaturedCourses = () => {
             Featured Programs
           </motion.div>
           <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4">
-            Explore Our Courses
+            {/* Explore Our Courses */}
+            Start Your Journey Today
           </h2>
+          <h3 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-4">
+            {/* Explore Our Courses */}
+            Professional Development Certificates
+          </h3>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-           Programs designed to advance your professional skills 
-            and earn recognized continuing education credits.
+            A comprehensive training program designed to build foundational and advanced career skills through structured, measurable learning experiences.
           </p>
         </motion.div>
 
@@ -121,7 +125,7 @@ const FeaturedCourses = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                
+
                 {/* Badges */}
                 <div className="absolute top-3 left-3 flex flex-wrap gap-2">
                   <Badge className="bg-secondary text-secondary-foreground font-semibold shadow-lg">

@@ -2,8 +2,11 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Award, Shield, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const CTASection = () => {
+  const user = useSelector((state: RootState) => state.user.userData);
   return (
     <section className="py-20 md:py-28 bg-background relative overflow-hidden">
       {/* Background Pattern */}
@@ -82,7 +85,7 @@ const CTASection = () => {
               <span className="block text-gradient-gold mt-2">Your Career?</span>
             </h2>
             <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-              Join thousands of professionals earning recognized continuing education 
+              Join thousands of professionals earning recognized ongoing education 
               credentials. Start your learning journey today with FGI.
             </p>
 
@@ -116,7 +119,7 @@ const CTASection = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.6 }}
             >
-              <Button
+              {!user?._id && <Button
                 size="xl"
                 variant="secondary"
                 className="font-heading font-semibold text-lg shadow-gold hover:shadow-lg transition-all duration-300 group"
@@ -132,11 +135,11 @@ const CTASection = () => {
                     <ArrowRight className="w-5 h-5" />
                   </motion.div>
                 </Link>
-              </Button>
+              </Button>}
               <Button
                 size="xl"
                 variant="outline"
-                className="font-heading font-semibold text-lg border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                className="font-heading font-semibold text-lg border-secondary/60 text-secondary bg-transparent hover:bg-secondary hover:text-secondary-foreground hover:border-secondary transition-all duration-300"
                 asChild
               >
                 <Link to="/courses">Browse Courses</Link>
@@ -154,7 +157,7 @@ const CTASection = () => {
               {[
                 { title: "CE", subtitle: "Standards-Aligned" },
                 { title: "10K+", subtitle: "Certified Professionals" },
-                { title: "ADA", subtitle: "Compliant Platform" },
+                // { title: "ADA", subtitle: "Compliant Platform" },
                 { title: "256-bit", subtitle: "SSL Encryption" },
               ].map((badge, index) => (
                 <motion.div

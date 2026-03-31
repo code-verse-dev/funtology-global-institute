@@ -53,7 +53,7 @@ const Footer = () => {
             </Link>
             <p className="text-primary-foreground/70 text-sm leading-relaxed mb-6">
               Advancing Levels. Elevating Futures. Mastering Innovation. 
-              Standards-aligned continuing education for career excellence.
+              Standards-aligned ongoing education for career excellence.
             </p>
             <div className="flex gap-4">
               <a

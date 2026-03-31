@@ -11,7 +11,7 @@ const policies = [
     id: "governance",
     icon: Shield, // 🏛️ GraduationCap/Building/Shield (Lucide: Shield)
     title: "Educational Governance Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) maintains a structured educational governance system designed to ensure the integrity, quality, and accountability of all continuing education and professional development programs offered through the institute.
+    content: `Funtology Global Institute for Career Innovation (FGI) maintains a structured educational governance system designed to ensure the integrity, quality, and accountability of all ongoing education and professional development programs offered through the institute.
 
 FGI leadership is responsible for the oversight, development, and continuous improvement of educational programs delivered through the FGI Learning Management System (LMS). Governance authority is maintained through the Executive Administration of FGI and its designated Academic Leadership Team.
 
@@ -21,7 +21,7 @@ The Academic Leadership Team is responsible for:
 • Ensuring alignment with workforce development and professional learning standards
 • Monitoring the quality and effectiveness of instructional programs
 • Overseeing learner assessment processes
-• Maintaining compliance with applicable continuing education standards including our guidelines
+• Maintaining compliance with applicable ongoing education standards including our guidelines
 
 All educational programs are developed and reviewed through documented instructional design processes. Policies governing course development, evaluation, and learner achievement are maintained and reviewed periodically to ensure continuous improvement.
 
@@ -34,7 +34,7 @@ FGI ensures that all educational decisions are made in alignment with the instit
     title: "Instructor Qualification Policy",
     content: `Funtology Global Institute for Career Innovation (FGI) ensures that all individuals involved in the development or delivery of educational programs possess appropriate qualifications, experience, and subject matter expertise relevant to the learning objectives of the program.
 
-FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its continuing education programs.
+FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its ongoing education programs.
 
 Instructor qualifications may include one or more of the following:
 • Demonstrated professional experience in the relevant field
@@ -117,12 +117,12 @@ FGI does not sell or distribute learner information to third parties except wher
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
     title: "CEU Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Continuing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Continuing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized continuing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
 All CEU-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
 CEU Definition
-A Continuing Education Unit (CEU) is a nationally recognized measure used to quantify participation in structured continuing education and professional development programs. One (1) CEU represents ten (10) contact hours of participation in an organized continuing education experience under responsible sponsorship, capable direction, and qualified instruction.
+A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) CEU represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
 FGI awards CEUs only for programs that include:
 • Clearly defined learning objectives
@@ -181,7 +181,7 @@ FGI maintains secure digital records documenting:
 These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of CEU completion or program participation as needed for professional or educational purposes.
 
 Policy Review
-This CEU Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional continuing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in continuing education delivery, learner assessment, and professional development training.
+This CEU Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
 `
   },
   // 8
@@ -189,14 +189,14 @@ This CEU Administration Policy is reviewed periodically by the FGI Academic Lead
     id: "needs-analysis",
     icon: FileText, // Search/BarChart/ClipboardList (Lucide: FileText as placeholder)
     title: "Needs Analysis Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) conducts a formal Needs Analysis process to ensure that all continuing education and professional development programs are designed to address identified learning needs, workforce demands, and industry competency gaps.
+    content: `Funtology Global Institute for Career Innovation (FGI) conducts a formal Needs Analysis process to ensure that all ongoing education and professional development programs are designed to address identified learning needs, workforce demands, and industry competency gaps.
 
 FGI uses a structured needs assessment methodology to determine the educational and professional development requirements of its target audiences, including youth, emerging professionals, entrepreneurs, workforce participants, and industry practitioners.
 
 Purpose of Needs Analysis — The process aims to:
 • Identify gaps in knowledge, skills, or professional competencies
 • Determine workforce readiness requirements within targeted industries
-• Support development of relevant continuing education programs
+• Support development of relevant ongoing education programs
 • Align training with professional and career advancement pathways
 • Ensure learning objectives are based on measurable workforce needs
 
@@ -233,7 +233,7 @@ Needs analysis is an ongoing process at FGI. The institute regularly reviews pro
     content: `Policy Statement
 Funtology Global Institute for Career Innovation (FGI) follows a structured course development process to ensure that all educational programs are designed to meet clearly defined learning objectives, workforce development needs, and measurable learning outcomes.
 
-FGI uses a systematic instructional design approach based on the ADDIE Model (Analysis, Design, Development, Implementation, Evaluation) to ensure quality and consistency across all continuing education programs.
+FGI uses a systematic instructional design approach based on the ADDIE Model (Analysis, Design, Development, Implementation, Evaluation) to ensure quality and consistency across all ongoing education programs.
 
 Course Development Stages:
 1. Analysis
@@ -270,7 +270,7 @@ Example: Learners will be able to identify key principles of professional commun
     id: "competency-framework",
     icon: FileText, // Trophy/Star/Layers (Lucide: FileText as placeholder)
     title: "Competency Framework",
-    content: `The FGI Competency Framework defines the core knowledge, skills, and abilities learners are expected to demonstrate upon completion of continuing education programs. Competencies provide the foundation for curriculum development, learning objectives, and assessment design.
+    content: `The FGI Competency Framework defines the core knowledge, skills, and abilities learners are expected to demonstrate upon completion of ongoing education programs. Competencies provide the foundation for curriculum development, learning objectives, and assessment design.
 
 Core Competency Areas:
 Professional Communication
@@ -313,7 +313,7 @@ To successfully complete an FGI course, learners must meet the minimum passing s
     id: "lms-system-overview",
     icon: FileText, // Monitor/Server/DatabaseZap (Lucide: FileText as placeholder)
     title: "LMS System Overview & Security",
-    content: `Funtology Global Institute for Career Innovation (FGI) delivers its continuing education programs through a secure web-based Learning Management System (LMS). The LMS serves as the primary platform for administering educational programs, managing learner participation, delivering instructional content, conducting assessments, and issuing certificates of completion.
+    content: `Funtology Global Institute for Career Innovation (FGI) delivers its ongoing education programs through a secure web-based Learning Management System (LMS). The LMS serves as the primary platform for administering educational programs, managing learner participation, delivering instructional content, conducting assessments, and issuing certificates of completion.
 
 LMS Core Functions:
 • Learner registration and enrollment
@@ -387,7 +387,7 @@ FGI conducts routine maintenance of the LMS to ensure optimal performance, secur
     id: "program-evaluation-policy",
     icon: FileText, // TrendingUp/LineChart/Activity (Lucide: FileText as placeholder)
     title: "Program Evaluation Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) maintains a structured program evaluation process designed to assess the effectiveness, relevance, and quality of its continuing education programs.
+    content: `Funtology Global Institute for Career Innovation (FGI) maintains a structured program evaluation process designed to assess the effectiveness, relevance, and quality of its ongoing education programs.
 
 Evaluation Objectives — FGI seeks to:
 • Measure learner satisfaction
@@ -420,7 +420,7 @@ FGI regularly reviews course effectiveness using the following indicators:
 • Relevance of instructional content
 
 Annual Program Review
-FGI conducts an annual review of its continuing education programs examining: learner participation trends, course completion rates, assessment performance data, participant feedback, and workforce development alignment.
+FGI conducts an annual review of its ongoing education programs examining: learner participation trends, course completion rates, assessment performance data, participant feedback, and workforce development alignment.
 
 Annual review findings may lead to:
 • Course content updates
@@ -440,7 +440,7 @@ FGI supports continuous improvement through regular program evaluations, analysi
     content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining accuracy, transparency, and ethical standards in all marketing, promotional, and informational communications related to its educational programs.
 
 Accreditation Representation
-FGI will not represent itself as  unless and until official accreditation has been granted by the International Accreditors for Continuing Education and Training. Until accreditation is formally approved, all references to our standards will clearly indicate the institute's status in a manner that avoids misrepresentation.
+FGI will not represent itself as  unless and until official accreditation has been granted by the International Accreditors for Ongoing Education and Training. Until accreditation is formally approved, all references to our standards will clearly indicate the institute's status in a manner that avoids misrepresentation.
 
 All marketing materials must accurately describe:
 • Course titles and descriptions
@@ -460,19 +460,19 @@ This policy applies to all marketing channels:
 FGI leadership reviews marketing materials related to educational programs to ensure compliance prior to publication. FGI will not engage in misleading, deceptive, or exaggerated claims regarding educational outcomes, certifications, or professional advancement opportunities.
 
 Policy Review
-This Marketing Compliance Policy is periodically reviewed by the FGI Academic Leadership Team to ensure continued alignment with professional continuing education standards and applicable accreditation requirements.`
+This Marketing Compliance Policy is periodically reviewed by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation requirements.`
   },
   // Accordion 16 — Institutional Overview & Standards
   {
     id: "institutional-overview-standards",
     icon: FileText, // Building2/University/Info (Lucide: FileText as placeholder)
     title: "Institutional Overview & Standards",
-    content: `Funtology Global Institute for Career Innovation (FGI) is a professional development and continuing education institute committed to advancing career readiness, leadership development, workforce training, and entrepreneurial education.
+    content: `Funtology Global Institute for Career Innovation (FGI) is a professional development and ongoing education institute committed to advancing career readiness, leadership development, workforce training, and entrepreneurial education.
 
 FGI delivers structured educational programs through a web-based Learning Management System (LMS) that supports learners in developing professional competencies relevant to modern workforce environments.
 
 Organizational Governance
-FGI maintains an educational governance structure responsible for overseeing the design, delivery, and evaluation of continuing education programs.
+FGI maintains an educational governance structure responsible for overseeing the design, delivery, and evaluation of ongoing education programs.
 
 The Academic Leadership Team is responsible for:
 • Program oversight
@@ -494,7 +494,7 @@ Assessment Methods:
 • Competency-based evaluation questions
 
 Commitment to Quality
-FGI is committed to delivering high-quality continuing education programs that support professional advancement and workforce development. Through structured governance, systematic instructional design, and continuous program evaluation, FGI ensures that educational offerings meet established standards of quality and effectiveness.`
+FGI is committed to delivering high-quality ongoing education programs that support professional advancement and workforce development. Through structured governance, systematic instructional design, and continuous program evaluation, FGI ensures that educational offerings meet established standards of quality and effectiveness.`
   },
   {
     id: "instructor-qualification",
@@ -502,7 +502,7 @@ FGI is committed to delivering high-quality continuing education programs that s
     title: "Instructor Qualification Policy",
     content: `Funtology Global Institute for Career Innovation (FGI) ensures that all individuals involved in the development or delivery of educational programs possess appropriate qualifications, experience, and subject matter expertise relevant to the learning objectives of the program.
 
-FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its continuing education programs.
+FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its ongoing education programs.
 
 Instructor qualifications may include one or more of the following:
 • Demonstrated professional experience in the relevant field
@@ -580,12 +580,12 @@ FGI does not sell or distribute learner information to third parties except wher
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
     title: "CEU Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Continuing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Continuing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized continuing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
 All CEU-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
 CEU Definition
-A Continuing Education Unit (CEU) is a nationally recognized measure used to quantify participation in structured continuing education and professional development programs. One (1) CEU represents ten (10) contact hours of participation in an organized continuing education experience under responsible sponsorship, capable direction, and qualified instruction.
+A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) CEU represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
 FGI awards CEUs only for programs that include:
 • Clearly defined learning objectives
@@ -644,7 +644,7 @@ FGI maintains secure digital records documenting:
 These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of CEU completion or program participation as needed for professional or educational purposes.
 
 Policy Review
-This CEU Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional continuing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in continuing education delivery, learner assessment, and professional development training.
+This CEU Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
 `,
   },
 ];

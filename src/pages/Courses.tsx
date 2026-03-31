@@ -175,7 +175,7 @@ const Courses = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <motion.div
+              {/* <motion.div
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/20 border border-secondary/30 mb-6"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -185,14 +185,13 @@ const Courses = () => {
                 <span className="text-sm font-medium text-secondary">
                   {courses.length}+ Courses
                 </span>
-              </motion.div>
+              </motion.div> */}
 
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
                 Course Catalog
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
-                Browse our continuing education courses designed to advance your career
-                and earn recognized professional certifications.
+                Browse our standards-aligned, on-going education programs designed to support career advancement, workforce readiness, and professional growth.
               </p>
 
               {/* Search Bar */}
@@ -393,16 +392,16 @@ const Courses = () => {
                 Ready to Advance Your Career?
               </h2>
               <p className="text-primary-foreground/80 text-lg mb-8">
-                Join thousands of professionals who have earned certifications with FGI.
+                Join a growing network of learners who have completed standards-aligned, career-focused programs through Funtology Global Institute for Career Innovation (FGI).
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="secondary" size="lg" className="font-heading font-semibold" asChild>
                   <Link to="/register">Get Started Today</Link>
                 </Button>
                 <Button
+                  size="xl"
                   variant="outline"
-                  size="lg"
-                  className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 font-heading"
+                  className="font-heading font-semibold text-lg border-secondary/60 text-secondary bg-transparent hover:bg-secondary hover:text-secondary-foreground hover:border-secondary transition-all duration-300"
                   asChild
                 >
                   <Link to="/contact">Contact Us</Link>

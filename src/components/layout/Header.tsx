@@ -87,8 +87,8 @@ const Header = () => {
                 <Link
                   to={item.href}
                   className={`flex items-center gap-1 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${isActive(item.href)
-                      ? "text-primary bg-primary/5"
-                      : "text-foreground/70 hover:text-primary hover:bg-primary/5"
+                    ? "text-primary bg-primary/5"
+                    : "text-foreground/70 hover:text-primary hover:bg-primary/5"
                     }`}
                 >
                   {item.label}
@@ -145,17 +145,17 @@ const Header = () => {
                 Sign In
               </Link>}
             </Button>
-            {!user._id  && <Button variant="secondary" className="font-heading font-semibold shadow-gold gap-2" asChild>
+            {!user._id && <Button variant="secondary" className="font-heading font-semibold shadow-gold gap-2" asChild>
               <Link to="/register">
                 <User className="w-4 h-4" />
                 Get Started
               </Link>
             </Button>}
-            <Button variant="outline" className="font-medium gap-2 text-xs" size="sm" asChild>
+            {user._id && <Button variant="outline" className="font-medium gap-2 text-xs" size="sm" asChild>
               <Link to="/dashboard">
                 Dashboard
               </Link>
-            </Button>
+            </Button>}
           </div>
 
           {/* Mobile Menu Button */}
@@ -213,8 +213,8 @@ const Header = () => {
                   <Link
                     to={item.href}
                     className={`block py-3 px-4 rounded-lg font-medium transition-colors ${isActive(item.href)
-                        ? "text-primary bg-primary/5"
-                        : "text-foreground/80 hover:text-primary hover:bg-muted"
+                      ? "text-primary bg-primary/5"
+                      : "text-foreground/80 hover:text-primary hover:bg-muted"
                       }`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -248,12 +248,12 @@ const Header = () => {
                     Sign In
                   </Link>
                 </Button>
-                <Button variant="secondary" className="w-full font-heading font-semibold gap-2" asChild>
+                {!user._id && <Button variant="secondary" className="w-full font-heading font-semibold gap-2" asChild>
                   <Link to="/register" onClick={() => setIsOpen(false)}>
                     <User className="w-4 h-4" />
                     Get Started
                   </Link>
-                </Button>
+                </Button>}
               </motion.div>
             </nav>
           </motion.div>

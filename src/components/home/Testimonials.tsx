@@ -1,5 +1,7 @@
+
 import { motion } from "framer-motion";
 import { Star, Quote, Sparkles } from "lucide-react";
+
 
 const testimonials = [
   {
@@ -62,8 +64,7 @@ const Testimonials = () => {
             What Our Learners Say
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of professionals who have advanced their careers 
-            with FGI continuing education certifications.
+          Join thousands of professionals earning recognized ongoing education credentials. Start your learning journey today with FGI.
           </p>
         </motion.div>
 

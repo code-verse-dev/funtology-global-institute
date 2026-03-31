@@ -77,7 +77,7 @@ const HowItWorks = () => {
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/70 max-w-2xl mx-auto">
             From enrollment to certification, our streamlined process makes earning 
-            your continuing education credits straightforward and efficient.
+            your ongoing education credits straightforward and efficient.
           </p>
         </motion.div>
 

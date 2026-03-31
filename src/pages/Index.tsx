@@ -75,7 +75,7 @@ const Index = () => {
                     Important Notice
                   </div>
                   <div className="font-bold text-yellow-900 text-base md:text-lg">
-                    Pending Approval IACET – International Accreditors for Continuing Education & Training
+                    Pending Approval IACET – International Accreditors for Ongoing Education & Training
                   </div>
                 </div>
               </section>
