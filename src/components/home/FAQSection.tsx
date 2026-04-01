@@ -15,32 +15,28 @@ const faqs = [
   //   answer: "IACET (International Accreditors for Ongoing Education and Training) accreditation is the gold standard for ongoing education providers. It ensures our programs meet rigorous quality standards, our CE hours are recognized industry-wide, and your certifications carry legitimate professional weight.",
   // },
   {
-    question: "How do I earn ongoing education credits?",
-    answer: "Simply enroll in a course, complete all learning modules, pass the assessment with a minimum 70% score, and submit your course evaluation. Your CE certificate is automatically generated and available for download in your dashboard.",
+    question: "What is Funtology Global Institute?",
+    answer: "Funtology Global Institute provides structured learning programs focused on supporting professional growth, career development, and continuous education.",
   },
   {
-    question: "Can my organization enroll multiple learners?",
-    answer: "Yes! We offer organization accounts that allow bulk enrollment, centralized billing, progress tracking for all team members, and dedicated support. Contact us for enterprise pricing and custom solutions.",
+    question: "Who are these programs designed for?",
+    answer: "Our programs are suitable for individuals seeking to build new skills, enhance existing knowledge, or advance in their professional careers.",
   },
   {
-    question: "What happens if I fail an assessment?",
-    answer: "You can retake assessments up to 2 times. After the second failed attempt, there's a 30-day waiting period before you can reattempt. Each retake may require an additional fee depending on the course.",
+    question: "What can I expect from the courses?",
+    answer: "You can expect practical, well-structured learning experiences that are designed to be engaging, relevant, and aligned with real-world applications.",
   },
   {
-    question: "How are course materials delivered?",
-    answer: "All courses are delivered in our interactive flipbook format, making content easy to navigate and digest. You'll also have access to PDFs, videos with captions, and interactive modules depending on the course.",
+    question: "Do I receive any certification after completing a course?",
+    answer: "Yes, learners receive certifications upon successful completion, recognizing their effort and acquired knowledge.",
   },
   {
-    question: "Are your certificates recognized by employers and licensing boards?",
-    answer: "Our  certificates are professionally recognized credentials. While we recommend checking with your specific licensing board for CE hour acceptance, our accreditation ensures the highest quality standards.",
+    question: "How are the courses delivered?",
+    answer: "All courses are offered in a digital format, allowing learners to study at their own pace with interactive and accessible learning materials.",
   },
   {
-    question: "Can I access courses on mobile devices?",
-    answer: "Absolutely! Our platform is fully responsive and works seamlessly on smartphones, tablets, and desktop computers. Learn anytime, anywhere at your own pace.",
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer: "We accept all major credit and debit cards. For organizations, we also offer invoice-based billing and purchase orders. Special access codes may also be provided for sponsored enrollments.",
+    question: "Why choose Funtology Global Institute?",
+    answer: "We focus on delivering quality education that supports long-term learning, skill development, and career progression in a flexible and accessible way.",
   },
 ];
 

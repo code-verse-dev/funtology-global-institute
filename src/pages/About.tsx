@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { Award, Target, Users, Shield, CheckCircle, GraduationCap } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ImageUrl } from "@/utils/Functions";
+import Fredrick from "@/assets/Fredrick.png";
+import Tequilla from "@/assets/Tequilla.png";
 
 const team = [
   // {
@@ -13,17 +16,17 @@ const team = [
   //   credentials: "Ph.D. in Education, MBA",
   // },
   {
-    name: "TeQuilla",
+    name: "Fredrick",
     // role: "Director of Education",
     // image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg",
+    image: Fredrick,
     // credentials: "Ed.D., Certified Administrator",
   },
   {
-    name: "Frederick",
+    name: "TeQuilla",
     // role: "Chief Academic Officer",
     // image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg",
+    image: Tequilla,
     // credentials: "Ph.D. in Curriculum Design",
   },
   // {

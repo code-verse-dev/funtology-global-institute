@@ -8,7 +8,7 @@ const benefits = [
   "Time-tracked learning for compliance verification",
   "Automated certificate generation upon completion",
   "7-year learner record retention",
-  "ADA-compliant accessible learning platform",
+  // "ADA-compliant accessible learning platform",
   "Comprehensive course evaluations for continuous improvement",
 ];
 

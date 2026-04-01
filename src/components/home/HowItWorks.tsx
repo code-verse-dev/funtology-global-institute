@@ -13,13 +13,13 @@ const steps = [
   {
     icon: BookOpen,
     title: "Enroll",
-    description: "Browse our courses and enroll via payment or access code",
+    description: "Browse our courses and enroll via payment.",
     color: "from-purple-500 to-purple-600",
   },
   {
     icon: FileText,
     title: "Learn",
-    description: "Access course materials in our immersive interactive flipbook format",
+    description: "Access course materials in our immersive interactive digital learning format",
     color: "from-green-500 to-green-600",
   },
   {
