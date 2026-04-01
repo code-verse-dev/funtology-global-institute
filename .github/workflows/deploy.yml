@@ -46,6 +46,7 @@ jobs:
           source: "."
           target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
           rm: false
+          debug: true
 
 
       # - name: 📂 Sync files
