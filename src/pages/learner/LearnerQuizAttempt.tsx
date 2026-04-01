@@ -10,7 +10,7 @@ import {
   type ApiQuizQuestion,
 } from "@/redux/services/apiSlices/lessonSlice";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -20,6 +20,7 @@ const LearnerQuizAttempt = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
   const [answers, setAnswers] = useState<AnswerMap>({});
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   const { data: courseRes, isLoading: courseLoading } = useGetCourseByIdQuery(courseId!, {
     skip: !courseId,
@@ -36,6 +37,7 @@ const LearnerQuizAttempt = () => {
     { skip: !quizLessonId },
   );
   const [submitQuizResponse, { isLoading: submitting }] = useSubmitQuizResponseMutation();
+  const shouldBlockNavigation = Boolean(quizLessonId) && !quizSubmitted;
 
   const course = courseRes?.data;
   const questions = useMemo(() => {
@@ -51,6 +53,60 @@ const LearnerQuizAttempt = () => {
   const setAnswer = (questionId: string, value: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
+
+  useEffect(() => {
+    if (!shouldBlockNavigation) return;
+
+    const currentUrl = window.location.href;
+    const originalPushState = window.history.pushState.bind(window.history);
+    const originalReplaceState = window.history.replaceState.bind(window.history);
+
+    const blockNavigation = () => {
+      toast.error("Please submit your quiz before leaving this page.");
+    };
+
+    window.history.pushState = function pushStateOverride(...args) {
+      const nextUrl = args[2];
+      const next =
+        typeof nextUrl === "string" ? new URL(nextUrl, window.location.href).href : window.location.href;
+      if (next !== currentUrl) {
+        blockNavigation();
+        return;
+      }
+      return originalPushState(...args);
+    };
+
+    window.history.replaceState = function replaceStateOverride(...args) {
+      const nextUrl = args[2];
+      const next =
+        typeof nextUrl === "string" ? new URL(nextUrl, window.location.href).href : window.location.href;
+      if (next !== currentUrl) {
+        blockNavigation();
+        return;
+      }
+      return originalReplaceState(...args);
+    };
+
+    const handlePopState = () => {
+      blockNavigation();
+      originalPushState(null, "", currentUrl);
+    };
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    originalPushState(null, "", currentUrl);
+    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [shouldBlockNavigation]);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -75,6 +131,7 @@ const LearnerQuizAttempt = () => {
         toast.error(res?.message || "Could not submit quiz response.");
         return;
       }
+      setQuizSubmitted(true);
       toast.success(res?.message || "Quiz submitted successfully.");
       if (res?.data?.certificate) {
         navigate("/dashboard", {
@@ -123,10 +180,14 @@ const LearnerQuizAttempt = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" asChild>
-            <Link to={`/dashboard/courses/${courseId}`} aria-label="Back to course">
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            type="button"
+            aria-label="Submit quiz to unlock navigation"
+            disabled={shouldBlockNavigation}
+          >
+            <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
             <h2 className="font-heading text-lg font-bold">Attempt quiz</h2>
