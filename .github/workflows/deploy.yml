@@ -42,7 +42,7 @@ jobs:
         with:
           host: ${{ vars.SERVER }}
           username: ${{ vars.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD  }}
+          key: ${{ secrets.SSH_KEY }}
           source: "."
           target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
           rm: false
