@@ -3,7 +3,7 @@ const { hostname } = window.location;
 const servers = {
   local: "http://localhost:3031",
   customDev: "https://react.customdev.solutions:3031",
-  live: "https://funtologyglobalinstitute.com/",
+  live: "https://react.customdev.solutions:3031",
 };
 
 let publicUrl = "/";
