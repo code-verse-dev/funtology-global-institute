@@ -47,7 +47,8 @@ jobs:
         with:
           host: ${{ vars.SERVER }}
           username: ${{ vars.FTP_USERNAME }}
-          key_path: key.pem
+          # chmod 600 key.pem
+          key_path: /tmp/key.pem
           # key: ${{ secrets.SSH_KEY }}
           source: "."
           target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
