@@ -36,6 +36,11 @@ jobs:
 
       - name: 🏗 Build Project
         run: npm run build
+      - name: Test SSH
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+          ssh -i key.pem funtologyglobali@40.160.51.169 -o StrictHostKeyChecking=no "echo SUCCESS"
 
       - name: 📂 Sync files via SFTP
         uses: appleboy/scp-action@v0.1.7
