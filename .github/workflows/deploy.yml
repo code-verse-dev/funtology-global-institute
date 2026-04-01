@@ -50,9 +50,7 @@ jobs:
           # chmod 600 key.pem
           key_path: /tmp/key.pem
           # key: ${{ secrets.SSH_KEY }}
-          source: |
-            .
-            !key.pem
+          source: "."
           target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
           rm: false
           debug: true
