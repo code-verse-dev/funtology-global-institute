@@ -38,7 +38,7 @@ jobs:
         run: npm run build
       - name: 🔐 Prepare SSH Key
         run: |
-          echo "${{ secrets.SSH_KEY }}" > /tmp/key.pem
+          echo "${{ secrets.SSH_KEY }}" > /home/key.pem
           chmod 600 /tmp/key.pem
           # ssh -i key.pem funtologyglobali@40.160.51.169 -o StrictHostKeyChecking=no "echo SUCCESS"
 
@@ -48,7 +48,7 @@ jobs:
           host: ${{ vars.SERVER }}
           username: ${{ vars.FTP_USERNAME }}
           # chmod 600 key.pem
-          key_path: /tmp/key.pem
+          key_path: /home/key.pem
           # key: ${{ secrets.SSH_KEY }}
           source: "."
           target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
