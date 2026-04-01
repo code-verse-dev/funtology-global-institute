@@ -37,14 +37,25 @@ jobs:
       - name: 🏗 Build Project
         run: npm run build
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 📂 Sync files via SFTP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ vars.SERVER }}
+          host: ${{ vars.SERVER }}
           username: ${{ vars.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          local-dir: ./dist/
+          password: ${{ secrets.FTP_PASSWORD  }}
+          source: "."
+          target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
+          rm: false
+
+
+      # - name: 📂 Sync files
+      #   uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      #   with:
+      #     server: ${{ vars.SERVER }}
+      #     username: ${{ vars.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     protocol: ftp
+      #     local-dir: ./dist/
 
   health-check:
     name: Health Check
