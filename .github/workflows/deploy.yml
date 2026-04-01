@@ -40,14 +40,15 @@ jobs:
         run: |
           echo "${{ secrets.SSH_KEY }}" > key.pem
           chmod 600 key.pem
-          ssh -i key.pem funtologyglobali@40.160.51.169 -o StrictHostKeyChecking=no "echo SUCCESS"
+          # ssh -i key.pem funtologyglobali@40.160.51.169 -o StrictHostKeyChecking=no "echo SUCCESS"
 
       - name: 📂 Sync files via SFTP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SERVER }}
           username: ${{ vars.FTP_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          key_path: key.pem
+          # key: ${{ secrets.SSH_KEY }}
           source: "."
           target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
           rm: false
