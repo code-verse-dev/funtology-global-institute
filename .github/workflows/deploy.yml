@@ -36,10 +36,10 @@ jobs:
 
       - name: 🏗 Build Project
         run: npm run build
-      - name: Test SSH
+      - name: 🔐 Prepare SSH Key
         run: |
-          echo "${{ secrets.SSH_KEY }}" > key.pem
-          chmod 600 key.pem
+          echo "${{ secrets.SSH_KEY }}" > /tmp/key.pem
+          chmod 600 /tmp/key.pem
           # ssh -i key.pem funtologyglobali@40.160.51.169 -o StrictHostKeyChecking=no "echo SUCCESS"
 
       - name: 📂 Sync files via SFTP
@@ -50,7 +50,9 @@ jobs:
           # chmod 600 key.pem
           key_path: /tmp/key.pem
           # key: ${{ secrets.SSH_KEY }}
-          source: "."
+          source: |
+            .
+            !key.pem
           target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
           rm: false
           debug: true
