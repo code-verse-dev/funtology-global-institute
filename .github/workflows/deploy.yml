@@ -38,22 +38,34 @@ jobs:
         run: npm run build
       - name: 🔐 Prepare SSH Key
         run: |
-          echo "${{ secrets.SSH_KEY }}" > /home/key.pem
+          echo "${{ secrets.SSH_KEY }}" > /tmp/key.pem
           chmod 600 /tmp/key.pem
           # ssh -i key.pem funtologyglobali@40.160.51.169 -o StrictHostKeyChecking=no "echo SUCCESS"
 
-      - name: 📂 Sync files via SFTP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ vars.SERVER }}
-          username: ${{ vars.FTP_USERNAME }}
-          # chmod 600 key.pem
-          key_path: /home/key.pem
-          # key: ${{ secrets.SSH_KEY }}
-          source: "."
-          target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
-          rm: false
-          debug: true
+      # - name: 📂 Sync files via SFTP
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ vars.SERVER }}
+      #     username: ${{ vars.FTP_USERNAME }}
+      #     # key: ${{ secrets.SSH_KEY }}
+      #     source: "."
+      #     target: "/home/funtologyglobali/public_html/api.funtologyglobalinstitute.com"
+      #     rm: false
+      #     debug: true
+      - name: Deploy via SCP manually
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+          tar -czf app.tar.gz .
+
+          scp -i key.pem -o StrictHostKeyChecking=no app.tar.gz funtologyglobali@40.160.51.169:/home/funtologyglobali/
+
+          ssh -i key.pem -o StrictHostKeyChecking=no funtologyglobali@40.160.51.169 << 'EOF'
+            cd /home/funtologyglobali/public_html/api.funtologyglobalinstitute.com
+            tar -xzf ~/app.tar.gz
+            rm -f ~/app.tar.gz
+          EOF
 
 
       # - name: 📂 Sync files
