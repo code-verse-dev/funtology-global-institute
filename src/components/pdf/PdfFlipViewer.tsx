@@ -2,7 +2,14 @@ import * as React from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import HTMLFlipBook from "react-pageflip";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Columns2, Download, FileText, Maximize2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Columns2, FileText, Maximize2, RotateCcw, ZoomIn, ZoomOut } from "lucide-react";
+
+const MIN_ZOOM = 0.5;
+const MAX_ZOOM = 2.5;
+const ZOOM_STEP = 0.15;
+
+const ZOOM_TOOLBAR_BTN =
+  "h-8 w-8 border-transparent bg-transparent text-foreground hover:bg-muted hover:text-foreground [&_svg]:h-4 [&_svg]:w-4 [&_svg]:stroke-[2.25]";
 
 const bundledWorkerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 const cdnWorkerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -56,6 +63,7 @@ export default function PdfFlipViewer({
   const [isLoading, setIsLoading] = React.useState(true);
   const [loadError, setLoadError] = React.useState(false);
   const [pageWidth, setPageWidth] = React.useState(0);
+  const [zoom, setZoom] = React.useState(1);
   /** In-memory PDF bytes so we load with credentials (cookies) and avoid worker cross-origin quirks */
   const [fileData, setFileData] = React.useState<ArrayBuffer | null>(null);
   const [fetchError, setFetchError] = React.useState(false);
@@ -68,6 +76,7 @@ export default function PdfFlipViewer({
     setNumPages(0);
     setCurrentPage(0);
     setFileData(null);
+    setZoom(1);
 
     const isDirect =
       fileUrl.startsWith("blob:") || fileUrl.startsWith("data:");
@@ -118,7 +127,25 @@ export default function PdfFlipViewer({
   }, [maxPageWidth, fileUrl, fileData]);
 
   const pageHeight = pageWidth > 0 ? Math.round(pageWidth * 1.414) : 0;
-  const flipMaxHeight = layoutExpanded ? 900 : 640;
+
+  const zoomIn = React.useCallback(() => {
+    setZoom((z) => Math.min(MAX_ZOOM, Math.round((z + ZOOM_STEP) * 100) / 100));
+  }, []);
+
+  const zoomOut = React.useCallback(() => {
+    setZoom((z) => Math.max(MIN_ZOOM, Math.round((z - ZOOM_STEP) * 100) / 100));
+  }, []);
+
+  const resetZoom = React.useCallback(() => setZoom(1), []);
+
+  /** Scaled dimensions for react-pdf + flipbook (sharp canvas, not CSS-only scale) */
+  const displayPageWidth =
+    pageWidth > 0 ? Math.max(100, Math.round(pageWidth * zoom)) : 0;
+  const displayPageHeight =
+    pageHeight > 0 ? Math.max(140, Math.round(pageHeight * zoom)) : 0;
+
+  const baseFlipMaxHeight = layoutExpanded ? 900 : 640;
+  const flipMaxHeight = Math.max(baseFlipMaxHeight, displayPageHeight);
 
   const flipNext = () => bookRef.current?.pageFlip()?.flipNext();
   const flipPrev = () => bookRef.current?.pageFlip()?.flipPrev();
@@ -134,17 +161,64 @@ export default function PdfFlipViewer({
   const readyFile: string | ArrayBuffer | null = directUrl ?? fileData;
 
   return (
-    <div className={`flex flex-col w-full overflow-hidden ${className}`}>
+    <div className={`flex w-full flex-col overflow-hidden ${className}`}>
       <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-muted/80 border-b border-border">
         <div className="flex items-center gap-2 text-foreground min-w-0">
           <FileText className="h-4 w-4 shrink-0 text-primary" />
           <span className="text-sm font-medium truncate">{title ?? "PDF document"}</span>
         </div>
-        <div className="flex items-center gap-2 ml-2 shrink-0">
+        <div className="flex flex-wrap items-center justify-end gap-1 sm:gap-2 ml-2 shrink-0">
           {numPages > 0 ? (
             <span className="text-xs text-muted-foreground tabular-nums">
               {currentSpread} / {totalSpreads}
             </span>
+          ) : null}
+          {numPages > 0 && !isLoading ? (
+            <div
+              className="flex items-center gap-0.5 rounded-lg border border-border bg-background px-1 py-0.5 shadow-sm"
+              role="toolbar"
+              aria-label="Zoom"
+            >
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className={ZOOM_TOOLBAR_BTN}
+                onClick={zoomOut}
+                disabled={zoom <= MIN_ZOOM}
+                aria-label="Zoom out"
+                title="Zoom out"
+              >
+                <ZoomOut aria-hidden />
+              </Button>
+              <span className="min-w-[2.5rem] px-0.5 text-center text-xs font-medium tabular-nums text-foreground">
+                {Math.round(zoom * 100)}%
+              </span>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className={ZOOM_TOOLBAR_BTN}
+                onClick={zoomIn}
+                disabled={zoom >= MAX_ZOOM}
+                aria-label="Zoom in"
+                title="Zoom in"
+              >
+                <ZoomIn aria-hidden />
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className={ZOOM_TOOLBAR_BTN}
+                onClick={resetZoom}
+                disabled={Math.abs(zoom - 1) < 0.001}
+                aria-label="Reset zoom"
+                title="Reset zoom"
+              >
+                <RotateCcw aria-hidden />
+              </Button>
+            </div>
           ) : null}
           {/* {onDownload ? (
             <Button size="sm" variant="outline" className="h-7 text-xs rounded-full gap-1" type="button" onClick={onDownload}>
@@ -178,8 +252,17 @@ export default function PdfFlipViewer({
 
       <div
         ref={containerRef}
-        className="relative w-full bg-muted flex items-center justify-center"
-        style={{ minHeight: pageHeight > 0 ? pageHeight + 48 : 400 }}
+        className="relative flex w-full items-center justify-center overflow-auto overscroll-contain bg-muted"
+        style={{
+          minHeight: pageHeight > 0 ? Math.min(pageHeight + 48, 520) : 400,
+          maxHeight: layoutExpanded ? "min(92vh, 960px)" : "min(85vh, 820px)",
+        }}
+        onWheel={(e) => {
+          if (!e.ctrlKey && !e.metaKey) return;
+          e.preventDefault();
+          if (e.deltaY < 0) zoomIn();
+          else zoomOut();
+        }}
       >
         {isLoading && !loadError && !fetchError ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-10 bg-muted">
@@ -231,18 +314,18 @@ export default function PdfFlipViewer({
             }}
             loading=""
           >
-            {numPages > 0 && pageWidth > 0 && pageHeight > 0 ? (
+            {numPages > 0 && displayPageWidth > 0 && displayPageHeight > 0 ? (
               <div className="py-6 drop-shadow-2xl">
                 <HTMLFlipBook
                   ref={bookRef}
-                  width={pageWidth}
-                  height={pageHeight}
+                  width={displayPageWidth}
+                  height={displayPageHeight}
                   className=""
                   style={{}}
                   size="fixed"
-                  minWidth={200}
-                  maxWidth={maxPageWidth}
-                  minHeight={280}
+                  minWidth={100}
+                  maxWidth={Math.max(maxPageWidth, displayPageWidth)}
+                  minHeight={140}
                   maxHeight={flipMaxHeight}
                   startPage={0}
                   drawShadow
@@ -261,7 +344,12 @@ export default function PdfFlipViewer({
                   onFlip={(e: { data: number }) => setCurrentPage(e.data)}
                 >
                   {Array.from({ length: numPages }, (_, i) => (
-                    <FlipPage key={i} pageNumber={i + 1} width={pageWidth} height={pageHeight} />
+                    <FlipPage
+                      key={i}
+                      pageNumber={i + 1}
+                      width={displayPageWidth}
+                      height={displayPageHeight}
+                    />
                   ))}
                 </HTMLFlipBook>
               </div>

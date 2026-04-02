@@ -13,7 +13,8 @@ import {
 import { cn } from "@/lib/utils";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
-import { Award, BarChart3, Bell, BookOpen, Building2, CreditCard, LogOut, RefreshCw, Settings, User, Users } from "lucide-react";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { Award, BarChart3, BookOpen, Building2, CreditCard, LogOut, RefreshCw, Settings, User, Users } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -69,12 +70,10 @@ const OrganizationDashboardLayout = () => {
                 {/* {orgData.name} */}
                 {user?.organizationName}
               </Badge>
-              <Button variant="ghost" size="icon" className="text-primary-foreground relative">
-                <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-secondary text-secondary-foreground text-xs rounded-full flex items-center justify-center">
-                  3
-                </span>
-              </Button>
+              <NotificationBell
+                triggerClassName="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                panelClassName="border-primary-foreground/20"
+              />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="h-10 w-10 rounded-full">
