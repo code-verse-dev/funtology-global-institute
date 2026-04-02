@@ -3,14 +3,37 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Activity, Award, BookOpen, Briefcase, DollarSign, Download, Plus, Shield, UserCheck, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-import { auditLog, systemStats } from "./data";
+import { formatDistanceToNow } from "date-fns";
 import { useGetAdminStatsQuery } from "@/redux/services/apiSlices/userSlice";
+import { useGetAdminNotificationsQuery } from "@/redux/services/apiSlices/notificationSlice";
 
+function formatTotalRevenue(value: unknown): string {
+  const n =
+    typeof value === "number"
+      ? value
+      : typeof value === "string"
+        ? Number.parseFloat(value)
+        : Number.NaN;
+  if (Number.isNaN(n)) return "—";
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(n);
+}
 
 const AdminOverview = () => {
   const { data: adminStats } = useGetAdminStatsQuery();
+  const { data: notificationsData, isLoading: notificationsLoading } = useGetAdminNotificationsQuery({
+    limit: 5,
+  });
 
-  console.log(adminStats);
+  const recentNotifications =
+    (notificationsData?.data?.notifications?.docs as Array<{
+      _id: string;
+      title?: string;
+      content?: string;
+      createdAt?: string;
+    }> | undefined) ?? [];
   return (
   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -75,7 +98,9 @@ const AdminOverview = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-2xl md:text-3xl font-bold text-foreground">${adminStats?.data?.totalRevenue}</p>
+                  <p className="text-2xl md:text-3xl font-bold text-foreground">
+                    ${formatTotalRevenue(adminStats?.data?.totalRevenue)}
+                  </p>
                   <p className="text-sm text-muted-foreground">Revenue (MTD)</p>
                 </div>
                 <DollarSign className={`w-8 h-8 text-primary`} />
@@ -88,22 +113,34 @@ const AdminOverview = () => {
       <Card className="lg:col-span-2">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="font-heading">Recent Activity</CardTitle>
-          <Button variant="ghost" size="sm" asChild>
-            <Link to="/admin/audit">View All</Link>
-          </Button>
+          {/* <Button variant="ghost" size="sm" asChild>
+            <Link to="/admin/notifications">View All</Link>
+          </Button> */}
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {auditLog.slice(0, 5).map((log, i) => (
-              <div key={i} className="flex items-start gap-3 p-3 bg-muted rounded-lg">
-                <Activity className="w-4 h-4 text-secondary mt-1 shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground">{log.action}</p>
-                  <p className="text-xs text-muted-foreground">{log.details}</p>
+            {notificationsLoading ? (
+              <p className="text-sm text-muted-foreground py-6 text-center">Loading activity…</p>
+            ) : recentNotifications.length === 0 ? (
+              <p className="text-sm text-muted-foreground py-6 text-center">No notifications yet.</p>
+            ) : (
+              recentNotifications.slice(0, 5).map((n) => (
+                <div key={n._id} className="flex items-start gap-3 p-3 bg-muted rounded-lg">
+                  <Activity className="w-4 h-4 text-secondary mt-1 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground">{n.title ?? "Notification"}</p>
+                    {n.content ? (
+                      <p className="text-xs text-muted-foreground line-clamp-2">{n.content}</p>
+                    ) : null}
+                  </div>
+                  <span className="text-xs text-muted-foreground whitespace-nowrap shrink-0">
+                    {n.createdAt
+                      ? formatDistanceToNow(new Date(n.createdAt), { addSuffix: true })
+                      : "—"}
+                  </span>
                 </div>
-                <span className="text-xs text-muted-foreground whitespace-nowrap">{log.time}</span>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </CardContent>
       </Card>

@@ -39,6 +39,8 @@ function learnerDisplayName(user: PaymentUser | undefined): string {
   return user.email ?? "—";
 }
 
+const PAGE_LIMIT = 10;
+
 export default function AdminPayments() {
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
@@ -56,7 +58,7 @@ export default function AdminPayments() {
   const queryArg = useMemo(
     () => ({
       page,
-      limit: 10,
+      limit: PAGE_LIMIT,
       ...(debouncedKeyword ? { keyword: debouncedKeyword } : {}),
     }),
     [page, debouncedKeyword],
@@ -130,7 +132,7 @@ export default function AdminPayments() {
                 aria-label="Search payments by user name"
               />
             </div>
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <Button variant="outline" size="sm" type="button">
                 <Download className="mr-2 h-4 w-4" />
                 Export CSV
@@ -139,7 +141,7 @@ export default function AdminPayments() {
                 <Download className="mr-2 h-4 w-4" />
                 Export PDF
               </Button>
-            </div>
+            </div> */}
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -152,7 +154,7 @@ export default function AdminPayments() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Charge / payment ID</TableHead>
+                  <TableHead>S.no</TableHead>
                   <TableHead>User</TableHead>
                   <TableHead>User Type</TableHead>
                   <TableHead>Type / reference</TableHead>
@@ -165,14 +167,15 @@ export default function AdminPayments() {
               <TableBody>
                 {docs.length === 0 && !isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
+                    <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
                       No payments found
                       {debouncedKeyword ? ` for “${debouncedKeyword}”.` : "."}
                     </TableCell>
                   </TableRow>
                 ) : (
                   docs.map((p, idx) => {
-                    const id = p.chargeId ?? `row-${idx}`;
+                    const serial = (page - 1) * PAGE_LIMIT + idx + 1;
+                    const rowKey = p.chargeId ?? `payment-${page}-${idx}`;
                     const paid = Boolean(p.isPaid);
                     const statusLabel = paid ? "completed" : "pending";
                     const created = p.createdAt ? new Date(p.createdAt).toLocaleString() : "—";
@@ -180,9 +183,9 @@ export default function AdminPayments() {
                     const type = refLabel === 'SUBSCRIPTION' ? 'Course Fees' : 'Quiz Retake';
 
                     return (
-                      <TableRow key={id}>
-                        <TableCell className="max-w-[160px] truncate font-mono text-xs font-medium">
-                          {p.chargeId ?? "—"}
+                      <TableRow key={rowKey}>
+                        <TableCell className="w-[1%] whitespace-nowrap tabular-nums text-sm font-medium text-foreground">
+                          {serial}
                         </TableCell>
                         <TableCell>
                           <div className="font-medium">{learnerDisplayName(p.user)}</div>

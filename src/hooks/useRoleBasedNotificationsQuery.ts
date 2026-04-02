@@ -5,6 +5,10 @@ import {
   useGetAllNotificationsQuery,
 } from "@/redux/services/apiSlices/notificationSlice";
 
+type NotificationsQueryHookOptions = NonNullable<
+  Parameters<typeof useGetAllNotificationsQuery>[1]
+>;
+
 export type NotificationsQueryArg = {
   page?: number;
   limit?: number;
@@ -16,14 +20,21 @@ export type NotificationsQueryArg = {
  */
 export function useRoleBasedNotificationsQuery(
   arg: NotificationsQueryArg,
-  options?: { skip?: boolean }
+  options?: NotificationsQueryHookOptions
 ) {
   const role = useSelector((s: RootState) => s.user.userData?.role as string | undefined);
   const isAdmin = role === "admin";
-  const skip = Boolean(options?.skip);
+  const { skip: skipOpt, ...subscriptionOptions } = options ?? {};
+  const skip = Boolean(skipOpt);
 
-  const adminQ = useGetAdminNotificationsQuery(arg, { skip: skip || !isAdmin });
-  const userQ = useGetAllNotificationsQuery(arg, { skip: skip || isAdmin });
+  const adminQ = useGetAdminNotificationsQuery(arg, {
+    skip: skip || !isAdmin,
+    ...subscriptionOptions,
+  });
+  const userQ = useGetAllNotificationsQuery(arg, {
+    skip: skip || isAdmin,
+    ...subscriptionOptions,
+  });
 
   return isAdmin ? adminQ : userQ;
 }

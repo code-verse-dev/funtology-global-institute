@@ -31,7 +31,7 @@ const steps = [
   {
     icon: Award,
     title: "Certify",
-    description: "Receive your official CE certificate instantly upon successful completion",
+    description: "Receive your ongoing education certificate instantly upon successful completion",
     color: "from-secondary to-gold-dark",
   },
 ];
@@ -76,9 +76,7 @@ const HowItWorks = () => {
             How It Works
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/70 max-w-2xl mx-auto">
-            From enrollment to certification, our streamlined process makes earning 
-            your ongoing education credits straightforward and efficient.
-          </p>
+          From enrollment to certification, our streamlined process makes earning your ongoing education credits straightforward and efficient.          </p>
         </motion.div>
 
         {/* Steps */}
