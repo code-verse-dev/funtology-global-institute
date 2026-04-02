@@ -405,7 +405,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
 
       {coverSrc ? (
         <div className="rounded-xl border border-border overflow-hidden bg-muted aspect-[21/9] max-h-56">
-          <img src={coverSrc} alt={course.title} className="w-full h-full object-cover" />
+          <img src={coverSrc} alt={course.title} className="w-full h-full object-contain" />
         </div>
       ) : null}
 

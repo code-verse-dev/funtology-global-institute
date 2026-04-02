@@ -93,6 +93,12 @@ export const userApiSlice = createApi({
         { type: "User", id },
       ],
     }),
+    getAdminStats: builder.query<any, void>({
+      query: () => ({
+        url: "/user/admin/stats",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -100,4 +106,5 @@ export const {
   useGetUsersQuery,
   useGetUserByIdQuery,
   useUpdateUserStatusMutation,
+  useGetAdminStatsQuery,
 } = userApiSlice;

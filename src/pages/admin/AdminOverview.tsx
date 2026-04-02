@@ -1,14 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Activity, Briefcase, DollarSign, Download, Plus, Shield, UserCheck } from "lucide-react";
+import { Activity, Award, BookOpen, Briefcase, DollarSign, Download, Plus, Shield, UserCheck, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { auditLog, systemStats } from "./data";
+import { useGetAdminStatsQuery } from "@/redux/services/apiSlices/userSlice";
 
-const AdminOverview = () => (
+
+const AdminOverview = () => {
+  const { data: adminStats } = useGetAdminStatsQuery();
+
+  console.log(adminStats);
+  return (
   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {systemStats.map((stat, i) => (
+      {/* {systemStats.map((stat, i) => (
         <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
           <Card className="hover:shadow-md transition-shadow">
             <CardContent className="pt-6">
@@ -23,7 +29,60 @@ const AdminOverview = () => (
             </CardContent>
           </Card>
         </motion.div>
-      ))}
+      ))} */}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
+          <Card className="hover:shadow-md transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold text-foreground">{adminStats?.data?.totalUsers}</p>
+                  <p className="text-sm text-muted-foreground">Total Users</p>
+                </div>
+                <Users className={`w-8 h-8 text-primary`} />
+              </div>
+              {/* <p className="text-xs text-green-600 font-medium mt-2">+8.2% from last month</p> */}
+            </CardContent>
+          </Card>
+        </motion.div>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
+          <Card className="hover:shadow-md transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold text-foreground">{adminStats?.data?.totalActiveCourses}</p>
+                  <p className="text-sm text-muted-foreground">Total Active Courses</p>
+                </div>
+                <BookOpen className={`w-8 h-8 text-primary`} />
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
+          <Card className="hover:shadow-md transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold text-foreground">{adminStats?.data?.totalCertificatesIssued}</p>
+                  <p className="text-sm text-muted-foreground">Certificates Issued</p>
+                </div>
+                <Award className={`w-8 h-8 text-primary`} />
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
+          <Card className="hover:shadow-md transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold text-foreground">${adminStats?.data?.totalRevenue}</p>
+                  <p className="text-sm text-muted-foreground">Revenue (MTD)</p>
+                </div>
+                <DollarSign className={`w-8 h-8 text-primary`} />
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
     </div>
     <div className="grid lg:grid-cols-3 gap-6">
       <Card className="lg:col-span-2">
@@ -97,6 +156,8 @@ const AdminOverview = () => (
       </div>
     </div>
   </motion.div>
-);
+  );
+};
+
 
 export default AdminOverview;

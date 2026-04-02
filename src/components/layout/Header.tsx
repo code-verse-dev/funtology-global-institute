@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { Menu, X, ChevronDown, User, LogIn, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import fgiLogo from "@/assets/fgi-logo.png";
@@ -136,6 +137,7 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
+            {user._id && <NotificationBell />}
             <Button variant="ghost" className="font-medium gap-2" asChild>
               {user._id ? <Button variant="ghost" className="font-medium gap-2" onClick={onLogout}>
                 <LogOut className="w-4 h-4" />
@@ -242,6 +244,11 @@ const Header = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
+                {user._id && (
+                  <div className="flex justify-center pb-2">
+                    <NotificationBell />
+                  </div>
+                )}
                 <Button variant="outline" className="w-full gap-2" asChild>
                   <Link to="/login" onClick={() => setIsOpen(false)}>
                     <LogIn className="w-4 h-4" />

@@ -6,11 +6,18 @@ export const paymentSlice = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ["Payments", "Subscription", "Cards"],
     endpoints: (builder) => ({
-        getPayments: builder.query<any, { page?: number; limit?: number; keyword?: string }>({
-            query: ({ page, limit, keyword } = {}) => ({
+        getPayments: builder.query<
+            any,
+            { page?: number; limit?: number; keyword?: string }
+        >({
+            query: ({ page = 1, limit = 10, keyword } = {}) => ({
                 url: "/payment",
                 method: "GET",
-                params: { page, limit, keyword },
+                params: {
+                    page: String(page),
+                    limit: String(limit),
+                    ...(keyword?.trim() ? { keyword: keyword.trim() } : {}),
+                },
             }),
             providesTags: ["Payments"],
         }),
