@@ -40,10 +40,7 @@ const Login = () => {
         role: selectedRole === "learner" ? "learner" : selectedRole === "organization" ? "organization" : "admin"
       }).unwrap();
       if (res?.status) {
-        toast.success("Signed in successfully");
         dispatch(addUser({ user: res?.data?.user }));
-        console.log(res?.data?.user, 'user in login');
-        console.log(selectedRole, 'selectedRole in login');
         navigate(selectedRole === "learner" ? "/dashboard" : selectedRole === "organization" ? "/organization" : "/admin")
       }
       else {
