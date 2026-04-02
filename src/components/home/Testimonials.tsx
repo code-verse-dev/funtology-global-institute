@@ -64,8 +64,7 @@ const Testimonials = () => {
             What Our Learners Say
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Join thousands of professionals earning recognized ongoing education credentials. Start your learning journey today with FGI.
-          </p>
+          Join thousands of professionals earning recognized ongoing education credentials. Start your learning journey today with FGI.          </p>
         </motion.div>
 
         {/* Testimonials Grid */}

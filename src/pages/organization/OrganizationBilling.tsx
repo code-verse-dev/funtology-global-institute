@@ -33,20 +33,13 @@ function formatAmount(amount: unknown, currency?: unknown): string {
 }
 
 function descriptionFromPayment(p: PaymentDoc): string {
-  const d =
-    p.description ??
-    p.type ??
-    p.purpose ??
-    (typeof p.metadata === "object" && p.metadata !== null && "description" in p.metadata
-      ? (p.metadata as { description?: string }).description
-      : undefined);
-  if (typeof d === "string" && d.trim()) return d.trim();
-  const course = p.course;
-  if (typeof course === "object" && course !== null && "title" in course) {
-    return String((course as { title?: string }).title ?? "—");
+  if (p.type === "SUBSCRIPTION") {
+    return "Course Fees";
   }
-  if (typeof course === "string") return course;
-  return "—";
+  if (p.type === "QUIZ_RETAKE") {
+    return "Quiz Retake";
+  }
+  return p.type as string;
 }
 
 function statusBadgeVariant(status: string) {

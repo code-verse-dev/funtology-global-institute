@@ -11,7 +11,9 @@ const stats = [
   { value: "10,000+", label: "Learners Engaged in Career Exploration Programs" },
   { value: "50+", label: "Career Readiness & Skill-Based Learning Modules" },
   { value: "98%", label: "Participant Satisfaction Rate" },
-  { value: "10,000+", label: "Certificates Issued" },
+  // { value: "10,000+", label: "Certificates Issued" },
+  { value: "27+", label: "Years of Excellence" },
+  { value: "450+", label: "Corporate Partners" },
 ];
 
 const PartnersSection = () => {
@@ -53,7 +55,7 @@ const PartnersSection = () => {
 
         {/* Animated Stats */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12"
+          className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

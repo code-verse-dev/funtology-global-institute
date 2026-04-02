@@ -16,7 +16,7 @@ const team = [
   //   credentials: "Ph.D. in Education, MBA",
   // },
   {
-    name: "Fredrick",
+    name: "Frederick",
     // role: "Director of Education",
     // image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop",
     image: Fredrick,

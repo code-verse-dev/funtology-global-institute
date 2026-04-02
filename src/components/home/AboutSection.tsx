@@ -87,7 +87,7 @@ const AboutSection = () => {
               <Shield className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold mb-2">Standards-Aligned</h3>
               <p className="text-sm text-primary/80">
-                Programs designed using ANSI/IACET 1-2018 as a guiding framework.
+              Our programs are thoughtfully designed to align with industry best practices, ensuring high-quality, engaging, and impactful learning experiences for every participant.
               </p>
             </motion.div>
 

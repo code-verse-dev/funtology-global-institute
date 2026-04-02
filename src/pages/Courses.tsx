@@ -114,7 +114,7 @@ const Courses = () => {
                 Course Catalog
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
-                Browse our standards-aligned, on-going education programs designed to support career advancement, workforce readiness, and professional growth.
+              Browse our standards-aligned, on-going education programs designed to support career advancement, workforce readiness, and professional growth.
               </p>
 
               {/* Search Bar */}
@@ -213,6 +213,7 @@ const Courses = () => {
                       course.learningObjectives?.[0] ?? "Professional certificate";
                     const levelLabel =
                       typeof course.level === "number" ? `Level ${course.level}` : "—";
+                    const showLevel = course.level && course.level > 0;
                     const price =
                       typeof course.amount === "number" && !Number.isNaN(course.amount)
                         ? course.amount
@@ -232,12 +233,12 @@ const Courses = () => {
                           <img
                             src={imageSrc}
                             alt={course.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
                           <div className="absolute top-4 left-4 flex max-w-[70%] flex-wrap gap-2">
-                            <Badge className="bg-secondary text-secondary-foreground font-semibold line-clamp-2 text-left whitespace-normal">
+                            {/* <Badge className="bg-secondary text-secondary-foreground font-semibold line-clamp-2 text-left whitespace-normal">
                               {topicBadge}
                             </Badge>
                             {isFeatured ? (
@@ -245,12 +246,12 @@ const Courses = () => {
                                 <Sparkles className="w-3 h-3" />
                                 Featured
                               </Badge>
-                            ) : null}
+                            ) : null} */}
                           </div>
-                          <Badge className="absolute top-4 right-4 bg-background/90 text-foreground gap-1">
+                          {showLevel && <Badge className="absolute top-4 right-4 bg-background/90 text-foreground gap-1">
                             <Layers className="h-3 w-3" />
                             {levelLabel}
-                          </Badge>
+                          </Badge>}
 
                           {typeof course.ceHours === "number" ? (
                             <div className="absolute bottom-4 left-4 flex items-center gap-2">

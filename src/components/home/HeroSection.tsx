@@ -3,6 +3,29 @@ import { ArrowRight, Award, BookOpen, Users, Play, Sparkles, CheckCircle2 } from
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+const heroFeatures = [
+  {
+    title: "Interactive Digital Learning Format",
+    subheading: "Engaging, hands-on instruction combining theory, application, and real-world scenarios",
+  },
+  {
+    title: "Earn Documented Learning Hours",
+    subheading: "Structured instructional time aligned with measurable learning objectives",
+  },
+  {
+    title: "Get Certified",
+    subheading: "Receive a certificate upon successful completion (minimum 70% passing score)",
+  },
+  {
+    title: "Explore Career Pathways",
+    subheading: "Funtology • Barbertology • Nailtology • Skintology • Entrepreneurship",
+  },
+  {
+    title: "Advance Your Learning Journey",
+    subheading: "Flexible, scalable programs for individuals, groups, and organizations",
+  },
+] as const;
+
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-hero overflow-hidden">
@@ -58,7 +81,7 @@ const HeroSection = () => {
             >
               <Award className="w-4 h-4 text-secondary" />
               <span className="text-sm font-medium text-secondary">
-                CE Standards-Aligned Provider
+              Funtology Global Institute for Career Innovation (FGI) 
               </span>
               <Sparkles className="w-4 h-4 text-secondary" />
             </motion.div>
@@ -91,21 +114,24 @@ const HeroSection = () => {
 
             {/* Feature List */}
             <motion.div
-              className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5 mb-8 max-w-2xl mx-auto lg:mx-0 justify-items-center lg:justify-items-stretch"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              {["Interactive Digital Learning Format", "Earn Documented Learning Hours", "Get Certified", "Explore Career Pathways", "Advance Your Learning Journey"].map((feature, index) => (
+              {heroFeatures.map(({ title, subheading }, index) => (
                 <motion.div
-                  key={feature}
-                  className="flex items-center gap-2 text-primary-foreground/80"
+                  key={title}
+                  className="flex items-start gap-3 text-left w-full max-w-sm sm:max-w-none"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + index * 0.1 }}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-secondary" />
-                  <span className="text-sm font-medium">{feature}</span>
+                  <CheckCircle2 className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+                  <div className="min-w-0 space-y-1">
+                    <p className="text-sm font-semibold text-primary-foreground leading-snug">{title}</p>
+                    <p className="text-xs font-normal text-primary-foreground/60 leading-relaxed">{subheading}</p>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
