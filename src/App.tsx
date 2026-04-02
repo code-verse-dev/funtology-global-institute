@@ -52,11 +52,26 @@ import LearnerNotifications, {
   OrganizationNotifications,
 } from "./pages/Notifications";
 import { getBasename } from "./utils/Functions";
-
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import socket from "@/config/socket";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  const user = useSelector((state: any) => state.user.userData);
+  useEffect(() => {
+    if (user?._id) {
+      if (user?.role === "admin") {
+        socket.emit("setupAdmin", user);
+      }
+      else{
+        socket.emit("setup", user);
+      }
+    }
+  }, [user]);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
@@ -244,6 +259,8 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  
+  );
+};
 
 export default App;
