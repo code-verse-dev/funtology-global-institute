@@ -47,6 +47,10 @@ import ProtectedRoute from "./pages/protectedRoute";
 import SubscriptionRequiredRoute from "./pages/protectedRoute/SubscriptionRequiredRoute";
 import Payment from "./pages/stripePayment";
 import Profile from "./pages/Profile";
+import LearnerNotifications, {
+  AdminNotifications,
+  OrganizationNotifications,
+} from "./pages/Notifications";
 import { getBasename } from "./utils/Functions";
 
 
@@ -119,6 +123,11 @@ const App = () => (
                 <LearnerQuizAttempt />
               </ProtectedRoute>
             } />
+            <Route path="notifications" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <LearnerNotifications />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route path="/admin" element={
             <ProtectedRoute allowedRoles={["admin"]}>
@@ -166,6 +175,11 @@ const App = () => (
             <Route path="reports" element={<AdminReports />} />
             <Route path="audit" element={<AdminAudit />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="notifications" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminNotifications />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route
             path="/organization"
@@ -213,6 +227,11 @@ const App = () => (
             <Route path="certificates" element={
               <ProtectedRoute allowedRoles={["organization"]}>
                 <OrganizationCertificates />
+              </ProtectedRoute>
+            } />
+            <Route path="notifications" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationNotifications />
               </ProtectedRoute>
             } />
           </Route>

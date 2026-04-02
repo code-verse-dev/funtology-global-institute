@@ -14,7 +14,8 @@ import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
 import type { RootState } from "@/redux/store";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
-import { Bell, BookOpen, Home, LogOut, Settings, User } from "lucide-react";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { BookOpen, Home, LogOut, Settings, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
@@ -93,12 +94,7 @@ const DashboardLayout = () => {
             </div>
 
             <div className="flex items-center gap-4 shrink-0">
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-destructive-foreground text-xs rounded-full flex items-center justify-center">
-                  2
-                </span>
-              </Button>
+              <NotificationBell />
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

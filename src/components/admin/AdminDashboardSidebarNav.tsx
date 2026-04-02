@@ -47,6 +47,7 @@ export function adminRoutePath(segment: AdminNavSegment) {
 }
 
 export function pageTitleForAdminPath(pathname: string): string {
+  if (pathname.includes("/admin/notifications")) return "Notifications";
   const m = pathname.match(/\/admin(?:\/([^/]+))?$/);
   const seg = (m?.[1] as AdminNavSegment | undefined) ?? "overview";
   return ADMIN_NAV_ITEMS.find((i) => i.segment === seg)?.label ?? "Overview";

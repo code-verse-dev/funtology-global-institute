@@ -1,4 +1,12 @@
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import type { RootState } from "@/redux/store";
 import {
   useGetSavedPaymentMethodsQuery,
@@ -9,11 +17,20 @@ import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import type { PaymentIntentResult } from "@stripe/stripe-js";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import { CheckCircle2, CreditCard, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, CreditCard, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+
+type PaymentResultState =
+  | { open: false }
+  | {
+      open: true;
+      success: true;
+      message: string;
+      onContinue: () => void;
+    }
+  | { open: true; success: false; message: string };
 
 function effectiveRole(userRole: unknown): string {
   const r = String(userRole ?? "").toLowerCase().trim();
@@ -60,6 +77,7 @@ const CheckoutForm = ({
 
   const [message, setMessage] = useState("");
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [paymentResult, setPaymentResult] = useState<PaymentResultState>({ open: false });
 
   const [createSubscription] = useSubscriptionPaymentMutation();
   const [confirmQuizRetakePayment] = useQuizRetakePaymentMutation();
@@ -87,29 +105,53 @@ const CheckoutForm = ({
             paymentIntentId: paymentIntent.id,
             type: "SUBSCRIPTION",
             courseIds,
-            totalLearners
+            totalLearners,
           },
         }).unwrap();
         if (res?.status) {
-          toast.success(res?.message || "Subscription activated.");
-          navigateAfterSubscription();
+          setPaymentResult({
+            open: true,
+            success: true,
+            message: res?.message || "Your subscription is active. Thank you for your payment.",
+            onContinue: navigateAfterSubscription,
+          });
         } else {
-          toast.error(res?.data?.error?.message || res?.error?.message || res?.message || "Something went wrong");
+          setPaymentResult({
+            open: true,
+            success: false,
+            message:
+              res?.data?.error?.message ||
+              res?.error?.message ||
+              res?.message ||
+              "We could not complete your subscription. Please try again or contact support.",
+          });
         }
       } else if (type === "QUIZ_RETAKE") {
         const res = await confirmQuizRetakePayment({
           data: { paymentIntentId: paymentIntent.id },
         }).unwrap();
         if (res?.status) {
-          toast.success(res?.message || "Quiz retake payment completed.");
           const from = (location.state as { from?: string } | null)?.from;
-          if (typeof from === "string" && from.length > 0) {
-            navigate(from, { replace: true, state: { retakePaid: true } });
-          } else {
-            navigate("/dashboard/courses", { replace: true });
-          }
+          const go =
+            typeof from === "string" && from.length > 0
+              ? () => navigate(from, { replace: true, state: { retakePaid: true } })
+              : () => navigate("/dashboard/courses", { replace: true });
+          setPaymentResult({
+            open: true,
+            success: true,
+            message: res?.message || "Quiz retake payment completed. You can continue to your quiz.",
+            onContinue: go,
+          });
         } else {
-          toast.error(res?.data?.error?.message || res?.error?.message || res?.message || "Something went wrong");
+          setPaymentResult({
+            open: true,
+            success: false,
+            message:
+              res?.data?.error?.message ||
+              res?.error?.message ||
+              res?.message ||
+              "Payment could not be confirmed. Please try again.",
+          });
         }
       }
     } catch (err: unknown) {
@@ -117,7 +159,17 @@ const CheckoutForm = ({
         err && typeof err === "object" && "data" in err && err.data && typeof err.data === "object" && "message" in err.data
           ? String((err.data as { message: string }).message)
           : "An unexpected error occurred.";
-      toast.error(msg);
+      setPaymentResult({ open: true, success: false, message: msg });
+    }
+  };
+
+  const closePaymentResult = () => setPaymentResult({ open: false });
+
+  const handlePaymentResultContinue = () => {
+    if (paymentResult.open && paymentResult.success) {
+      const fn = paymentResult.onContinue;
+      closePaymentResult();
+      fn();
     }
   };
 
@@ -191,6 +243,76 @@ const CheckoutForm = ({
 
   return (
     <div className="relative space-y-6">
+      <Dialog
+        open={paymentResult.open}
+        onOpenChange={(open) => {
+          if (!open && paymentResult.open) {
+            if (paymentResult.success) return;
+            closePaymentResult();
+          }
+        }}
+      >
+        <DialogContent
+          className={
+            paymentResult.open && paymentResult.success
+              ? "max-w-[min(100vw-2rem,28rem)] gap-0 border-0 p-0 shadow-2xl sm:max-w-md [&>button]:hidden"
+              : "max-w-[min(100vw-2rem,28rem)] gap-0 border-0 p-0 shadow-2xl sm:max-w-md"
+          }
+          onPointerDownOutside={(e) => {
+            if (paymentResult.open && paymentResult.success) e.preventDefault();
+          }}
+          onEscapeKeyDown={(e) => {
+            if (paymentResult.open && paymentResult.success) e.preventDefault();
+          }}
+        >
+          {paymentResult.open ? (
+            paymentResult.success ? (
+              <div className="overflow-hidden rounded-lg border border-border bg-card">
+                <div className="bg-gradient-to-br from-primary/15 via-primary/5 to-background px-8 pb-6 pt-10 text-center">
+                  <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-primary/15 ring-8 ring-primary/10">
+                    <CheckCircle2 className="h-11 w-11 text-primary" strokeWidth={2} />
+                  </div>
+                  <DialogHeader className="space-y-3 text-center sm:text-center">
+                    <DialogTitle className="font-heading text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+                      Payment successful
+                    </DialogTitle>
+                    <DialogDescription className="text-base leading-relaxed text-muted-foreground">
+                      {paymentResult.message}
+                    </DialogDescription>
+                  </DialogHeader>
+                </div>
+                <DialogFooter className="flex-col gap-2 border-t border-border bg-muted/30 px-6 py-5 sm:flex-col">
+                  <Button type="button" size="lg" className="w-full font-heading text-base font-semibold" onClick={handlePaymentResultContinue}>
+                    Continue
+                  </Button>
+                </DialogFooter>
+              </div>
+            ) : (
+              <div className="overflow-hidden rounded-lg border border-destructive/20 bg-card">
+                <div className="bg-gradient-to-br from-destructive/10 via-destructive/5 to-background px-8 pb-6 pt-10 text-center">
+                  <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-destructive/15 ring-8 ring-destructive/10">
+                    <AlertCircle className="h-11 w-11 text-destructive" strokeWidth={2} />
+                  </div>
+                  <DialogHeader className="space-y-3 text-center sm:text-center">
+                    <DialogTitle className="font-heading text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+                      Payment could not be completed
+                    </DialogTitle>
+                    <DialogDescription className="text-base leading-relaxed text-muted-foreground">
+                      {paymentResult.message}
+                    </DialogDescription>
+                  </DialogHeader>
+                </div>
+                <DialogFooter className="border-t border-border bg-muted/30 px-6 py-5">
+                  <Button type="button" variant="secondary" size="lg" className="w-full font-heading text-base font-semibold" onClick={closePaymentResult}>
+                    Close
+                  </Button>
+                </DialogFooter>
+              </div>
+            )
+          ) : null}
+        </DialogContent>
+      </Dialog>
+
       {isProcessing && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-2xl bg-background/80 backdrop-blur-sm gap-3">
           <Loader2 className="h-10 w-10 animate-spin text-primary" />

@@ -349,7 +349,7 @@ const AdminCourses = () => {
                               </DropdownMenuSubContent>
                             </DropdownMenuSub>
                             <DropdownMenuItem asChild>
-                              <Link to={`/admin/courses/${course._id}/content`}>
+                              <Link to={`//courses/${course._id}/content`}>
                                 <Upload className="w-4 h-4 mr-2" />
                                 Upload content
                               </Link>
@@ -433,7 +433,7 @@ const AdminCourses = () => {
                   <img
                     src={courseImageUrl(previewCourse.image)}
                     alt=""
-                    className="w-full rounded-lg border border-border object-cover max-h-48"
+                    className="w-full rounded-lg border border-border object-contain max-h-48"
                   />
                 ) : (
                   <div className="rounded-lg border border-dashed border-border bg-muted/40 h-32 flex items-center justify-center text-sm text-muted-foreground">

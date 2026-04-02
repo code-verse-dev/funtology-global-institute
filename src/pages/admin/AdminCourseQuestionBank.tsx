@@ -66,7 +66,7 @@ const emptyQuestionForm = {
   question: "",
   type: "multiple_choice" as QuizQuestionType,
   optionsText: "",
-  correctMcIndex: "0",
+  correctMcIndex: "",
   correctTf: "true",
   correctShort: "",
   points: "1",
@@ -162,9 +162,10 @@ const AdminCourseQuestionBank = () => {
   const openEdit = (q: ApiQuizQuestion) => {
     setEditing(q);
     const opts = q.options ?? [];
-    let mcIndex = "0";
-    if (q.type === "multiple_choice" && typeof q.correctAnswer === "number") {
-      mcIndex = String(q.correctAnswer);
+    let mcIndex = "";
+    if (q.type === "multiple_choice" && q.correctAnswer) {
+      const correctAnswerIndex = opts.indexOf(q.correctAnswer as string);
+      mcIndex = String(correctAnswerIndex);
     }
     setEditForm({
       question: q.question,
@@ -654,10 +655,11 @@ const AdminCourseQuestionBank = () => {
                     rows={4}
                   />
                   <div className="space-y-2">
-                    <Label>Correct option index</Label>
+                    <Label>Correct option index (0 = first option)</Label>
                     <Input
                       type="number"
                       min={0}
+                      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       value={editForm.correctMcIndex}
                       onChange={(e) => setEditForm((f) => ({ ...f, correctMcIndex: e.target.value }))}
                     />

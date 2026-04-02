@@ -34,9 +34,9 @@ function CourseRowCard({
       <Card className="hover:shadow-md transition-all overflow-hidden">
         <CardContent className="p-0">
           <div className="flex flex-col sm:flex-row">
-            <div className="relative sm:w-44 md:w-52 shrink-0 aspect-[4/3] sm:aspect-auto sm:min-h-[140px] bg-muted">
+            <div className="relative sm:w-44 md:w-72 shrink-0 aspect-[4/3] sm:aspect-auto sm:min-h-[140px] bg-muted">
               {coverSrc ? (
-                <img src={coverSrc} alt={course.title} className="absolute inset-0 w-full h-full object-cover" />
+                <img src={coverSrc} alt={course.title} className="absolute inset-0 w-full h-full object-contain" />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                   <BookOpen className="w-10 h-10 opacity-40" />
