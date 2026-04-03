@@ -84,6 +84,7 @@ export default function AdminComplaints() {
   const totalDocs = pageData?.totalDocs ?? 0;
   const stats = statsRes?.data;
 
+
   useEffect(() => {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -217,7 +218,7 @@ export default function AdminComplaints() {
                       <TableCell className="font-medium max-w-[220px]">
                         <span className="line-clamp-2">{t.subject}</span>
                       </TableCell>
-                      <TableCell className="text-muted-foreground text-xs font-mono" title={String(t.user)}>
+                      <TableCell className="text-muted-foreground text-xs font-mono" title={t.user}>
                         {formatUserRef(t.user)}
                       </TableCell>
                       <TableCell>

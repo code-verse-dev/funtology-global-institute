@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { ApiCourse } from "@/redux/services/apiSlices/courseSlice";
-import { useGetAllCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
+import { useGetCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
 import {
   type ApiLearner,
   type AssignedCourseRow,
@@ -134,7 +134,7 @@ const OrganizationLearners = () => {
   const [pendingCourseIds, setPendingCourseIds] = useState<string[]>([]);
 
   const { data: listRes, isLoading, isFetching, isError, error, refetch } = useGetLearnersQuery(query);
-  const { data: allCoursesRes, isLoading: coursesLoading } = useGetAllCoursesQuery();
+  const { data: allCoursesRes, isLoading: coursesLoading } = useGetCoursesQuery({});
   const { data: assignedRes, isLoading: assignedLoading } = useGetAssignedCoursesQuery(
     { learnerId: coursesLearner?._id ?? "" },
     { skip: !coursesLearner?._id }
