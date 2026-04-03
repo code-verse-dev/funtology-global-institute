@@ -51,6 +51,7 @@ import LearnerNotifications, {
   AdminNotifications,
   OrganizationNotifications,
 } from "./pages/Notifications";
+import MySupportTickets from "./pages/MySupportTickets";
 import { getBasename } from "./utils/Functions";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -141,6 +142,11 @@ const App = () => {
             <Route path="notifications" element={
               <ProtectedRoute allowedRoles={["learner"]}>
                 <LearnerNotifications />
+              </ProtectedRoute>
+            } />
+            <Route path="support" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <MySupportTickets />
               </ProtectedRoute>
             } />
           </Route>
@@ -247,6 +253,11 @@ const App = () => {
             <Route path="notifications" element={
               <ProtectedRoute allowedRoles={["organization"]}>
                 <OrganizationNotifications />
+              </ProtectedRoute>
+            } />
+            <Route path="support" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <MySupportTickets />
               </ProtectedRoute>
             } />
           </Route>

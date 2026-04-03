@@ -118,7 +118,6 @@ const AdminUserDetail = () => {
             <Row label="Phone" value={user.phoneNumber} />
             <Row label="Organization" value={user.organizationName} />
             <Row label="Street address" value={user.streetAddress} />
-            <Row label="Department" value={user.department} />
             <Row
               label="Joined"
               value={

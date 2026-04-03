@@ -2,14 +2,12 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithReauth from "@/redux/reauth/baseQueryWithReauth";
 import type { ApiCourse } from "./courseSlice";
 
-export type OrgLearnerDepartment = "Nursing" | "Lab" | "General";
 
 export type InviteLearnerBody = {
   email: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  department: OrgLearnerDepartment;
 };
 
 export type ApiLearner = {
@@ -18,12 +16,12 @@ export type ApiLearner = {
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;
-  department?: string;
   status?: string;
   progress?: number;
   coursesCount?: number;
   completedCourses?: number;
   enrolledCourses?: number;
+  assignments?: any[];
 };
 
 export type LearnersPaginated = {

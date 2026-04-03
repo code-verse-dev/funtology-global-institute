@@ -59,7 +59,7 @@ const CTASection = () => {
             transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
           >
             <Shield className="w-5 h-5 text-secondary" />
-            <span className="text-sm font-medium text-primary-foreground">Accredited</span>
+            {/* <span className="text-sm font-medium text-primary-foreground">Accredited</span> */}
           </motion.div>
 
           <motion.div
@@ -85,7 +85,7 @@ const CTASection = () => {
               <span className="block text-gradient-gold mt-2">Your Career?</span>
             </h2>
             <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-            Join a growing network of learners who have completed standards-aligned, career-focused programs through Funtology Global Institute for Career Innovation (FGI).
+            Join a growing network of learners who have completed career-focused programs through Funtology Global Institute for Career Innovation (FGI).
             </p>
 
             {/* Benefits List */}
@@ -96,7 +96,7 @@ const CTASection = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
             >
-              {["Standards-Aligned", "Interactive Learning", "Instant Certificates"].map((benefit, index) => (
+              {["Interactive Learning", "Instant Certificates"].map((benefit, index) => (
                 <motion.div
                   key={benefit}
                   className="flex items-center gap-2 text-primary-foreground/80"
@@ -146,7 +146,7 @@ const CTASection = () => {
             </motion.div>
 
             {/* Trust Badges */}
-            <motion.div 
+            {/* <motion.div 
               className="mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-6 md:gap-10"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -155,8 +155,6 @@ const CTASection = () => {
             >
               {[
                 { title: "CE", subtitle: "Standards-Aligned" },
-                { title: "10K+", subtitle: "Certified Professionals" },
-                // { title: "ADA", subtitle: "Compliant Platform" },
                 { title: "256-bit", subtitle: "SSL Encryption" },
               ].map((badge, index) => (
                 <motion.div
@@ -172,7 +170,7 @@ const CTASection = () => {
                   <p className="text-xs text-primary-foreground/60">{badge.subtitle}</p>
                 </motion.div>
               ))}
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </motion.div>
       </div>

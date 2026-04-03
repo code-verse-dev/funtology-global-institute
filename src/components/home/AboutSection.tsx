@@ -31,9 +31,7 @@ const AboutSection = () => {
               Excellence in Ongoing Education
             </h2>
             <p className="text-md text-muted-foreground leading-relaxed mb-8">
-            Funtology Global Institute for Career Innovation is committed to delivering high-quality, standards-aligned on-going education programs that support career advancement, workforce readiness, and professional growth.
-            Our structured learning platform is designed to provide measurable learning outcomes, documented instructional hours, and competency-based development, ensuring participants earn recognized professional development credentials that strengthen career pathways and demonstrate mastery of essential skills.
-            </p>
+            Empowering individuals and professionals through standards-based education that delivers measurable learning outcomes and verifiable professional credentials            </p>
 
             {/* Benefits List */}
             <ul className="space-y-4 mb-8">
@@ -87,7 +85,7 @@ const AboutSection = () => {
               <Shield className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold mb-2">Standards-Aligned</h3>
               <p className="text-sm text-primary/80">
-              Our programs are thoughtfully designed to align with industry best practices, ensuring high-quality, engaging, and impactful learning experiences for every participant.
+                Our programs are thoughtfully designed to align with industry best practices, ensuring high-quality, engaging, and impactful learning experiences for every participant.
               </p>
             </motion.div>
 
@@ -111,10 +109,10 @@ const AboutSection = () => {
               transition={{ duration: 0.2 }}
             >
               <div className="space-y-4">
-                <div>
+                {/* <div>
                   <p className="font-heading text-3xl font-bold text-secondary">10,000+</p>
                   <p className="text-sm text-primary-foreground/70">CE Hours Awarded</p>
-                </div>
+                </div> */}
                 <div>
                   <p className="font-heading text-3xl font-bold text-secondary">50+</p>
                   <p className="text-sm text-primary-foreground/70">Partner Organizations</p>

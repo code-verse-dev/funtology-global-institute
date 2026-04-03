@@ -26,7 +26,6 @@ import {
   type ApiLearner,
   type AssignedCourseRow,
   type LearnersPaginated,
-  type OrgLearnerDepartment,
   useAssignCourseToLearnerMutation,
   useGetAssignedCoursesQuery,
   useGetLearnersQuery,
@@ -40,11 +39,6 @@ import { toast } from "sonner";
 
 const PAGE_SIZE = 10;
 
-const DEPARTMENTS: { value: OrgLearnerDepartment; label: string }[] = [
-  { value: "Nursing", label: "Nursing" },
-  { value: "Lab", label: "Lab" },
-  { value: "General", label: "General" },
-];
 
 function coursesFromGetAllResponse(res: unknown): ApiCourse[] {
   if (!res || typeof res !== "object") return [];
@@ -127,7 +121,6 @@ const OrganizationLearners = () => {
     firstName: "",
     lastName: "",
     phoneNumber: "",
-    department: "General" as OrgLearnerDepartment,
   });
 
   const [coursesLearner, setCoursesLearner] = useState<ApiLearner | null>(null);
@@ -139,7 +132,6 @@ const OrganizationLearners = () => {
     { learnerId: coursesLearner?._id ?? "" },
     { skip: !coursesLearner?._id }
   );
-
   const [inviteLearner, { isLoading: inviting }] = useInviteLearnerMutation();
   const [assignCourses, { isLoading: assigning }] = useAssignCourseToLearnerMutation();
   const [removeCourse, { isLoading: removingCourse }] = useRemoveCourseFromLearnerMutation();
@@ -231,8 +223,7 @@ const OrganizationLearners = () => {
         email,
         firstName,
         lastName,
-        phoneNumber,
-        department: inviteForm.department,
+        phoneNumber
       }).unwrap();
       if (res.status) {
         toast.success(res.message || "Invitation sent.");
@@ -242,7 +233,6 @@ const OrganizationLearners = () => {
           firstName: "",
           lastName: "",
           phoneNumber: "",
-          department: "General",
         });
       } else {
         toast.error(res.message || "Could not invite learner.");
@@ -287,7 +277,7 @@ const OrganizationLearners = () => {
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            placeholder="Search by name, email, or department…"
+            placeholder="Search by name, or email"
             className="pl-10"
             value={keywordInput}
             onChange={(e) => onKeywordChange(e.target.value)}
@@ -322,9 +312,7 @@ const OrganizationLearners = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Learner</TableHead>
-                  <TableHead>Department</TableHead>
                   <TableHead>Courses</TableHead>
-                  <TableHead>Progress</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="w-[140px]"></TableHead>
                 </TableRow>
@@ -350,17 +338,10 @@ const OrganizationLearners = () => {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell>{learner.department ?? "—"}</TableCell>
                       <TableCell>
-                        {learner.enrolledCourses ?? learner.coursesCount ?? learner.completedCourses ?? "—"}
+                        {learner.assignments.length?? "—"}
                       </TableCell>
-                      <TableCell>
-                        {typeof learner.progress === "number" ? (
-                          <span className="text-sm tabular-nums">{learner.progress}%</span>
-                        ) : (
-                          "—"
-                        )}
-                      </TableCell>
+                  
                       <TableCell>
                         <Badge variant={statusBadgeVariant(learner.status)} className="gap-1 capitalize">
                           {learner.status === "active" ? <Clock className="w-3 h-3" /> : null}
@@ -458,24 +439,7 @@ const OrganizationLearners = () => {
                 onChange={(e) => setInviteForm((f) => ({ ...f, phoneNumber: e.target.value }))}
               />
             </div>
-            <div className="grid gap-2">
-              <Label>Department</Label>
-              <Select
-                value={inviteForm.department}
-                onValueChange={(v) => setInviteForm((f) => ({ ...f, department: v as OrgLearnerDepartment }))}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {DEPARTMENTS.map((d) => (
-                    <SelectItem key={d.value} value={d.value}>
-                      {d.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
             <Button type="button" variant="outline" onClick={() => setInviteOpen(false)}>
@@ -535,14 +499,10 @@ const OrganizationLearners = () => {
                   {assignedRows.map((row, idx) => {
                     const cid = courseIdFromAssignedRow(row);
                     const title = courseTitleFromRow(row);
-                    const progress = row.completionPercentage ?? row.progress;
                     return (
                       <li key={cid ?? row._id ?? idx} className="flex items-center justify-between gap-2 p-3 text-sm">
                         <div className="min-w-0 flex-1">
                           <p className="font-medium truncate">{title}</p>
-                          {typeof progress === "number" ? (
-                            <p className="text-xs text-muted-foreground">{progress}% complete</p>
-                          ) : null}
                         </div>
                         <Button
                           type="button"

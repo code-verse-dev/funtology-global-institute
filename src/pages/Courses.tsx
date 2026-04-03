@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { Search, Filter, Clock, Award, ChevronRight, BookOpen, Sparkles, Layers } from "lucide-react";
+import { Search, Filter, Clock, Award, ChevronRight, BookOpen, Sparkles, Layers, Timer, BookText } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGetAllCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { useSelector } from "react-redux";
@@ -26,6 +26,8 @@ type CatalogCourse = {
   level?: number;
   amount?: number;
   learningObjectives?: string[];
+  readingTime?: number;
+  testTime?: number;
 };
 
 function coursesFromResponse(data: unknown): CatalogCourse[] {
@@ -67,6 +69,9 @@ const Courses = () => {
   const user = useSelector((state: RootState) => state.user.userData);
   const isLearner = user?.role && user?.role === "learner";
   const isAdmin = user?.role && user?.role === "admin";
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -114,7 +119,7 @@ const Courses = () => {
                 Course Catalog
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
-              Browse our standards-aligned, on-going education programs designed to support career advancement, workforce readiness, and professional growth.
+                Browse our standards-aligned, on-going education programs designed to support career advancement, workforce readiness, and professional growth.
               </p>
 
               {/* Search Bar */}
@@ -186,10 +191,11 @@ const Courses = () => {
                 "Loading courses…"
               ) : (
                 <>
-                  Showing <span className="font-semibold text-foreground">{filteredCourses.length}</span>
+                  {/* Showing <span className="font-semibold text-foreground">{filteredCourses.length}</span>
                   {searchQuery.trim()
                     ? ` matching “${searchQuery.trim()}”`
-                    : " courses"}
+                    : " courses"} */}
+                  5+ On-Going Education Courses Available
                 </>
               )}
             </p>
@@ -272,12 +278,18 @@ const Courses = () => {
                           </p>
 
                           <div className="flex flex-wrap items-center gap-4 mb-5 text-sm text-muted-foreground">
-                            {typeof course.ceHours === "number" ? (
-                              <div className="flex items-center gap-1">
-                                <Clock className="w-4 h-4" />
-                                <span>{course.ceHours}h</span>
-                              </div>
-                            ) : null}
+                          {course.readingTime ? (
+                          <span className="flex items-center gap-1">
+                            <BookText className="w-3.5 h-3.5 shrink-0" aria-hidden />
+                            {course.readingTime}hours
+                          </span>
+                        ) : null}
+                        {course.testTime ? (
+                          <span className="flex items-center gap-1">
+                            <Timer className="w-3.5 h-3.5 shrink-0" aria-hidden />
+                            {course.testTime}hours
+                          </span>
+                        ) : null}
                             <div className="flex items-center gap-1">
                               <BookOpen className="w-4 h-4" />
                               <span>Flipbook</span>
@@ -291,7 +303,7 @@ const Courses = () => {
                               <span className="text-sm text-muted-foreground">See details</span>
                             )}
                             <Button variant="secondary" size="sm" className="font-heading font-semibold" asChild>
-                            <Link to={isLearner ? `/dashboard/courses/${course._id}` : isAdmin ? `/admin/courses` : `/organization/courses/${course._id}`}>
+                              <Link to={isLearner ? `/dashboard/courses/${course._id}` : isAdmin ? `/admin/courses` : `/organization/courses/${course._id}`}>
                                 View Details
                                 <ChevronRight className="w-4 h-4 ml-1" />
                               </Link>

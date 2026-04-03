@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 import fgiLogo from "@/assets/fgi-logo.png";
 
 const Footer = () => {
@@ -52,11 +52,11 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-primary-foreground/70 text-sm leading-relaxed mb-6">
-              Advancing Levels. Elevating Futures. Mastering Innovation. 
-              Standards-aligned ongoing education for career excellence.
+              Advancing Levels. Elevating Futures. Mastering Innovation
+              and ongoing education for career excellence.
             </p>
             <div className="flex gap-4">
-              <a
+              {/* <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -73,9 +73,18 @@ const Footer = () => {
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
+              </a> */}
+              <a
+                href="https://www.instagram.com/invites/contact/?igsh=7p0xd4gzanzm&utm_content=htmlpeo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary hover:text-primary transition-colors duration-300"
+                aria-label="LinkedIn"
+              >
+                <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/18MbReEkXY/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary hover:text-primary transition-colors duration-300"
@@ -151,8 +160,9 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary mt-0.5" />
                 <span className="text-primary-foreground/70">
-                  123 Education Lane<br />
-                  Innovation City, IC 12345
+                  P.O. Box 5481
+                  <br />
+                  Augusta, Georgia 30916
                 </span>
               </li>
             </ul>

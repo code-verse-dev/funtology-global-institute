@@ -14,6 +14,7 @@ import { certificateSlice } from "./services/apiSlices/certificateSlice";
 import { retakeSlice } from "./services/apiSlices/retakeSlice";
 import { subscriptionSlice } from "./services/apiSlices/subscriptionSlice";
 import { notificationSlice } from "./services/apiSlices/notificationSlice";
+import { feedbackSlice } from "./services/apiSlices/feedbackSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -28,12 +29,13 @@ const rootReducer = combineReducers({
   [retakeSlice.reducerPath]: retakeSlice.reducer,
   [subscriptionSlice.reducerPath]: subscriptionSlice.reducer,
   [notificationSlice.reducerPath]: notificationSlice.reducer,
+  [feedbackSlice.reducerPath]: feedbackSlice.reducer,
 });
 
 const persistConfig = {
   key: "global_institute",
   storage,
-  blacklist: [authSlice.reducerPath, userApiSlice.reducerPath, courseApiSlice.reducerPath, lessonSlice.reducerPath, ticketSlice.reducerPath, paymentSlice.reducerPath, learnerSlice.reducerPath, certificateSlice.reducerPath, retakeSlice.reducerPath, subscriptionSlice.reducerPath, notificationSlice.reducerPath],
+  blacklist: [authSlice.reducerPath, userApiSlice.reducerPath, courseApiSlice.reducerPath, lessonSlice.reducerPath, ticketSlice.reducerPath, paymentSlice.reducerPath, learnerSlice.reducerPath, certificateSlice.reducerPath, retakeSlice.reducerPath, subscriptionSlice.reducerPath, notificationSlice.reducerPath, feedbackSlice.reducerPath],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -44,7 +46,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      .concat(authSlice.middleware, userApiSlice.middleware, courseApiSlice.middleware, lessonSlice.middleware, ticketSlice.middleware, paymentSlice.middleware, learnerSlice.middleware, certificateSlice.middleware, retakeSlice.middleware, subscriptionSlice.middleware, notificationSlice.middleware)
+      .concat(authSlice.middleware, userApiSlice.middleware, courseApiSlice.middleware, lessonSlice.middleware, ticketSlice.middleware, paymentSlice.middleware, learnerSlice.middleware, certificateSlice.middleware, retakeSlice.middleware, subscriptionSlice.middleware, notificationSlice.middleware, feedbackSlice.middleware)
 });
 
 setupListeners(store.dispatch);

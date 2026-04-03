@@ -349,9 +349,9 @@ const AdminCourses = () => {
                               </DropdownMenuSubContent>
                             </DropdownMenuSub>
                             <DropdownMenuItem asChild>
-                              <Link to={`//courses/${course._id}/content`}>
+                              <Link to={`/admin/courses/${course._id}/content`}>
                                 <Upload className="w-4 h-4 mr-2" />
-                                Upload content
+                                View content
                               </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>

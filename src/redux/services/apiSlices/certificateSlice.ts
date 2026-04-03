@@ -12,7 +12,6 @@ export type OrgCertificateStudent = {
   firstName?: string;
   lastName?: string;
   email?: string;
-  department?: string;
 };
 
 export type OrganizationLearnerCertificate = {
