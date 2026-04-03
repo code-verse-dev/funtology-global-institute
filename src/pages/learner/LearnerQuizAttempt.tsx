@@ -54,59 +54,59 @@ const LearnerQuizAttempt = () => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
 
-  useEffect(() => {
-    if (!shouldBlockNavigation) return;
+  // useEffect(() => {
+  //   if (!shouldBlockNavigation) return;
 
-    const currentUrl = window.location.href;
-    const originalPushState = window.history.pushState.bind(window.history);
-    const originalReplaceState = window.history.replaceState.bind(window.history);
+  //   const currentUrl = window.location.href;
+  //   const originalPushState = window.history.pushState.bind(window.history);
+  //   const originalReplaceState = window.history.replaceState.bind(window.history);
 
-    const blockNavigation = () => {
-      toast.error("Please submit your quiz before leaving this page.");
-    };
+  //   const blockNavigation = () => {
+  //     toast.error("Please submit your quiz before leaving this page.");
+  //   };
 
-    window.history.pushState = function pushStateOverride(...args) {
-      const nextUrl = args[2];
-      const next =
-        typeof nextUrl === "string" ? new URL(nextUrl, window.location.href).href : window.location.href;
-      if (next !== currentUrl) {
-        blockNavigation();
-        return;
-      }
-      return originalPushState(...args);
-    };
+  //   window.history.pushState = function pushStateOverride(...args) {
+  //     const nextUrl = args[2];
+  //     const next =
+  //       typeof nextUrl === "string" ? new URL(nextUrl, window.location.href).href : window.location.href;
+  //     if (next !== currentUrl) {
+  //       blockNavigation();
+  //       return;
+  //     }
+  //     return originalPushState(...args);
+  //   };
 
-    window.history.replaceState = function replaceStateOverride(...args) {
-      const nextUrl = args[2];
-      const next =
-        typeof nextUrl === "string" ? new URL(nextUrl, window.location.href).href : window.location.href;
-      if (next !== currentUrl) {
-        blockNavigation();
-        return;
-      }
-      return originalReplaceState(...args);
-    };
+  //   window.history.replaceState = function replaceStateOverride(...args) {
+  //     const nextUrl = args[2];
+  //     const next =
+  //       typeof nextUrl === "string" ? new URL(nextUrl, window.location.href).href : window.location.href;
+  //     if (next !== currentUrl) {
+  //       blockNavigation();
+  //       return;
+  //     }
+  //     return originalReplaceState(...args);
+  //   };
 
-    const handlePopState = () => {
-      blockNavigation();
-      originalPushState(null, "", currentUrl);
-    };
+  //   const handlePopState = () => {
+  //     blockNavigation();
+  //     originalPushState(null, "", currentUrl);
+  //   };
 
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "";
-    };
+  //   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  //     event.preventDefault();
+  //     event.returnValue = "";
+  //   };
 
-    originalPushState(null, "", currentUrl);
-    window.addEventListener("popstate", handlePopState);
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.history.pushState = originalPushState;
-      window.history.replaceState = originalReplaceState;
-      window.removeEventListener("popstate", handlePopState);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [shouldBlockNavigation]);
+  //   originalPushState(null, "", currentUrl);
+  //   window.addEventListener("popstate", handlePopState);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   return () => {
+  //     window.history.pushState = originalPushState;
+  //     window.history.replaceState = originalReplaceState;
+  //     window.removeEventListener("popstate", handlePopState);
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, [shouldBlockNavigation]);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -127,13 +127,14 @@ const LearnerQuizAttempt = () => {
 
     try {
       const res = await submitQuizResponse({ lessonId: quizLessonId, answers: payload.answers }).unwrap();
+      console.log(res, 'res');
       if (res?.status === false) {
         toast.error(res?.message || "Could not submit quiz response.");
         return;
       }
-      setQuizSubmitted(true);
-      toast.success(res?.message || "Quiz submitted successfully.");
+      // setQuizSubmitted(true);
       if (res?.data?.certificate) {
+        toast.success(res?.message || "Quiz submitted successfully.");
         navigate("/dashboard", {
           replace: true,
           state: { activeTab: "certificates" as const },
@@ -142,6 +143,7 @@ const LearnerQuizAttempt = () => {
       }
       navigate(`/dashboard/courses/${courseId}`, { replace: true });
     } catch (err: unknown) {
+      console.log(err, 'err');
       const msg =
         err && typeof err === "object" && "data" in err && err.data && typeof err.data === "object" && "message" in err.data
           ? String((err.data as { message: string }).message)
