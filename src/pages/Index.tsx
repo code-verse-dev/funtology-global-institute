@@ -62,7 +62,7 @@ const Index = () => {
               <FeaturedCourses />
               <AboutSection />
               <HowItWorks />
-              <Testimonials />
+              {/* <Testimonials /> */}
               <FAQSection />
               <CTASection />
               {/* Important Notice / Accreditation Status Disclaimer */}

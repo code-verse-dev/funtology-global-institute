@@ -15,7 +15,7 @@ import { removeUser } from "@/redux/services/Slices/userSlice";
 import type { RootState } from "@/redux/store";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
-import { BookOpen, Home, LogOut, Settings, User } from "lucide-react";
+import { BookOpen, Headphones, Home, LogOut, Settings, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
@@ -90,6 +90,12 @@ const DashboardLayout = () => {
                     My courses
                   </span>
                 </NavLink>
+                <NavLink to="/dashboard/support" className={navClass}>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Headphones className="w-4 h-4" />
+                    Support
+                  </span>
+                </NavLink>
               </nav>
             </div>
 
@@ -140,6 +146,9 @@ const DashboardLayout = () => {
             </NavLink>
             <NavLink to="/dashboard/courses" className={navClass}>
               Courses
+            </NavLink>
+            <NavLink to="/dashboard/support" className={navClass}>
+              Support
             </NavLink>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, Loader2 } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,24 +8,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useSubmitFeedbackMutation } from "@/redux/services/apiSlices/feedbackSlice";
 
 const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    details: "support@fgi.edu",
+    details: "info@FuntologyGlobalInstitute.com",
     description: "We respond within 24 hours",
   },
   {
     icon: Phone,
     title: "Phone",
-    details: "+1 (800) 555-0199",
+    details: "+1 (706) 288 8082",
     description: "Mon-Fri, 9AM-5PM EST",
   },
   {
     icon: MapPin,
     title: "Address",
-    details: "123 Education Lane",
+    details: "P.O. Box 5481",
     description: "Suite 400, New York, NY 10001",
   },
   {
@@ -44,10 +45,30 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitFeedback, { isLoading }] = useSubmitFeedbackMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    try {
+      const res = await submitFeedback({
+        fullName: formData.name.trim(),
+        email: formData.email.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+      }).unwrap();
+      if (res.status) {
+        toast.success(res.message || "Message sent successfully! We'll get back to you soon.");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast.error(res.message || "Could not send your message.");
+      }
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "data" in err && err.data && typeof err.data === "object" && "message" in err.data
+          ? String((err.data as { message: string }).message)
+          : "Could not send your message. Please try again.";
+      toast.error(msg);
+    }
   };
 
   useEffect(() => {
@@ -139,9 +160,18 @@ const Contact = () => {
                     />
                   </div>
                   
-                  <Button type="submit" variant="secondary" size="lg" className="w-full sm:w-auto">
-                    <Send className="w-4 h-4 mr-2" />
-                    Send Message
+                  <Button type="submit" variant="secondary" size="lg" className="w-full sm:w-auto" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" aria-hidden />
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" aria-hidden />
+                        Send Message
+                      </>
+                    )}
                   </Button>
                 </form>
               </motion.div>

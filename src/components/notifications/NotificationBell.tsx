@@ -100,14 +100,14 @@ export function NotificationBell({ triggerClassName, panelClassName }: Notificat
           onMouseLeave={scheduleClose}
         >
           <div className="flex items-center justify-between px-2 pb-1">
-            <span className="text-sm font-semibold">Notifications</span>
+            <span className="text-sm font-semibold text-foreground/70">Notifications</span>
             {unreadCount > 0 && (
               <span className="text-[10px] font-bold text-destructive">{unreadCount} unread</span>
             )}
           </div>
           <div className="my-1 h-px bg-border" />
           {topNotifs.length === 0 ? (
-            <div className="px-3 py-6 text-center text-xs text-muted-foreground">
+            <div className="px-3 py-6 text-center text-xs text-foreground/70">
               No new notifications.
             </div>
           ) : (
@@ -133,7 +133,7 @@ export function NotificationBell({ triggerClassName, panelClassName }: Notificat
           <div className="my-1 h-px bg-border" />
           <Link
             to={listPath}
-            className="block rounded-md py-2 text-center text-xs font-semibold text-primary hover:bg-muted/60"
+            className="block rounded-md py-2 text-center text-xs font-semibold text-foreground/70 hover:bg-muted/60"
             onClick={() => setOpen(false)}
           >
             View all notifications

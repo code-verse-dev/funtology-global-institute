@@ -106,7 +106,7 @@ const HeroSection = () => {
             >
               {/* Elevate your expertise with standards-aligned ongoing education programs. 
               Earn recognized certifications that advance your career and demonstrate mastery. */}
-              Elevate your expertise through standards-aligned, ongoing education programs designed to support career readiness, workforce development, and professional growth.
+              Elevate your expertise, ongoing education programs designed to support career readiness, workforce development, and professional growth.
               <br />
               <br />
               Earn recognized certifications that validate skill development, strengthen resumes, and demonstrate mastery of essential career competencies.
@@ -181,8 +181,8 @@ const HeroSection = () => {
               transition={{ delay: 1 }}
             >
               {[
-                { value: "10K+", label: "Certified Professionals" },
-                { value: "50+", label: "CE Courses Available" },
+                // { value: "10K+", label: "Certified Professionals" },
+                { value: "50+", label: "Courses Available" },
                 { value: "98%", label: "Satisfaction Rate" },
               ].map((stat, index) => (
                 <motion.div
@@ -228,15 +228,15 @@ const HeroSection = () => {
                   </motion.div>
                   <div>
                     <p className="font-heading font-bold text-foreground text-lg">Featured Course</p>
-                    <p className="text-sm text-muted-foreground">Start your journey today</p>
+                    {/* <p className="text-sm text-muted-foreground">Start your journey today</p> */}
                   </div>
                 </div>
                 
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
-                  Professional Development Certificate
+                  Start Your Journey Today
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Comprehensive training program with 40 CE hours. Master essential skills for career advancement.
+                A comprehensive training program designed with standards-aligned on-going education hours to build measurable skills that support career advancement.
                 </p>
 
                 {/* Progress Preview */}
@@ -260,10 +260,10 @@ const HeroSection = () => {
                     <Users className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">2,340 enrolled</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  {/* <div className="flex items-center gap-1">
                     <Award className="w-5 h-5 text-secondary" />
                     <span className="text-sm font-bold text-secondary">40 CE Hours</span>
-                  </div>
+                  </div> */}
                 </div>
               </motion.div>
 

@@ -127,7 +127,6 @@ const LearnerQuizAttempt = () => {
 
     try {
       const res = await submitQuizResponse({ lessonId: quizLessonId, answers: payload.answers }).unwrap();
-      console.log(res, 'res');
       if (res?.status === false) {
         toast.error(res?.message || "Could not submit quiz response.");
         return;

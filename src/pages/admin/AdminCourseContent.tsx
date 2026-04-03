@@ -125,7 +125,7 @@ const AdminCourseContent = () => {
             </Link>
           </Button>
           <div>
-            <h2 className="font-heading text-lg font-bold">Upload content</h2>
+            <h2 className="font-heading text-lg font-bold">View content</h2>
             <p className="text-sm text-muted-foreground">{course?.title ?? "Course"}</p>
           </div>
         </div>

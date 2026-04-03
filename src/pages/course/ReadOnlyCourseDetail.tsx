@@ -414,7 +414,6 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
           <CardTitle className="font-heading text-base">About this course</CardTitle>
           <CardDescription>
             {course.ceHours} CE hours
-            {course.sortOrder != null ? ` · Order ${course.sortOrder}` : ""}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 text-sm">
@@ -422,7 +421,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
           {course.learningObjectives && course.learningObjectives.length > 0 ? (
             <div>
               <p className="font-medium text-foreground mb-2">Learning objectives</p>
-              <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-1 text-foreground">
                 {course.learningObjectives.map((obj, i) => (
                   <li key={i}>{obj}</li>
                 ))}

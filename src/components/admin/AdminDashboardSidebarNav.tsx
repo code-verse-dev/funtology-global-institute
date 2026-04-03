@@ -38,7 +38,7 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   { segment: "payments", label: "Payments & Revenue", icon: DollarSign },
   { segment: "complaints", label: "Complaints & Appeals", icon: MessageSquare },
   // { segment: "reports", label: "Reports & Analytics", icon: BarChart3 },
-  { segment: "audit", label: "Audit Log", icon: History },
+  // { segment: "audit", label: "Audit Log", icon: History },
   { segment: "settings", label: "System Settings", icon: Settings },
 ];
 

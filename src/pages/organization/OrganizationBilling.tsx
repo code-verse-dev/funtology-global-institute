@@ -8,11 +8,6 @@ import { AlertTriangle, CheckCircle2, Clock, Loader2 } from "lucide-react";
 
 type PaymentDoc = Record<string, unknown>;
 
-function formatPaymentId(id: string) {
-  if (id.length <= 10) return id;
-  return `#${id.slice(-8)}`;
-}
-
 function formatDate(iso?: string) {
   if (!iso) return "—";
   const d = new Date(iso);
@@ -86,7 +81,7 @@ const OrganizationBilling = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Payment</TableHead>
+                  <TableHead className="w-14">#</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Description</TableHead>
                   <TableHead>Amount</TableHead>
@@ -101,15 +96,15 @@ const OrganizationBilling = () => {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  docs.map((raw) => {
+                  docs.map((raw, index) => {
                     const p = raw as PaymentDoc;
                     const id = String(p._id ?? p.id ?? "");
                     const status = String(p.status ?? p.paymentStatus ?? "—");
                     const created = typeof p.createdAt === "string" ? p.createdAt : typeof p.date === "string" ? p.date : undefined;
                     return (
                       <TableRow key={id || JSON.stringify(p)}>
-                        <TableCell className="font-mono text-xs whitespace-nowrap" title={id}>
-                          {id ? formatPaymentId(id) : "—"}
+                        <TableCell className="text-muted-foreground text-sm tabular-nums text-center">
+                          {index + 1}
                         </TableCell>
                         <TableCell className="text-muted-foreground text-sm whitespace-nowrap">{formatDate(created)}</TableCell>
                         <TableCell className="text-muted-foreground max-w-[280px]">

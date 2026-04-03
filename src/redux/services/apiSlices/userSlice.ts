@@ -15,7 +15,6 @@ export type ApiUser = {
   role: string;
   organizationName?: string;
   streetAddress?: string;
-  department?: string;
   createdAt?: string;
   updatedAt?: string;
 };

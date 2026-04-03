@@ -252,7 +252,8 @@ const DashboardHome = () => {
                             <p className="text-xs text-muted-foreground">Passed on {formatIssuedDate(item.passedAt)}</p>
                           </div>
                           <Badge variant="secondary" className="whitespace-nowrap">
-                            {score}% (pass {passThresholdPercent}%)
+                            {score}% 
+                            {/* (pass {passThresholdPercent}%) */}
                           </Badge>
                         </div>
                       );
