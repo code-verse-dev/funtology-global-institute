@@ -65,16 +65,25 @@ export const userApiSlice = createApi({
   tagTypes: ["User"],
   endpoints: (builder) => ({
     getUsers: builder.query<
-    any,
-    { page?: number; limit?: number; keyword?: string; role?: string, status?: string, from?: string, to?: string }
-  >({
-    query: ({ page, limit, keyword, role, status, from, to } = {}) => ({
-      url: "/user/admin/getUsers",
-      method: "GET",
-      params: { page, limit, keyword, role, status, from, to },
+      any,
+      { page?: number; limit?: number; keyword?: string; role?: string, status?: string, from?: string, to?: string }
+    >({
+      query: ({ page, limit, keyword, role, status, from, to } = {}) => ({
+        url: "/user/admin/getUsers",
+        method: "GET",
+        params: { page, limit, keyword, role, status, from, to },
+      }),
+      providesTags: ["User"],
     }),
-    providesTags: ["User"],
-  }),
+
+    exportUsersXlsx: builder.mutation({
+      query: (params: any) => ({
+        url: "/user/admin/exportUsers",
+        method: "GET",
+        params,
+        responseHandler: async (response: any) => await response.blob(), // handles XLSX too
+      }),
+    }),
 
     getUserById: builder.query<UserByIdApiResponse, string>({
       query: (id) => `/user/getUser/${id}`,
@@ -106,4 +115,5 @@ export const {
   useGetUserByIdQuery,
   useUpdateUserStatusMutation,
   useGetAdminStatsQuery,
+  useExportUsersXlsxMutation,
 } = userApiSlice;

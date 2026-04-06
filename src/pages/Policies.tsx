@@ -671,7 +671,20 @@ const Policies = () => {
                 Policies & Compliance
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80">
-                Our commitment to transparency, accessibility, and ethical practices
+                Our Commitment to Transparency, Accessibility, and Ethical Practices
+              </p>
+              <h2 className="font-heading text-3xl font-bold text-foreground mb-3 text-white mt-2">
+              Have Questions About Our Policies?
+              </h2>
+              <p className="text-lg md:text-xl text-primary-foreground/80">
+                Our Compliance Team is Here to Help Clarify Any Policy Questions.
+                <br />
+                <a
+                  href="mailto:compliance@fgi.edu"
+                  className="font-medium text-secondary underline underline-offset-4 hover:text-primary-foreground"
+                >
+                  compliance@fgi.edu
+                </a>
               </p>
             </motion.div>
           </div>

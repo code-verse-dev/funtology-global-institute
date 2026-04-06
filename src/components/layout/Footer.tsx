@@ -40,7 +40,7 @@ const Footer = () => {
               <img
                 src={fgiLogo}
                 alt="FGI Logo"
-                className="h-16 w-16 object-contain"
+                className="h-28 w-28 object-contain"
               />
               <div>
                 <p className="font-heading font-bold text-lg text-primary-foreground leading-tight">
@@ -52,8 +52,7 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-primary-foreground/70 text-sm leading-relaxed mb-6">
-              Advancing Levels. Elevating Futures. Mastering Innovation
-              and ongoing education for career excellence.
+              Advancing Levels. Elevating Futures. Mastering Innovation and Ongoing Education for Career Excellence
             </p>
             <div className="flex gap-4">
               {/* <a
@@ -145,16 +144,16 @@ const Footer = () => {
                   href="mailto:info@funtologyglobal.com"
                   className="text-primary-foreground/70 hover:text-secondary transition-colors"
                 >
-                  info@funtologyglobal.com
+                  Info@FuntologyGlobalInstitute.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-secondary mt-0.5" />
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+17062888082"
                   className="text-primary-foreground/70 hover:text-secondary transition-colors"
                 >
-                  +1 (234) 567-890
+                  +1 (706) 288-8082
                 </a>
               </li>
               <li className="flex items-start gap-3">

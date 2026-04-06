@@ -79,6 +79,15 @@ export const paymentSlice = createApi({
             }),
             providesTags: ["Payments"],
         }),
+        exportPaymentsXlsx: builder.mutation({
+            query: (params: any) => ({
+              url: "/payment/admin/exportPayments",
+              method: "GET",
+              params,
+              responseHandler: async (response: any) => await response.blob(), // handles XLSX too
+            }),
+          }),
+      
 
     }),
 });
@@ -92,4 +101,5 @@ export const {
     useGetSavedPaymentMethodsQuery,
     useGetMySubscriptionQuery,
     useGetMyPaymentsQuery,
+    useExportPaymentsXlsxMutation,
 } = paymentSlice;

@@ -29,6 +29,7 @@ import AdminCourseContent from "./pages/admin/AdminCourseContent";
 import AdminCourseQuestionBank from "./pages/admin/AdminCourseQuestionBank";
 import AdminSme from "./pages/admin/AdminSme";
 import AdminPayments from "./pages/admin/AdminPayments";
+import AdminEvaluations from "./pages/admin/AdminEvaluations";
 import AdminComplaints from "./pages/admin/AdminComplaints";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminAudit from "./pages/admin/AdminAudit";
@@ -190,6 +191,11 @@ const App = () => {
             <Route path="payments" element={
               <ProtectedRoute allowedRoles={["admin"]}>
                 <AdminPayments />
+              </ProtectedRoute>
+            } />
+            <Route path="evaluations" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminEvaluations />
               </ProtectedRoute>
             } />
             <Route path="complaints" element={<AdminComplaints />} />

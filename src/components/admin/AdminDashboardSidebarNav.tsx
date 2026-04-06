@@ -5,6 +5,7 @@ import {
   BarChart3,
   BookOpen,
   Briefcase,
+  ClipboardList,
   DollarSign,
   History,
   MessageSquare,
@@ -19,6 +20,7 @@ export type AdminNavSegment =
   | "courses"
   | "sme"
   | "payments"
+  | "evaluations"
   | "complaints"
   | "reports"
   | "audit"
@@ -36,6 +38,7 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   { segment: "courses", label: "Course Management", icon: BookOpen },
   // { segment: "sme", label: "SME Repository", icon: Briefcase },
   { segment: "payments", label: "Payments & Revenue", icon: DollarSign },
+  { segment: "evaluations", label: "Course evaluations", icon: ClipboardList },
   { segment: "complaints", label: "Complaints & Appeals", icon: MessageSquare },
   // { segment: "reports", label: "Reports & Analytics", icon: BarChart3 },
   // { segment: "audit", label: "Audit Log", icon: History },
@@ -48,6 +51,7 @@ export function adminRoutePath(segment: AdminNavSegment) {
 
 export function pageTitleForAdminPath(pathname: string): string {
   if (pathname.includes("/admin/notifications")) return "Notifications";
+  if (pathname.includes("/admin/evaluations")) return "Course evaluations";
   const m = pathname.match(/\/admin(?:\/([^/]+))?$/);
   const seg = (m?.[1] as AdminNavSegment | undefined) ?? "overview";
   return ADMIN_NAV_ITEMS.find((i) => i.segment === seg)?.label ?? "Overview";

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, Clock, CreditCard, DollarSign, Download, Search } from "lucide-react";
-import { useGetPaymentsQuery } from "@/redux/services/apiSlices/paymentSlice";
+import { useExportPaymentsXlsxMutation, useGetPaymentsQuery } from "@/redux/services/apiSlices/paymentSlice";
 import { useEffect, useMemo, useState } from "react";
 
 type PaymentUser = {
@@ -75,6 +75,27 @@ export default function AdminPayments() {
 
   const pageSum = docs.reduce((sum, d) => sum + (Number(d.totalAmount) || 0), 0);
 
+  const [exportPaymentsXlsx] = useExportPaymentsXlsxMutation();
+
+  const handleExport = async () => {
+    try {
+      const blob = await exportPaymentsXlsx({
+        keyword: debouncedKeyword,
+      }).unwrap();
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "payments-export.xlsx"; 
+      link.click();
+
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.log("Export error:", err);
+    }
+  };
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       {/* <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -132,16 +153,10 @@ export default function AdminPayments() {
                 aria-label="Search payments by user name"
               />
             </div>
-            {/* <div className="flex gap-2">
-              <Button variant="outline" size="sm" type="button">
-                <Download className="mr-2 h-4 w-4" />
-                Export CSV
-              </Button>
-              <Button variant="outline" size="sm" type="button">
-                <Download className="mr-2 h-4 w-4" />
-                Export PDF
-              </Button>
-            </div> */}
+            <Button variant="outline" size="sm" type="button" onClick={handleExport}>
+              <Download className="w-4 h-4 mr-2" />
+              Export Payments
+            </Button>
           </div>
         </CardHeader>
         <CardContent className="p-0">

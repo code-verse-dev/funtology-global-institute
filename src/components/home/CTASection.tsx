@@ -85,7 +85,7 @@ const CTASection = () => {
               <span className="block text-gradient-gold mt-2">Your Career?</span>
             </h2>
             <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-            Join a growing network of learners who have completed career-focused programs through Funtology Global Institute for Career Innovation (FGI).
+            Join a Growing Network of Learners Who Have Completed Career-Focused Programs Through Funtology Global Institute for Career Innovation (FGI).
             </p>
 
             {/* Benefits List */}
