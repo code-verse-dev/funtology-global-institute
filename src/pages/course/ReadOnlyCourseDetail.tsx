@@ -1,7 +1,16 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import PdfFlipViewer from "@/components/pdf/PdfFlipViewer";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { useGetCourseByIdQuery } from "@/redux/services/apiSlices/courseSlice";
@@ -11,7 +20,12 @@ import {
   useGetEligibilityQuery,
   useGetApprovedRetakeRequestQuery,
 } from "@/redux/services/apiSlices/retakeSlice";
-import { ArrowLeft, FileText, GraduationCap, ListOrdered, Loader2 } from "lucide-react";
+import {
+  useLazyGetMyEvaluationStatusQuery,
+  useSubmitEvaluationMutation,
+  type EvaluationApiResponse,
+} from "@/redux/services/apiSlices/evaluationSlice";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -23,6 +37,30 @@ export type ReadOnlyCourseDetailProps = {
   listPath: string;
   variant?: "organization" | "learner";
 };
+
+const SCALE_OPTIONS = [
+  { value: 1, label: "1 — Strongly Disagree" },
+  { value: 2, label: "2 — Disagree" },
+  { value: 3, label: "3 — Neutral" },
+  { value: 4, label: "4 — Agree" },
+  { value: 5, label: "5 — Strongly Agree" },
+] as const;
+
+function evaluationStatusSubmitted(res: EvaluationApiResponse<{ submitted?: boolean }> | undefined): boolean {
+  const d = res?.data;
+  return Boolean(d && typeof d === "object" && d.submitted === true);
+}
+
+const defaultEvalForm = () => ({
+  confirmMaterialComplete: false,
+  confirmEvaluationRequired: false,
+  confirmFeedbackUse: false,
+  scaleGainedNewKnowledge: null as number | null,
+  scaleApplyRealWorld: null as number | null,
+  scaleImprovedUnderstanding: null as number | null,
+  scaleInstructionClear: null as number | null,
+  scaleWouldRecommend: null as number | null,
+});
 
 export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: ReadOnlyCourseDetailProps) {
   const { courseId } = useParams<{ courseId: string }>();
@@ -55,7 +93,12 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
   );
 
   const [requestRetake, { isLoading: requestingRetake }] = useRequestRetakeMutation();
+  const [fetchEvalStatus] = useLazyGetMyEvaluationStatusQuery();
+  const [submitEvaluation, { isLoading: submittingEvaluation }] = useSubmitEvaluationMutation();
   const [confirmMaterialOpen, setConfirmMaterialOpen] = useState(false);
+  const [evaluationOpen, setEvaluationOpen] = useState(false);
+  const [materialContinueBusy, setMaterialContinueBusy] = useState(false);
+  const [evalForm, setEvalForm] = useState(defaultEvalForm);
   const [confirmRetakeOpen, setConfirmRetakeOpen] = useState(false);
   const [confirmPaymentOpen, setConfirmPaymentOpen] = useState(false);
   const [pendingPaymentAmount, setPendingPaymentAmount] = useState<number>(0);
@@ -148,9 +191,91 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
     setConfirmMaterialOpen(true);
   };
 
-  const onConfirmMaterialCompleted = () => {
-    setConfirmMaterialOpen(false);
-    void onLearnerAttemptClick();
+  const onConfirmMaterialCompleted = async () => {
+    if (!quizLessonId) return;
+    setMaterialContinueBusy(true);
+    try {
+      const statusRes = await fetchEvalStatus(quizLessonId).unwrap();
+      if (!statusRes?.status) {
+        toast.error(statusRes?.message || "Could not load evaluation status.");
+        return;
+      }
+      if (evaluationStatusSubmitted(statusRes)) {
+        setConfirmMaterialOpen(false);
+        void onLearnerAttemptClick();
+        return;
+      }
+      setConfirmMaterialOpen(false);
+      setEvalForm(defaultEvalForm());
+      setEvaluationOpen(true);
+    } catch {
+      toast.error("Could not verify evaluation status. Please try again.");
+    } finally {
+      setMaterialContinueBusy(false);
+    }
+  };
+
+  const handleSubmitEvaluation = async () => {
+    if (!quizLessonId) return;
+    if (
+      !evalForm.confirmMaterialComplete ||
+      !evalForm.confirmEvaluationRequired ||
+      !evalForm.confirmFeedbackUse
+    ) {
+      toast.error("Please check all three confirmation boxes before submitting.");
+      return;
+    }
+    const scales = [
+      evalForm.scaleGainedNewKnowledge,
+      evalForm.scaleApplyRealWorld,
+      evalForm.scaleImprovedUnderstanding,
+      evalForm.scaleInstructionClear,
+      evalForm.scaleWouldRecommend,
+    ];
+    if (scales.some((n) => n == null || n < 1 || n > 5)) {
+      toast.error("Please select a rating (1–5) for each statement.");
+      return;
+    }
+    try {
+      const res = await submitEvaluation({
+        lessonId: quizLessonId,
+        body: {
+          confirmMaterialComplete: evalForm.confirmMaterialComplete,
+          confirmEvaluationRequired: evalForm.confirmEvaluationRequired,
+          confirmFeedbackUse: evalForm.confirmFeedbackUse,
+          scaleGainedNewKnowledge: evalForm.scaleGainedNewKnowledge!,
+          scaleApplyRealWorld: evalForm.scaleApplyRealWorld!,
+          scaleImprovedUnderstanding: evalForm.scaleImprovedUnderstanding!,
+          scaleInstructionClear: evalForm.scaleInstructionClear!,
+          scaleWouldRecommend: evalForm.scaleWouldRecommend!,
+        },
+      }).unwrap();
+      if (res?.status) {
+        toast.success(res?.message || "Evaluation submitted.");
+        setEvaluationOpen(false);
+        setEvalForm(defaultEvalForm());
+        void onLearnerAttemptClick();
+        return;
+      }
+      toast.error(res?.message || "Could not submit evaluation.");
+    } catch (err: unknown) {
+      const status =
+        err && typeof err === "object" && "status" in err
+          ? (err as { status?: number }).status
+          : undefined;
+      if (status === 409) {
+        toast.info("Evaluation was already on file. Continuing to the quiz.");
+        setEvaluationOpen(false);
+        setEvalForm(defaultEvalForm());
+        void onLearnerAttemptClick();
+        return;
+      }
+      const msg =
+        err && typeof err === "object" && "data" in err && err.data && typeof err.data === "object" && "message" in err.data
+          ? String((err.data as { message: string }).message)
+          : "Could not submit evaluation.";
+      toast.error(msg);
+    }
   };
 
   const continueToRetakePayment = () => {
@@ -329,11 +454,197 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="gap-2 sm:gap-0">
-              <Button type="button" variant="outline" onClick={() => setConfirmMaterialOpen(false)}>
+              <Button type="button" variant="outline" onClick={() => setConfirmMaterialOpen(false)} disabled={materialContinueBusy}>
                 No, not yet
               </Button>
-              <Button type="button" variant="secondary" onClick={onConfirmMaterialCompleted}>
-                Yes, continue
+              <Button type="button" variant="secondary" onClick={() => void onConfirmMaterialCompleted()} disabled={materialContinueBusy}>
+                {materialContinueBusy ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
+                    Checking…
+                  </>
+                ) : (
+                  "Yes, continue"
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={evaluationOpen} onOpenChange={setEvaluationOpen}>
+          <DialogContent className="flex max-h-[min(90dvh,720px)] flex-col gap-0 p-0 sm:max-w-lg">
+            <div className="border-b border-border px-6 py-4">
+              <DialogHeader className="space-y-1 text-left">
+                <DialogTitle className="font-heading">Course evaluation</DialogTitle>
+                <DialogDescription>
+                  Complete this short evaluation before starting the assessment. All fields are required.
+                </DialogDescription>
+              </DialogHeader>
+            </div>
+            <div className="space-y-5 overflow-y-auto px-6 py-4">
+              <div className="space-y-3 rounded-lg border border-border bg-muted/30 p-3 text-xs text-muted-foreground">
+                <p className="font-medium text-foreground">Rating scale</p>
+                <ul className="list-inside list-disc space-y-0.5">
+                  <li>1 = Strongly Disagree</li>
+                  <li>2 = Disagree</li>
+                  <li>3 = Neutral</li>
+                  <li>4 = Agree</li>
+                  <li>5 = Strongly Agree</li>
+                </ul>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="eval-confirm-material"
+                    checked={evalForm.confirmMaterialComplete}
+                    onCheckedChange={(c) => setEvalForm((f) => ({ ...f, confirmMaterialComplete: c === true }))}
+                    className="mt-1"
+                  />
+                  <Label htmlFor="eval-confirm-material" className="cursor-pointer text-sm font-normal leading-relaxed">
+                    1. I confirm that I have completed the course material in its entirety.
+                  </Label>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="eval-confirm-required"
+                    checked={evalForm.confirmEvaluationRequired}
+                    onCheckedChange={(c) => setEvalForm((f) => ({ ...f, confirmEvaluationRequired: c === true }))}
+                    className="mt-1"
+                  />
+                  <Label htmlFor="eval-confirm-required" className="cursor-pointer text-sm font-normal leading-relaxed">
+                    2. I understand that this evaluation is required before accessing the assessment.
+                  </Label>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="eval-confirm-feedback"
+                    checked={evalForm.confirmFeedbackUse}
+                    onCheckedChange={(c) => setEvalForm((f) => ({ ...f, confirmFeedbackUse: c === true }))}
+                    className="mt-1"
+                  />
+                  <Label htmlFor="eval-confirm-feedback" className="cursor-pointer text-sm font-normal leading-relaxed">
+                    3. I acknowledge that my feedback will be used to improve course quality and learner experience.
+                  </Label>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="eval-scale-knowledge" className="text-sm">
+                    4. I gained new knowledge from this course.
+                  </Label>
+                  <Select
+                    value={evalForm.scaleGainedNewKnowledge != null ? String(evalForm.scaleGainedNewKnowledge) : undefined}
+                    onValueChange={(v) => setEvalForm((f) => ({ ...f, scaleGainedNewKnowledge: Number(v) }))}
+                  >
+                    <SelectTrigger id="eval-scale-knowledge">
+                      <SelectValue placeholder="Select 1–5" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCALE_OPTIONS.map((o) => (
+                        <SelectItem key={o.value} value={String(o.value)}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="eval-scale-apply" className="text-sm">
+                    5. I can apply what I learned to real-world situations.
+                  </Label>
+                  <Select
+                    value={evalForm.scaleApplyRealWorld != null ? String(evalForm.scaleApplyRealWorld) : undefined}
+                    onValueChange={(v) => setEvalForm((f) => ({ ...f, scaleApplyRealWorld: Number(v) }))}
+                  >
+                    <SelectTrigger id="eval-scale-apply">
+                      <SelectValue placeholder="Select 1–5" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCALE_OPTIONS.map((o) => (
+                        <SelectItem key={o.value} value={String(o.value)}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="eval-scale-understanding" className="text-sm">
+                    6. The course improved my understanding of the subject matter.
+                  </Label>
+                  <Select
+                    value={evalForm.scaleImprovedUnderstanding != null ? String(evalForm.scaleImprovedUnderstanding) : undefined}
+                    onValueChange={(v) => setEvalForm((f) => ({ ...f, scaleImprovedUnderstanding: Number(v) }))}
+                  >
+                    <SelectTrigger id="eval-scale-understanding">
+                      <SelectValue placeholder="Select 1–5" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCALE_OPTIONS.map((o) => (
+                        <SelectItem key={o.value} value={String(o.value)}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="eval-scale-clear" className="text-sm">
+                    7. The instruction or presentation of the material was clear and effective.
+                  </Label>
+                  <Select
+                    value={evalForm.scaleInstructionClear != null ? String(evalForm.scaleInstructionClear) : undefined}
+                    onValueChange={(v) => setEvalForm((f) => ({ ...f, scaleInstructionClear: Number(v) }))}
+                  >
+                    <SelectTrigger id="eval-scale-clear">
+                      <SelectValue placeholder="Select 1–5" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCALE_OPTIONS.map((o) => (
+                        <SelectItem key={o.value} value={String(o.value)}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="eval-scale-recommend" className="text-sm">
+                    8. I would recommend this course to others.
+                  </Label>
+                  <Select
+                    value={evalForm.scaleWouldRecommend != null ? String(evalForm.scaleWouldRecommend) : undefined}
+                    onValueChange={(v) => setEvalForm((f) => ({ ...f, scaleWouldRecommend: Number(v) }))}
+                  >
+                    <SelectTrigger id="eval-scale-recommend">
+                      <SelectValue placeholder="Select 1–5" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCALE_OPTIONS.map((o) => (
+                        <SelectItem key={o.value} value={String(o.value)}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+            <DialogFooter className="gap-2 border-t border-border px-6 py-4 sm:gap-0">
+              <Button type="button" variant="outline" onClick={() => setEvaluationOpen(false)} disabled={submittingEvaluation}>
+                Cancel
+              </Button>
+              <Button type="button" variant="secondary" onClick={() => void handleSubmitEvaluation()} disabled={submittingEvaluation}>
+                {submittingEvaluation ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
+                    Submitting…
+                  </>
+                ) : (
+                  "Submit and continue to quiz"
+                )}
               </Button>
             </DialogFooter>
           </DialogContent>

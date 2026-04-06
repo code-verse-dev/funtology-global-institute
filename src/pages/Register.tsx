@@ -49,10 +49,6 @@ const Register = () => {
       toast.error("Please agree to the Terms of Service and Privacy Policy");
       return;
     }
-    if (!profileImage) {
-      toast.error("Please upload a profile image");
-      return;
-    }
     if (accountType === "organization" && !formData.organizationName.trim()) {
       toast.error("Organization name is required");
       return;
@@ -68,7 +64,9 @@ const Register = () => {
     if (accountType === "organization") {
       fd.append("organizationName", formData.organizationName.trim());
     }
-    fd.append("image", profileImage);
+    if (profileImage) {
+      fd.append("image", profileImage);
+    }
 
     try {
       const res = await register(fd).unwrap();
@@ -225,7 +223,7 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="profileImage">Profile image</Label>
+              <Label htmlFor="profileImage">Profile image (optional)</Label>
               <div className="relative">
                 <ImagePlus className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                 <Input
@@ -240,7 +238,7 @@ const Register = () => {
                 />
               </div>
               <p className="text-xs text-muted-foreground">
-                PNG, JPEG, GIF, or WebP. Required for signup.
+                PNG, JPEG, GIF, or WebP. Optional.
               </p>
             </div>
 
