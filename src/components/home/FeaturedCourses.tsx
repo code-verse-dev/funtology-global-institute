@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Clock, Award, ArrowRight, Sparkles, BookOpen, Layers } from "lucide-react";
+import { Award, ArrowRight, Sparkles, BookOpen, BookText, Timer, Layers } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +22,8 @@ type FeaturedCourseItem = {
   level?: number;
   amount?: number;
   learningObjectives?: string[];
+  readingTime?: number;
+  testTime?: number;
 };
 
 function coursesFromResponse(data: unknown): FeaturedCourseItem[] {
@@ -43,7 +45,7 @@ const FeaturedCourses = () => {
     return [...list]
       .filter((c) => c.status === "published")
       .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
-      .slice(0, 4);
+      .slice(0, 3);
   })();
   
   const user = useSelector((state: RootState) => state.user.userData);
@@ -92,7 +94,7 @@ const FeaturedCourses = () => {
             Professional Development Certificates
           </h3>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive training program designed to build foundational and advanced career skills through structured, measurable learning experiences.
+            A Comprehensive Training Program Designed to Build Foundational and Advanced Career Skills Through Structured, Measurable Learning Experiences.
           </p>
         </motion.div>
 
@@ -102,7 +104,7 @@ const FeaturedCourses = () => {
         ) : featuredFour.length === 0 ? (
           <p className="text-center text-sm text-muted-foreground py-12">No published courses yet.</p>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredFour.map((course, index) => {
               const imageSrc = lessonFileUrl(course.image) ?? FALLBACK_IMAGE;
               const subtitle =
@@ -128,7 +130,7 @@ const FeaturedCourses = () => {
                     <img
                       src={imageSrc}
                       alt={course.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
@@ -167,10 +169,16 @@ const FeaturedCourses = () => {
 
                     <div className="flex items-center justify-between pt-4 border-t border-border">
                       <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                        {typeof course.ceHours === "number" ? (
+                        {course.readingTime ? (
                           <span className="flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5" />
-                            {course.ceHours}h
+                            <BookText className="w-3.5 h-3.5 shrink-0" aria-hidden />
+                            {course.readingTime}hours
+                          </span>
+                        ) : null}
+                        {course.testTime ? (
+                          <span className="flex items-center gap-1">
+                            <Timer className="w-3.5 h-3.5 shrink-0" aria-hidden />
+                            {course.testTime}hours
                           </span>
                         ) : null}
                         <span className="flex items-center gap-1">

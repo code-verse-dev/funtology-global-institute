@@ -12,6 +12,7 @@ import {
   useGetSavedPaymentMethodsQuery,
   useQuizRetakePaymentMutation,
   useSubscriptionPaymentMutation,
+  useUpgradeSubscriptionMutation,
 } from "@/redux/services/apiSlices/paymentSlice";
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import type { PaymentIntentResult } from "@stripe/stripe-js";
@@ -21,15 +22,16 @@ import { AlertCircle, CheckCircle2, CreditCard, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 type PaymentResultState =
   | { open: false }
   | {
-      open: true;
-      success: true;
-      message: string;
-      onContinue: () => void;
-    }
+    open: true;
+    success: true;
+    message: string;
+    onContinue: () => void;
+  }
   | { open: true; success: false; message: string };
 
 function effectiveRole(userRole: unknown): string {
@@ -58,6 +60,8 @@ interface CheckoutFormProps {
   isProcessing: boolean;
   setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>;
   totalLearners?: number;
+  upgradeNewLearnersCount?: number;
+  returnPath?: string;
 }
 
 const CheckoutForm = ({
@@ -68,6 +72,8 @@ const CheckoutForm = ({
   isProcessing,
   setIsProcessing,
   totalLearners,
+  upgradeNewLearnersCount = 0,
+  returnPath,
 }: CheckoutFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -80,6 +86,7 @@ const CheckoutForm = ({
   const [paymentResult, setPaymentResult] = useState<PaymentResultState>({ open: false });
 
   const [createSubscription] = useSubscriptionPaymentMutation();
+  const [upgradeSubscription] = useUpgradeSubscriptionMutation();
   const [confirmQuizRetakePayment] = useQuizRetakePaymentMutation();
 
   const { data: paymentData, isLoading: cardsLoading } = useGetSavedPaymentMethodsQuery();
@@ -125,6 +132,23 @@ const CheckoutForm = ({
               res?.message ||
               "We could not complete your subscription. Please try again or contact support.",
           });
+        }
+      } else if (type === "UPGRADE_SUBSCRIPTION") {
+        const res = await upgradeSubscription({
+          data: {
+            paymentIntentId: paymentIntent.id,
+            type: "UPGRADE_SUBSCRIPTION",
+            newCourseIds: courseIds,
+            newLearnersCount: upgradeNewLearnersCount,
+          },
+        }).unwrap();
+        const goPath =
+          typeof returnPath === "string" && returnPath.length > 0 ? returnPath : "/organization/subscription";
+        if (res?.status) {
+          swal("Success", res?.message || "Payment completed successfully", "success");
+          navigate(goPath, { replace: true });
+        } else {
+          swal("Error", res?.data?.error?.message || res?.error?.message || "We could not complete the upgrade. Please try again or contact support.", "error");
         }
       } else if (type === "QUIZ_RETAKE") {
         const res = await confirmQuizRetakePayment({
@@ -179,7 +203,7 @@ const CheckoutForm = ({
     setMessage("");
     try {
       let result: PaymentIntentResult;
-      if (type === "SUBSCRIPTION") {
+      if (type === "SUBSCRIPTION" || type === "UPGRADE_SUBSCRIPTION") {
         result = await stripe.confirmPayment({
           clientSecret,
           confirmParams: {
@@ -345,11 +369,10 @@ const CheckoutForm = ({
                   key={pm.id}
                   type="button"
                   onClick={() => setSelectedCardId(isSelected ? null : pm.id)}
-                  className={`w-full flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-all ${
-                    isSelected
-                      ? "border-primary bg-primary/5"
-                      : "border-border hover:border-primary/30 bg-card"
-                  }`}
+                  className={`w-full flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-all ${isSelected
+                    ? "border-primary bg-primary/5"
+                    : "border-border hover:border-primary/30 bg-card"
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="h-9 w-9 flex items-center justify-center rounded-lg bg-muted text-muted-foreground">

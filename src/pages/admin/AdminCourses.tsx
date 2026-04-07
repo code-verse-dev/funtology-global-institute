@@ -242,10 +242,6 @@ const AdminCourses = () => {
               onChange={(e) => setSearchInput(e.target.value)}
             />
           </div>
-          <Button variant="outline" size="sm" type="button">
-            <Download className="w-4 h-4 mr-2" />
-            Export
-          </Button>
         </div>
       </div>
       <Card className="bg-muted/50 border-dashed">
@@ -349,9 +345,9 @@ const AdminCourses = () => {
                               </DropdownMenuSubContent>
                             </DropdownMenuSub>
                             <DropdownMenuItem asChild>
-                              <Link to={`//courses/${course._id}/content`}>
+                              <Link to={`/admin/courses/${course._id}/content`}>
                                 <Upload className="w-4 h-4 mr-2" />
-                                Upload content
+                                View content
                               </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>

@@ -27,7 +27,7 @@ const AdminSettings = () => (
           ))}
         </CardContent>
       </Card>
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle className="font-heading">Platform Settings</CardTitle>
         </CardHeader>
@@ -46,34 +46,8 @@ const AdminSettings = () => (
             </div>
           ))}
         </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-heading">Policy Documents</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          {[
-            "CE Policy Manual",
-            "SME Qualification Policy",
-            "Assessment Policy",
-            "Complaints & Appeals Policy",
-            "Accessibility Policy",
-            "Records Retention Policy",
-            "Ethics & Marketing Policy",
-          ].map((doc) => (
-            <div key={doc} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-              <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-secondary" />
-                <span className="text-sm">{doc}</span>
-              </div>
-              <Button variant="ghost" size="sm">
-                <Edit className="w-3 h-3" />
-              </Button>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-      <Card>
+      </Card> */}
+      {/* <Card>
         <CardHeader>
           <CardTitle className="font-heading">Security & Access</CardTitle>
         </CardHeader>
@@ -92,7 +66,43 @@ const AdminSettings = () => (
             </div>
           ))}
         </CardContent>
+      </Card> */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-heading">Policy Documents</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          {[
+            "Educational Governance Policy",
+            "Instructional Qualification Policy",
+            "Conflict of Interest Policy",
+            "Ethical Standards Policy",
+            "Non-Discrimination Policy",
+            "Privacy & Data Protection Policy",
+            "Needs Analysis Policy",
+            "Course Development Process",
+            "Learning Objective Writing Guidelines",
+            "Competency Framework",
+            "Assessment Alignment Framework",
+            "LMS System Overview & Security",
+            "Program Evaluation Policy",
+            "Marketing Compliance Policy",
+            "Intitutional Overview & Standards",
+            "Instructor Qualification Policy",
+          ].map((doc) => (
+            <div key={doc} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+              <div className="flex items-center gap-2">
+                <FileText className="w-4 h-4 text-secondary" />
+                <span className="text-sm">{doc}</span>
+              </div>
+              <Button variant="ghost" size="sm">
+                <Edit className="w-3 h-3" />
+              </Button>
+            </div>
+          ))}
+        </CardContent>
       </Card>
+      
     </div>
   </motion.div>
 );

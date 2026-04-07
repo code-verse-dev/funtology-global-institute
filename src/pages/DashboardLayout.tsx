@@ -15,7 +15,8 @@ import { removeUser } from "@/redux/services/Slices/userSlice";
 import type { RootState } from "@/redux/store";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
-import { BookOpen, Home, LogOut, Settings, User } from "lucide-react";
+import { hasParentOrganization } from "@/pages/protectedRoute/SubscriptionRequiredRoute";
+import { BookOpen, Headphones, Home, LogOut, Package, Settings, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
@@ -48,6 +49,8 @@ const DashboardLayout = () => {
   const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
   const userData = useSelector((s: RootState) => s.user.userData) as Record<string, unknown> | undefined;
+  const showPlatformFeesNav =
+    String(userData?.role ?? "").toLowerCase().trim() === "learner" && !hasParentOrganization(userData);
   const displayName = learnerDisplayName(userData);
   const email = typeof userData?.email === "string" ? userData.email : "";
   const profileImage = userProfileImageSrc(userData?.image);
@@ -88,6 +91,20 @@ const DashboardLayout = () => {
                   <span className="inline-flex items-center gap-1.5">
                     <BookOpen className="w-4 h-4" />
                     My courses
+                  </span>
+                </NavLink>
+                {showPlatformFeesNav ? (
+                  <NavLink to="/dashboard/subscription" className={navClass}>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Package className="w-4 h-4" />
+                      Platform Fees
+                    </span>
+                  </NavLink>
+                ) : null}
+                <NavLink to="/dashboard/support" className={navClass}>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Headphones className="w-4 h-4" />
+                    Support
                   </span>
                 </NavLink>
               </nav>
@@ -140,6 +157,14 @@ const DashboardLayout = () => {
             </NavLink>
             <NavLink to="/dashboard/courses" className={navClass}>
               Courses
+            </NavLink>
+            {showPlatformFeesNav ? (
+              <NavLink to="/dashboard/subscription" className={navClass}>
+                Platform Fees
+              </NavLink>
+            ) : null}
+            <NavLink to="/dashboard/support" className={navClass}>
+              Support
             </NavLink>
           </div>
         </div>

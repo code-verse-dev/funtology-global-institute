@@ -47,7 +47,6 @@ const Profile = () => {
   const role = typeof user?.role === "string" ? user.role : "";
   const phone = typeof user?.phoneNumber === "string" ? user.phoneNumber : "";
   const org = typeof user?.organizationName === "string" ? user.organizationName : "";
-  const department = typeof user?.department === "string" ? user.department : "";
   const street = typeof user?.streetAddress === "string" ? user.streetAddress : "";
   const status = typeof user?.status === "string" ? user.status : "";
   const createdAt = formatDate(user?.createdAt);
@@ -58,7 +57,6 @@ const Profile = () => {
     { label: "Phone", value: phone },
     { label: "Role", value: role },
     { label: "Organization", value: org },
-    { label: "Department", value: department },
     { label: "Address", value: street },
     { label: "Status", value: status },
     { label: "Member since", value: createdAt ?? "" },

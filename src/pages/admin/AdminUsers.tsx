@@ -21,6 +21,8 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UPLOADS_URL } from "@/constants/api";
 import {
+  
+  useExportUsersXlsxMutation,
   useGetUsersQuery,
   useUpdateUserStatusMutation,
   type UserStatus,
@@ -54,6 +56,31 @@ const AdminUsers = () => {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [exportUsersXlsx] = useExportUsersXlsxMutation();
+
+  const handleExport = async () => {
+    try {
+      const blob = await exportUsersXlsx({
+        keyword: debouncedKeyword,
+        role: roleFilter === "all" ? undefined : roleFilter,
+        status: statusFilter === "all" ? undefined : (statusFilter as UserStatus),
+        from: fromDate || undefined,
+        to: toDate || undefined,
+      }).unwrap();
+  
+      const url = window.URL.createObjectURL(blob);
+  
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "users-export.xlsx"; // 🔥 IMPORTANT: XLSX FILE
+      link.click();
+  
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.log("Export error:", err);
+    }
+  };
+
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedKeyword(searchInput.trim()), 400);
@@ -151,9 +178,9 @@ const AdminUsers = () => {
             {isFetching && !isLoading ? <Loader2 className="inline w-3 h-3 ml-2 animate-spin" /> : null}
           </p>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" type="button" disabled>
+            <Button variant="outline" size="sm" type="button" onClick={handleExport}>
               <Download className="w-4 h-4 mr-2" />
-              Export CSV
+              Export Users
             </Button>
           </div>
         </div>

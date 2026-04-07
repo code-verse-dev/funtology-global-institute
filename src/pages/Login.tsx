@@ -40,7 +40,6 @@ const Login = () => {
         role: selectedRole === "learner" ? "learner" : selectedRole === "organization" ? "organization" : "admin"
       }).unwrap();
       if (res?.status) {
-        toast.success("Signed in successfully");
         dispatch(addUser({ user: res?.data?.user }));
         navigate(selectedRole === "learner" ? "/dashboard" : selectedRole === "organization" ? "/organization" : "/admin")
       }
@@ -190,22 +189,21 @@ const Login = () => {
             Advancing Levels. Elevating Futures.
           </h2>
           <p className="text-primary-foreground/80 text-lg">
-            Access your ongoing education courses, track your progress, and earn
-            professional certifications that advance your career.
+          Access Your Ongoing Education Courses, Track Your Progress, and Earn Professional Certifications That Advance Your Career.
           </p>
 
           <div className="mt-12 grid grid-cols-3 gap-6 text-center">
             <div>
               <p className="font-heading text-3xl font-bold text-secondary">5+</p>
-              <p className="text-sm text-primary-foreground/70">Courses</p>
+              <p className="text-sm text-primary-foreground/70">Standards-Aligned Courses for Career Advancement</p>
             </div>
             <div>
               <p className="font-heading text-3xl font-bold text-secondary">10K+</p>
-              <p className="text-sm text-primary-foreground/70">Learners</p>
+              <p className="text-sm text-primary-foreground/70">Empowering Learners Building Skills and Confidence</p>
             </div>
             <div>
               <p className="font-heading text-3xl font-bold text-secondary">100%</p>
-              <p className="text-sm text-primary-foreground/70">Online</p>
+              <p className="text-sm text-primary-foreground/70">Flexible Online Learning Anytime and Anywhere Access</p>
             </div>
           </div>
         </motion.div>

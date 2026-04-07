@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 import fgiLogo from "@/assets/fgi-logo.png";
 
 const Footer = () => {
@@ -40,7 +40,7 @@ const Footer = () => {
               <img
                 src={fgiLogo}
                 alt="FGI Logo"
-                className="h-16 w-16 object-contain"
+                className="h-28 w-28 object-contain"
               />
               <div>
                 <p className="font-heading font-bold text-lg text-primary-foreground leading-tight">
@@ -52,11 +52,10 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-primary-foreground/70 text-sm leading-relaxed mb-6">
-              Advancing Levels. Elevating Futures. Mastering Innovation. 
-              Standards-aligned ongoing education for career excellence.
+              Advancing Levels. Elevating Futures. Mastering Innovation and Ongoing Education for Career Excellence
             </p>
             <div className="flex gap-4">
-              <a
+              {/* <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -73,9 +72,18 @@ const Footer = () => {
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
+              </a> */}
+              <a
+                href="https://www.instagram.com/invites/contact/?igsh=7p0xd4gzanzm&utm_content=htmlpeo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary hover:text-primary transition-colors duration-300"
+                aria-label="LinkedIn"
+              >
+                <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/18MbReEkXY/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary hover:text-primary transition-colors duration-300"
@@ -136,23 +144,24 @@ const Footer = () => {
                   href="mailto:info@funtologyglobal.com"
                   className="text-primary-foreground/70 hover:text-secondary transition-colors"
                 >
-                  info@funtologyglobal.com
+                  Info@FuntologyGlobalInstitute.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-secondary mt-0.5" />
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+17062888082"
                   className="text-primary-foreground/70 hover:text-secondary transition-colors"
                 >
-                  +1 (234) 567-890
+                  +1 (706) 288-8082
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary mt-0.5" />
                 <span className="text-primary-foreground/70">
-                  123 Education Lane<br />
-                  Innovation City, IC 12345
+                  P.O. Box 5481
+                  <br />
+                  Augusta, Georgia 30916
                 </span>
               </li>
             </ul>

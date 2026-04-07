@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, Clock, CreditCard, DollarSign, Download, Search } from "lucide-react";
-import { useGetPaymentsQuery } from "@/redux/services/apiSlices/paymentSlice";
+import { useExportPaymentsXlsxMutation, useGetPaymentsQuery } from "@/redux/services/apiSlices/paymentSlice";
 import { useEffect, useMemo, useState } from "react";
 
 type PaymentUser = {
@@ -39,6 +39,8 @@ function learnerDisplayName(user: PaymentUser | undefined): string {
   return user.email ?? "—";
 }
 
+const PAGE_LIMIT = 10;
+
 export default function AdminPayments() {
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
@@ -56,7 +58,7 @@ export default function AdminPayments() {
   const queryArg = useMemo(
     () => ({
       page,
-      limit: 10,
+      limit: PAGE_LIMIT,
       ...(debouncedKeyword ? { keyword: debouncedKeyword } : {}),
     }),
     [page, debouncedKeyword],
@@ -72,6 +74,27 @@ export default function AdminPayments() {
   const hasPrevPage = Boolean(paginated?.hasPrevPage);
 
   const pageSum = docs.reduce((sum, d) => sum + (Number(d.totalAmount) || 0), 0);
+
+  const [exportPaymentsXlsx] = useExportPaymentsXlsxMutation();
+
+  const handleExport = async () => {
+    try {
+      const blob = await exportPaymentsXlsx({
+        keyword: debouncedKeyword,
+      }).unwrap();
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "payments-export.xlsx";
+      link.click();
+
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.log("Export error:", err);
+    }
+  };
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
@@ -130,16 +153,10 @@ export default function AdminPayments() {
                 aria-label="Search payments by user name"
               />
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" type="button">
-                <Download className="mr-2 h-4 w-4" />
-                Export CSV
-              </Button>
-              <Button variant="outline" size="sm" type="button">
-                <Download className="mr-2 h-4 w-4" />
-                Export PDF
-              </Button>
-            </div>
+            <Button variant="outline" size="sm" type="button" onClick={handleExport}>
+              <Download className="w-4 h-4 mr-2" />
+              Export Payments
+            </Button>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -152,7 +169,7 @@ export default function AdminPayments() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Charge / payment ID</TableHead>
+                  <TableHead>S.no</TableHead>
                   <TableHead>User</TableHead>
                   <TableHead>User Type</TableHead>
                   <TableHead>Type / reference</TableHead>
@@ -165,24 +182,25 @@ export default function AdminPayments() {
               <TableBody>
                 {docs.length === 0 && !isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
+                    <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
                       No payments found
                       {debouncedKeyword ? ` for “${debouncedKeyword}”.` : "."}
                     </TableCell>
                   </TableRow>
                 ) : (
                   docs.map((p, idx) => {
-                    const id = p.chargeId ?? `row-${idx}`;
+                    const serial = (page - 1) * PAGE_LIMIT + idx + 1;
+                    const rowKey = p.chargeId ?? `payment-${page}-${idx}`;
                     const paid = Boolean(p.isPaid);
                     const statusLabel = paid ? "completed" : "pending";
                     const created = p.createdAt ? new Date(p.createdAt).toLocaleString() : "—";
                     const refLabel = [p.type].filter(Boolean).join(" · ") || "—";
-                    const type = refLabel === 'SUBSCRIPTION' ? 'Course Fees' : 'Quiz Retake';
+                    const type = refLabel === 'SUBSCRIPTION' ? 'Course Fees' : refLabel === 'QUIZ_RETAKE' ? 'Quiz Retake' : refLabel === 'UPGRADE_SUBSCRIPTION' ? 'Upgrade Plan' : refLabel;
 
                     return (
-                      <TableRow key={id}>
-                        <TableCell className="max-w-[160px] truncate font-mono text-xs font-medium">
-                          {p.chargeId ?? "—"}
+                      <TableRow key={rowKey}>
+                        <TableCell className="w-[1%] whitespace-nowrap tabular-nums text-sm font-medium text-foreground">
+                          {serial}
                         </TableCell>
                         <TableCell>
                           <div className="font-medium">{learnerDisplayName(p.user)}</div>

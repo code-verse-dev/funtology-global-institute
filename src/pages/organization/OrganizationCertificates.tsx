@@ -41,11 +41,6 @@ function studentInitials(cert: OrganizationLearnerCertificate): string {
   return "?";
 }
 
-function studentDepartment(cert: OrganizationLearnerCertificate): string {
-  const s = cert.student;
-  if (s && typeof s === "object" && s.department) return s.department;
-  return "—";
-}
 
 function courseTitle(cert: OrganizationLearnerCertificate): string {
   const c = cert.course;
@@ -115,7 +110,6 @@ const OrganizationCertificates = () => {
                       </Avatar>
                       <div className="min-w-0">
                         <p className="font-medium text-sm truncate">{studentDisplayName(cert)}</p>
-                        <p className="text-xs text-muted-foreground">{studentDepartment(cert)}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-2 mb-2">

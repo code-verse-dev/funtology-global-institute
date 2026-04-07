@@ -49,10 +49,6 @@ const Register = () => {
       toast.error("Please agree to the Terms of Service and Privacy Policy");
       return;
     }
-    if (!profileImage) {
-      toast.error("Please upload a profile image");
-      return;
-    }
     if (accountType === "organization" && !formData.organizationName.trim()) {
       toast.error("Organization name is required");
       return;
@@ -68,7 +64,9 @@ const Register = () => {
     if (accountType === "organization") {
       fd.append("organizationName", formData.organizationName.trim());
     }
-    fd.append("image", profileImage);
+    if (profileImage) {
+      fd.append("image", profileImage);
+    }
 
     try {
       const res = await register(fd).unwrap();
@@ -97,15 +95,15 @@ const Register = () => {
             <img
               src={fgiLogo}
               alt="FGI Logo"
-              className="w-32 h-32 mx-auto drop-shadow-2xl"
+              className="w-36 h-36 mx-auto drop-shadow-2xl"
             />
           </div>
           <h2 className="font-heading text-3xl font-bold text-primary-foreground mb-4">
             Start Your Learning Journey Today
           </h2>
           <p className="text-primary-foreground/80 text-lg mb-8">
-            Join thousands of professionals advancing their careers with 
-            ongoing education courses.
+            Join Thousands of Professionals Advancing Their Careers with 
+            Ongoing Education Courses.
           </p>
           
           <div className="space-y-4 text-left bg-primary-foreground/10 rounded-xl p-6">
@@ -150,7 +148,7 @@ const Register = () => {
             Create Account
           </h1>
           <p className="text-muted-foreground mb-6">
-            Join FGI and start earning professional certifications
+            Join FGI and Start Earning Professional Certifications
           </p>
 
           <Tabs
@@ -225,7 +223,7 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="profileImage">Profile image</Label>
+              <Label htmlFor="profileImage">Profile image (optional)</Label>
               <div className="relative">
                 <ImagePlus className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                 <Input
@@ -240,7 +238,7 @@ const Register = () => {
                 />
               </div>
               <p className="text-xs text-muted-foreground">
-                PNG, JPEG, GIF, or WebP. Required for signup.
+                PNG, JPEG, GIF, or WebP. Optional.
               </p>
             </div>
 

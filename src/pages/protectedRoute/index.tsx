@@ -18,7 +18,7 @@ interface JwtPayload {
 
 const ProtectedRoute: React.FC<UserAuthCheckProps> = ({ children, allowedRoles }) => {
   const token = Cookies.get("accessToken");
-
+  
   if (!token) {
     return <Navigate to="/login" replace />;
   }

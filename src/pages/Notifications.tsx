@@ -45,7 +45,7 @@ export function NotificationsPageContent() {
     filter === "unread" ? { isRead: false } : filter === "read" ? { isRead: true } : {};
 
   const { data: notificationsData, isLoading, refetch } =
-    useRoleBasedNotificationsQuery(queryArg);
+    useRoleBasedNotificationsQuery(queryArg, { refetchOnMountOrArgChange: true });
   const [toggleNotification] = useToggleNotificationMutation();
   const [markAllRead] = useMarkAllReadMutation();
 

@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { authSlice } from "./services/apiSlices/authSlice";
 import { courseApiSlice } from "./services/apiSlices/courseSlice";
@@ -14,6 +14,19 @@ import { certificateSlice } from "./services/apiSlices/certificateSlice";
 import { retakeSlice } from "./services/apiSlices/retakeSlice";
 import { subscriptionSlice } from "./services/apiSlices/subscriptionSlice";
 import { notificationSlice } from "./services/apiSlices/notificationSlice";
+import { feedbackSlice } from "./services/apiSlices/feedbackSlice";
+import { evaluationSlice } from "./services/apiSlices/evaluationSlice";
+import { removeUser } from "./services/Slices/userSlice";
+
+/** User-specific RTK Query caches (same endpoint key for every account) must clear on logout. */
+const logoutListener = createListenerMiddleware();
+logoutListener.startListening({
+  actionCreator: removeUser,
+  effect: (_action, listenerApi) => {
+    listenerApi.dispatch(paymentSlice.util.resetApiState());
+    listenerApi.dispatch(subscriptionSlice.util.resetApiState());
+  },
+});
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -28,12 +41,14 @@ const rootReducer = combineReducers({
   [retakeSlice.reducerPath]: retakeSlice.reducer,
   [subscriptionSlice.reducerPath]: subscriptionSlice.reducer,
   [notificationSlice.reducerPath]: notificationSlice.reducer,
+  [feedbackSlice.reducerPath]: feedbackSlice.reducer,
+  [evaluationSlice.reducerPath]: evaluationSlice.reducer,
 });
 
 const persistConfig = {
   key: "global_institute",
   storage,
-  blacklist: [authSlice.reducerPath, userApiSlice.reducerPath, courseApiSlice.reducerPath, lessonSlice.reducerPath, ticketSlice.reducerPath, paymentSlice.reducerPath, learnerSlice.reducerPath, certificateSlice.reducerPath, retakeSlice.reducerPath, subscriptionSlice.reducerPath, notificationSlice.reducerPath],
+  blacklist: [authSlice.reducerPath, userApiSlice.reducerPath, courseApiSlice.reducerPath, lessonSlice.reducerPath, ticketSlice.reducerPath, paymentSlice.reducerPath, learnerSlice.reducerPath, certificateSlice.reducerPath, retakeSlice.reducerPath, subscriptionSlice.reducerPath, notificationSlice.reducerPath, feedbackSlice.reducerPath, evaluationSlice.reducerPath],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -44,7 +59,22 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      .concat(authSlice.middleware, userApiSlice.middleware, courseApiSlice.middleware, lessonSlice.middleware, ticketSlice.middleware, paymentSlice.middleware, learnerSlice.middleware, certificateSlice.middleware, retakeSlice.middleware, subscriptionSlice.middleware, notificationSlice.middleware)
+      .concat(
+        authSlice.middleware,
+        userApiSlice.middleware,
+        courseApiSlice.middleware,
+        lessonSlice.middleware,
+        ticketSlice.middleware,
+        paymentSlice.middleware,
+        learnerSlice.middleware,
+        certificateSlice.middleware,
+        retakeSlice.middleware,
+        subscriptionSlice.middleware,
+        notificationSlice.middleware,
+        feedbackSlice.middleware,
+        evaluationSlice.middleware,
+        logoutListener.middleware,
+      )
 });
 
 setupListeners(store.dispatch);

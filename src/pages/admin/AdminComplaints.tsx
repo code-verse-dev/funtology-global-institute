@@ -84,6 +84,7 @@ export default function AdminComplaints() {
   const totalDocs = pageData?.totalDocs ?? 0;
   const stats = statsRes?.data;
 
+
   useEffect(() => {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -132,14 +133,14 @@ export default function AdminComplaints() {
     isError && error && "data" in error && error.data && typeof error.data === "object" && "message" in error.data
       ? String((error.data as { message: string }).message)
       : "Could not load tickets.";
-
+  console.log(tickets, 'tickets');
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 className="font-heading text-lg font-bold">Complaints &amp; Appeals</h2>
-        <p className="text-sm text-muted-foreground sm:text-right max-w-md">
+        {/* <p className="text-sm text-muted-foreground sm:text-right max-w-md">
           Tickets are created by learners from support flows. Update status as you triage and resolve issues.
-        </p>
+        </p> */}
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -217,8 +218,8 @@ export default function AdminComplaints() {
                       <TableCell className="font-medium max-w-[220px]">
                         <span className="line-clamp-2">{t.subject}</span>
                       </TableCell>
-                      <TableCell className="text-muted-foreground text-xs font-mono" title={String(t.user)}>
-                        {formatUserRef(t.user)}
+                      <TableCell className="text-muted-foreground text-xs font-mono" title={t.user}>
+                        {t.user.firstName} {t.user.lastName}
                       </TableCell>
                       <TableCell>
                         <Badge variant={statusBadgeVariant(t.status)} className="gap-1 whitespace-nowrap">
@@ -306,7 +307,8 @@ export default function AdminComplaints() {
               </div>
               <div className="space-y-1">
                 <Label className="text-muted-foreground">User</Label>
-                <p className="font-mono text-xs break-all">{String(selected.user)}</p>
+                {/* <p className="font-mono text-xs break-all">{String(selected.user)}</p> */}
+                <p className="font-mono text-xs break-all">{selected?.user?.firstName} {selected?.user?.lastName}</p>
               </div>
               <div className="space-y-1">
                 <Label className="text-muted-foreground">Description</Label>

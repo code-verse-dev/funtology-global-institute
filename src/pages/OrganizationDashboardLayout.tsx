@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
-import { Award, BarChart3, BookOpen, Building2, CreditCard, LogOut, RefreshCw, Settings, User, Users } from "lucide-react";
+import { Award, BarChart3, BookOpen, Building2, CreditCard, Headphones, LogOut, Package, RefreshCw, Settings, User, Users } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -26,8 +26,10 @@ const orgNavItems = [
   { to: "learners", label: "Learners", icon: Users },
   { to: "courses", label: "Courses", icon: BookOpen },
   { to: "retake-requests", label: "Retake Requests", icon: RefreshCw },
+  { to: "subscription", label: "Platform Fees", icon: Package },
   { to: "billing", label: "Billing", icon: CreditCard },
   { to: "certificates", label: "Certificates", icon: Award },
+  { to: "support", label: "Support", icon: Headphones },
 ] as const;
 
 function userProfileImageSrc(raw: unknown): string | undefined {
@@ -57,7 +59,7 @@ const OrganizationDashboardLayout = () => {
         <div className="container-wide">
           <div className="flex items-center justify-between h-16">
             <Link to="/" className="flex items-center gap-3">
-              <img src={fgiLogo} alt="FGI" className="h-10 w-10" />
+              <img src={fgiLogo} alt="FGI" className="h-12 w-12" />
               <div className="hidden sm:block">
                 <p className="font-heading font-bold text-primary-foreground leading-tight">FGI</p>
                 <p className="text-xs text-secondary">Organization Portal</p>
@@ -67,7 +69,6 @@ const OrganizationDashboardLayout = () => {
             <div className="flex items-center gap-2">
               <Badge variant="secondary" className="hidden sm:flex gap-1">
                 <Building2 className="w-3 h-3" />
-                {/* {orgData.name} */}
                 {user?.organizationName}
               </Badge>
               <NotificationBell

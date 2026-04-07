@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, Loader2 } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,25 +8,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useSubmitFeedbackMutation } from "@/redux/services/apiSlices/feedbackSlice";
 
 const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    details: "support@fgi.edu",
+    details: "info@FuntologyGlobalInstitute.com",
+    href: "mailto:info@FuntologyGlobalInstitute.com",
     description: "We respond within 24 hours",
   },
   {
     icon: Phone,
     title: "Phone",
-    details: "+1 (800) 555-0199",
+    details: "+1 (706) 288 8082",
+    href: "tel:+17062888082",
     description: "Mon-Fri, 9AM-5PM EST",
   },
   {
     icon: MapPin,
     title: "Address",
-    details: "123 Education Lane",
-    description: "Suite 400, New York, NY 10001",
+    details: "P.O. Box 5481",
+    description: "Augusta, Georgia 30916",
   },
   {
     icon: Clock,
@@ -44,10 +47,30 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitFeedback, { isLoading }] = useSubmitFeedbackMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    try {
+      const res = await submitFeedback({
+        fullName: formData.name.trim(),
+        email: formData.email.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+      }).unwrap();
+      if (res.status) {
+        toast.success(res.message || "Message sent successfully! We'll get back to you soon.");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast.error(res.message || "Could not send your message.");
+      }
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "data" in err && err.data && typeof err.data === "object" && "message" in err.data
+          ? String((err.data as { message: string }).message)
+          : "Could not send your message. Please try again.";
+      toast.error(msg);
+    }
   };
 
   useEffect(() => {
@@ -57,7 +80,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      
+
       <main className="flex-1 pt-20">
         {/* Hero Section */}
         <section className="bg-gradient-hero py-16 md:py-24">
@@ -72,7 +95,7 @@ const Contact = () => {
                 Contact Us
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80">
-                Have questions? We're here to help you on your learning journey
+                Have Questions? We’re Here To Help You On Your Learning Journey
               </p>
             </motion.div>
           </div>
@@ -115,7 +138,7 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
                     <Input
@@ -126,7 +149,7 @@ const Contact = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="message">Message</Label>
                     <Textarea
@@ -138,10 +161,19 @@ const Contact = () => {
                       required
                     />
                   </div>
-                  
-                  <Button type="submit" variant="secondary" size="lg" className="w-full sm:w-auto">
-                    <Send className="w-4 h-4 mr-2" />
-                    Send Message
+
+                  <Button type="submit" variant="secondary" size="lg" className="w-full sm:w-auto" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" aria-hidden />
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" aria-hidden />
+                        Send Message
+                      </>
+                    )}
                   </Button>
                 </form>
               </motion.div>
@@ -153,13 +185,13 @@ const Contact = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <h2 className="font-heading text-3xl font-bold text-foreground mb-6">
-                  Get in Touch
+                Whether you have questions about our courses, need technical support, or want to learn more about our certificate programs, we’re here to help.
                 </h2>
                 <p className="text-muted-foreground mb-8">
-                  Whether you have questions about our courses, need technical support, 
-                  or want to learn more about our accreditation, we're here to help.
+                  Whether you have questions about our courses, need technical support,
+                  or want to learn more about our certificate programs, we're here to help.
                 </p>
-                
+
                 <div className="grid sm:grid-cols-2 gap-6">
                   {contactInfo.map((item, index) => (
                     <motion.div
@@ -175,7 +207,16 @@ const Contact = () => {
                       <h3 className="font-heading font-bold text-foreground mb-1">
                         {item.title}
                       </h3>
-                      <p className="text-secondary font-medium">{item.details}</p>
+                      {item.href ? (
+                        <a
+                          href={item.href}
+                          className="text-secondary font-medium break-words underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                        >
+                          {item.details}
+                        </a>
+                      ) : (
+                        <p className="text-secondary font-medium break-words">{item.details}</p>
+                      )}
                       <p className="text-sm text-muted-foreground">{item.description}</p>
                     </motion.div>
                   ))}
@@ -199,7 +240,7 @@ const Contact = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );

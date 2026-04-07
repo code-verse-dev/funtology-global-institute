@@ -29,6 +29,7 @@ import AdminCourseContent from "./pages/admin/AdminCourseContent";
 import AdminCourseQuestionBank from "./pages/admin/AdminCourseQuestionBank";
 import AdminSme from "./pages/admin/AdminSme";
 import AdminPayments from "./pages/admin/AdminPayments";
+import AdminEvaluations from "./pages/admin/AdminEvaluations";
 import AdminComplaints from "./pages/admin/AdminComplaints";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminAudit from "./pages/admin/AdminAudit";
@@ -39,6 +40,7 @@ import OrganizationLearners from "./pages/organization/OrganizationLearners";
 import OrganizationCourses from "./pages/organization/OrganizationCourses";
 import OrganizationCourseDetail from "./pages/organization/OrganizationCourseDetail";
 import OrganizationBilling from "./pages/organization/OrganizationBilling";
+import OrganizationSubscription from "./pages/organization/OrganizationSubscription";
 import OrganizationCertificates from "./pages/organization/OrganizationCertificates";
 import OrganizationRetakeRequests from "./pages/organization/OrganizationRetakeRequests";
 import CertificateVerification from "./pages/CertificateVerification";
@@ -51,12 +53,28 @@ import LearnerNotifications, {
   AdminNotifications,
   OrganizationNotifications,
 } from "./pages/Notifications";
+import MySupportTickets from "./pages/MySupportTickets";
 import { getBasename } from "./utils/Functions";
-
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import socket from "@/config/socket";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  const user = useSelector((state: any) => state.user.userData);
+  useEffect(() => {
+    if (user?._id) {
+      if (user?.role === "admin") {
+        socket.emit("setupAdmin", user);
+      }
+      else{
+        socket.emit("setup", user);
+      }
+    }
+  }, [user]);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
@@ -128,6 +146,21 @@ const App = () => (
                 <LearnerNotifications />
               </ProtectedRoute>
             } />
+            <Route path="support" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <MySupportTickets />
+              </ProtectedRoute>
+            } />
+            <Route path="subscription" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <OrganizationSubscription />
+              </ProtectedRoute>
+            } />
+            <Route path="billing" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <OrganizationBilling />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route path="/admin" element={
             <ProtectedRoute allowedRoles={["admin"]}>
@@ -169,6 +202,11 @@ const App = () => (
             <Route path="payments" element={
               <ProtectedRoute allowedRoles={["admin"]}>
                 <AdminPayments />
+              </ProtectedRoute>
+            } />
+            <Route path="evaluations" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminEvaluations />
               </ProtectedRoute>
             } />
             <Route path="complaints" element={<AdminComplaints />} />
@@ -219,6 +257,11 @@ const App = () => (
                 <OrganizationRetakeRequests />
               </ProtectedRoute>
             } />
+            <Route path="subscription" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationSubscription />
+              </ProtectedRoute>
+            } />
             <Route path="billing" element={
               <ProtectedRoute allowedRoles={["organization"]}>
                 <OrganizationBilling />
@@ -234,6 +277,11 @@ const App = () => (
                 <OrganizationNotifications />
               </ProtectedRoute>
             } />
+            <Route path="support" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <MySupportTickets />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route path="/verify" element={<CertificateVerification />} />
           <Route path="/faq" element={<Index />} />
@@ -244,6 +292,8 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  
+  );
+};
 
 export default App;

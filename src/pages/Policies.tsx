@@ -113,25 +113,25 @@ FGI does not sell or distribute learner information to third parties except wher
   },
   // 7
   {
-    id: "ceu-administration",
+    id: "On-going Education Hours-administration",
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
-    title: "CEU Administration Policy",
+    title: "On-going Education Hours Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
-All CEU-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
+All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
-CEU Definition
-A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) CEU represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
+On-going Education Hours Definition
+A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
-FGI awards CEUs only for programs that include:
+FGI awards On-going Education Hourss only for programs that include:
 • Clearly defined learning objectives
 • Organized instructional content
 • Measurable learning outcomes
 • Participant verification of completion
 • Documented program evaluation procedures
 
-CEUs are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
+On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
 
 Contact Hour Definition
 A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
@@ -151,37 +151,37 @@ Contact hours do NOT include:
 
 FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
-CEU Calculation Formula
-FGI calculates CEUs using the standard formula recognized by our standards:
-10 Contact Hours = 1.0 CEU
-The CEU value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
+On-going Education Hours Calculation Formula
+FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
+10 Contact Hours = 1.0 On-going Education Hours
+The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
-CEU Structure for FGI Certification Levels — TABLE:
-[[CEU_TABLE]]
+On-going Education Hours Structure for FGI Certification Levels — TABLE:
+[[On-going Education Hours_TABLE]]
 
 Completion Requirements
-To receive CEU credit, participants must:
+To receive On-going Education Hours credit, participants must:
 • Complete all required course modules
 • Participate in the full instructional content of the course
 • Successfully pass the required course assessment
 • Achieve the minimum passing score established for the program
 Learners who successfully meet all completion requirements will receive:
 • A certificate of completion
-• The CEU value awarded for the program
+• The On-going Education Hours value awarded for the program
 • A unique certificate number for verification
 Completion records are maintained within the FGI Learning Management System for documentation and transcript purposes.
 
-CEU Recordkeeping
+On-going Education Hours Recordkeeping
 FGI maintains secure digital records documenting:
 • Learner registration
 • Course participation
 • Assessment results
-• CEU credits awarded
+• On-going Education Hours credits awarded
 • Certificate issuance
-These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of CEU completion or program participation as needed for professional or educational purposes.
+These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of On-going Education Hours completion or program participation as needed for professional or educational purposes.
 
 Policy Review
-This CEU Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
+This On-going Education Hours Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
 `
   },
   // 8
@@ -239,7 +239,7 @@ Course Development Stages:
 1. Analysis
 FGI identifies the purpose of the course and the learning needs of the target audience. This includes review of workforce development needs, identification of learner skill gaps, definition of target audience characteristics, determination of expected learning outcomes, and alignment with program certification level.
 2. Design
-FGI establishes the instructional structure of the course — development of learning objectives, identification of competencies, determination of content sequence, selection of assessment methods, and determination of instructional time and CEU value.
+FGI establishes the instructional structure of the course — development of learning objectives, identification of competencies, determination of content sequence, selection of assessment methods, and determination of instructional time and On-going Education Hours value.
 3. Development
 Instructional materials are created including written course content, multimedia materials, online learning modules, assessments and examinations, and instructional resources.
 4. Implementation
@@ -321,7 +321,7 @@ LMS Core Functions:
 • Structured learning modules
 • Learner progress tracking
 • Assessment administration
-• CEU documentation
+• On-going Education Hours documentation
 • Certificate generation and issuance
 • Transcript recordkeeping
 
@@ -373,7 +373,7 @@ FGI certificates include:
 • Program title
 • Certificate number
 • Completion date
-• CEU value awarded
+• On-going Education Hours value awarded
 • Issuing institution
 
 Data Backup
@@ -445,7 +445,7 @@ FGI will not represent itself as  unless and until official accreditation has be
 All marketing materials must accurately describe:
 • Course titles and descriptions
 • Program objectives and learning outcomes
-• CEU values associated with courses
+• On-going Education Hours values associated with courses
 • Program completion requirements
 • Certification documentation issued by FGI
 
@@ -576,25 +576,25 @@ FGI implements reasonable administrative, technical, and security measures to sa
 FGI does not sell or distribute learner information to third parties except where required by law or necessary to support educational services.`,
   },
   {
-    id: "ceu-administration",
+    id: "On-going Education Hours-administration",
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
-    title: "CEU Administration Policy",
+    title: "On-going Education Hours Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (CEUs) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that CEUs are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
-All CEU-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
+All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
-CEU Definition
-A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) CEU represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
+On-going Education Hours Definition
+A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
-FGI awards CEUs only for programs that include:
+FGI awards On-going Education Hourss only for programs that include:
 • Clearly defined learning objectives
 • Organized instructional content
 • Measurable learning outcomes
 • Participant verification of completion
 • Documented program evaluation procedures
 
-CEUs are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
+On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
 
 Contact Hour Definition
 A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
@@ -614,37 +614,37 @@ Contact hours do NOT include:
 
 FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
-CEU Calculation Formula
-FGI calculates CEUs using the standard formula recognized by our standards:
-10 Contact Hours = 1.0 CEU
-The CEU value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
+On-going Education Hours Calculation Formula
+FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
+10 Contact Hours = 1.0 On-going Education Hours
+The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
-CEU Structure for FGI Certification Levels — TABLE:
-[[CEU_TABLE]]
+On-going Education Hours Structure for FGI Certification Levels — TABLE:
+[[On-going Education Hours_TABLE]]
 
 Completion Requirements
-To receive CEU credit, participants must:
+To receive On-going Education Hours credit, participants must:
 • Complete all required course modules
 • Participate in the full instructional content of the course
 • Successfully pass the required course assessment
 • Achieve the minimum passing score established for the program
 Learners who successfully meet all completion requirements will receive:
 • A certificate of completion
-• The CEU value awarded for the program
+• The On-going Education Hours value awarded for the program
 • A unique certificate number for verification
 Completion records are maintained within the FGI Learning Management System for documentation and transcript purposes.
 
-CEU Recordkeeping
+On-going Education Hours Recordkeeping
 FGI maintains secure digital records documenting:
 • Learner registration
 • Course participation
 • Assessment results
-• CEU credits awarded
+• On-going Education Hours credits awarded
 • Certificate issuance
-These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of CEU completion or program participation as needed for professional or educational purposes.
+These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of On-going Education Hours completion or program participation as needed for professional or educational purposes.
 
 Policy Review
-This CEU Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
+This On-going Education Hours Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
 `,
   },
 ];
@@ -671,7 +671,20 @@ const Policies = () => {
                 Policies & Compliance
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80">
-                Our commitment to transparency, accessibility, and ethical practices
+                Our Commitment to Transparency, Accessibility, and Ethical Practices
+              </p>
+              <h2 className="font-heading text-3xl font-bold text-foreground mb-3 text-white mt-2">
+              Have Questions About Our Policies?
+              </h2>
+              <p className="text-lg md:text-xl text-primary-foreground/80">
+                Our Compliance Team is Here to Help Clarify Any Policy Questions.
+                <br />
+                <a
+                  href="mailto:info@funtologyglobalinstitute.com"
+                  className="font-medium text-secondary underline underline-offset-4 hover:text-primary-foreground"
+                >
+                  Info@FuntologyGlobalInstitute.com
+                </a>
               </p>
             </motion.div>
           </div>
@@ -704,10 +717,10 @@ const Policies = () => {
                     </AccordionTrigger>
                     <AccordionContent className="pb-6">
                       <div className="pl-16 pr-4">
-                        {policy.id === "ceu-administration" ? (
+                        {policy.id === "On-going Education Hours-administration" ? (
                           <>
                             <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-line">
-                              {policy.content.split("[[CEU_TABLE]]")[0]}
+                              {policy.content.split("[[On-going Education Hours_TABLE]]")[0]}
                             </div>
                             <div className="overflow-x-auto mt-4 mb-6">
                               <table className="min-w-full border border-gray-300 text-sm">
@@ -715,7 +728,7 @@ const Policies = () => {
                                   <tr className="bg-primary text-primary-foreground">
                                     <th className="px-4 py-2 text-left">Program Level</th>
                                     <th className="px-4 py-2 text-left">Contact Hours</th>
-                                    <th className="px-4 py-2 text-left">CEUs Awarded</th>
+                                    <th className="px-4 py-2 text-left">On-going Education Hourss Awarded</th>
                                     <th className="px-4 py-2 text-left">Price</th>
                                   </tr>
                                 </thead>
@@ -723,38 +736,38 @@ const Policies = () => {
                                   <tr>
                                     <td className="px-4 py-2">Level 1 – Career Foundations</td>
                                     <td className="px-4 py-2">10 hours</td>
-                                    <td className="px-4 py-2">1.0 CEU</td>
+                                    <td className="px-4 py-2">1.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$25</td>
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 2 – Professional Advancement</td>
                                     <td className="px-4 py-2">30 hours</td>
-                                    <td className="px-4 py-2">3.0 CEU</td>
+                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$49</td>
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 3 – Career Leadership</td>
                                     <td className="px-4 py-2">30 hours</td>
-                                    <td className="px-4 py-2">3.0 CEU</td>
+                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$59</td>
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 4 – Executive Strategy</td>
                                     <td className="px-4 py-2">40 hours</td>
-                                    <td className="px-4 py-2">4.0 CEU</td>
+                                    <td className="px-4 py-2">4.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$69</td>
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 5 – Fellowship of Distinction</td>
                                     <td className="px-4 py-2">50 hours</td>
-                                    <td className="px-4 py-2">5.0 CEU</td>
+                                    <td className="px-4 py-2">5.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$79</td>
                                   </tr>
                                 </tbody>
                               </table>
                             </div>
                             <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-line">
-                              {policy.content.split("[[CEU_TABLE]]")[1]}
+                              {policy.content.split("[[On-going Education Hours_TABLE]]")[1]}
                             </div>
                           </>
                         ) : (
@@ -783,10 +796,10 @@ const Policies = () => {
                 Our compliance team is here to help clarify any policy questions.
               </p>
               <a
-                href="mailto:compliance@fgi.edu"
+                href="mailto:info@funtologyglobalinstitute.com"
                 className="text-primary font-semibold hover:underline"
               >
-                compliance@fgi.edu
+                Info@FuntologyGlobalInstitute.com
               </a>
             </motion.div>
           </div>

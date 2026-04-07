@@ -56,13 +56,13 @@ const Header = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container-wide">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-28">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <motion.img
               src={fgiLogo}
               alt="FGI Logo"
-              className="h-12 w-12 md:h-14 md:w-14 object-contain"
+              className="h-12 w-12 md:h-28 md:w-28 object-contain"
               whileHover={{ scale: 1.05, rotate: 5 }}
               transition={{ duration: 0.2 }}
             />

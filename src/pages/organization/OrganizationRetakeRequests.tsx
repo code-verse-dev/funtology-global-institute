@@ -22,7 +22,6 @@ type RetakeRequest = {
     firstName?: string;
     lastName?: string;
     email?: string;
-    department?: string;
     _id?: string;
   } | null;
   courseTitle?: string;

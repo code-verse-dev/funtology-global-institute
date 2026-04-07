@@ -51,6 +51,14 @@ export const paymentSlice = createApi({
             }),
             invalidatesTags: ["Subscription"],
         }),
+        UpgradeSubscription: builder.mutation<any, { data: any }>({
+            query: ({ data }) => ({
+                url: "/payment/upgrade-subscription-payment",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Subscription"],
+        }),
         quizRetakePayment: builder.mutation<any, { data: { paymentIntentId: string } }>({
             query: ({ data }) => ({
                 url: "/payment/quiz-retake-payment",
@@ -79,7 +87,14 @@ export const paymentSlice = createApi({
             }),
             providesTags: ["Payments"],
         }),
-
+        exportPaymentsXlsx: builder.mutation({
+            query: (params: any) => ({
+              url: "/payment/admin/exportPayments",
+              method: "GET",
+              params,
+              responseHandler: async (response: any) => await response.blob(), // handles XLSX too
+            }),
+          }),
     }),
 });
 
@@ -92,4 +107,6 @@ export const {
     useGetSavedPaymentMethodsQuery,
     useGetMySubscriptionQuery,
     useGetMyPaymentsQuery,
+    useExportPaymentsXlsxMutation,
+    useUpgradeSubscriptionMutation
 } = paymentSlice;

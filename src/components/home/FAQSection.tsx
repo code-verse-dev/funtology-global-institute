@@ -66,8 +66,8 @@ const FAQSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Find answers to common questions about our ongoing education programs,
-            certification process, and platform features.
+            Find Answers to Common Questions About Our Ongoing Education Programs,
+            Certification Process, and Platform Features.
           </p>
         </motion.div>
 
