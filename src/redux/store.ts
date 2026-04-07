@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { authSlice } from "./services/apiSlices/authSlice";
 import { courseApiSlice } from "./services/apiSlices/courseSlice";
@@ -16,6 +16,17 @@ import { subscriptionSlice } from "./services/apiSlices/subscriptionSlice";
 import { notificationSlice } from "./services/apiSlices/notificationSlice";
 import { feedbackSlice } from "./services/apiSlices/feedbackSlice";
 import { evaluationSlice } from "./services/apiSlices/evaluationSlice";
+import { removeUser } from "./services/Slices/userSlice";
+
+/** User-specific RTK Query caches (same endpoint key for every account) must clear on logout. */
+const logoutListener = createListenerMiddleware();
+logoutListener.startListening({
+  actionCreator: removeUser,
+  effect: (_action, listenerApi) => {
+    listenerApi.dispatch(paymentSlice.util.resetApiState());
+    listenerApi.dispatch(subscriptionSlice.util.resetApiState());
+  },
+});
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -48,7 +59,22 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      .concat(authSlice.middleware, userApiSlice.middleware, courseApiSlice.middleware, lessonSlice.middleware, ticketSlice.middleware, paymentSlice.middleware, learnerSlice.middleware, certificateSlice.middleware, retakeSlice.middleware, subscriptionSlice.middleware, notificationSlice.middleware, feedbackSlice.middleware, evaluationSlice.middleware)
+      .concat(
+        authSlice.middleware,
+        userApiSlice.middleware,
+        courseApiSlice.middleware,
+        lessonSlice.middleware,
+        ticketSlice.middleware,
+        paymentSlice.middleware,
+        learnerSlice.middleware,
+        certificateSlice.middleware,
+        retakeSlice.middleware,
+        subscriptionSlice.middleware,
+        notificationSlice.middleware,
+        feedbackSlice.middleware,
+        evaluationSlice.middleware,
+        logoutListener.middleware,
+      )
 });
 
 setupListeners(store.dispatch);

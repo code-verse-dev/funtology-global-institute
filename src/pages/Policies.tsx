@@ -680,10 +680,10 @@ const Policies = () => {
                 Our Compliance Team is Here to Help Clarify Any Policy Questions.
                 <br />
                 <a
-                  href="mailto:compliance@fgi.edu"
+                  href="mailto:info@funtologyglobalinstitute.com"
                   className="font-medium text-secondary underline underline-offset-4 hover:text-primary-foreground"
                 >
-                  compliance@fgi.edu
+                  Info@FuntologyGlobalInstitute.com
                 </a>
               </p>
             </motion.div>
@@ -796,10 +796,10 @@ const Policies = () => {
                 Our compliance team is here to help clarify any policy questions.
               </p>
               <a
-                href="mailto:compliance@fgi.edu"
+                href="mailto:info@funtologyglobalinstitute.com"
                 className="text-primary font-semibold hover:underline"
               >
-                compliance@fgi.edu
+                Info@FuntologyGlobalInstitute.com
               </a>
             </motion.div>
           </div>

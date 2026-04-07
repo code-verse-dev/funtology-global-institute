@@ -87,7 +87,7 @@ export default function AdminPayments() {
 
       const link = document.createElement("a");
       link.href = url;
-      link.download = "payments-export.xlsx"; 
+      link.download = "payments-export.xlsx";
       link.click();
 
       window.URL.revokeObjectURL(url);
@@ -195,7 +195,7 @@ export default function AdminPayments() {
                     const statusLabel = paid ? "completed" : "pending";
                     const created = p.createdAt ? new Date(p.createdAt).toLocaleString() : "—";
                     const refLabel = [p.type].filter(Boolean).join(" · ") || "—";
-                    const type = refLabel === 'SUBSCRIPTION' ? 'Course Fees' : 'Quiz Retake';
+                    const type = refLabel === 'SUBSCRIPTION' ? 'Course Fees' : refLabel === 'QUIZ_RETAKE' ? 'Quiz Retake' : refLabel === 'UPGRADE_SUBSCRIPTION' ? 'Upgrade Plan' : refLabel;
 
                     return (
                       <TableRow key={rowKey}>
