@@ -18,7 +18,7 @@ const heroFeatures = [
   },
   {
     title: "Explore Career Pathways",
-    subheading: "Funtology • Barbertology • Nailtology • Skintology • Entrepreneurship",
+    subheading: "Cosmetology • Barbering • Nails • Skincare • Entrepreneurship",
   },
   {
     title: "Advance Your Learning Journey",

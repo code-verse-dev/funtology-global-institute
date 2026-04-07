@@ -37,7 +37,7 @@ function normalizeRole(role: unknown): string {
   return typeof role === "string" ? role.toLowerCase().trim() : "";
 }
 
-function hasParentOrganization(user: Record<string, unknown> | null | undefined): boolean {
+export function hasParentOrganization(user: Record<string, unknown> | null | undefined): boolean {
   const p = user?.parentOrganization;
   if (p == null) return false;
   if (typeof p === "string") return p.length > 0;

@@ -40,6 +40,7 @@ import OrganizationLearners from "./pages/organization/OrganizationLearners";
 import OrganizationCourses from "./pages/organization/OrganizationCourses";
 import OrganizationCourseDetail from "./pages/organization/OrganizationCourseDetail";
 import OrganizationBilling from "./pages/organization/OrganizationBilling";
+import OrganizationSubscription from "./pages/organization/OrganizationSubscription";
 import OrganizationCertificates from "./pages/organization/OrganizationCertificates";
 import OrganizationRetakeRequests from "./pages/organization/OrganizationRetakeRequests";
 import CertificateVerification from "./pages/CertificateVerification";
@@ -150,6 +151,16 @@ const App = () => {
                 <MySupportTickets />
               </ProtectedRoute>
             } />
+            <Route path="subscription" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <OrganizationSubscription />
+              </ProtectedRoute>
+            } />
+            <Route path="billing" element={
+              <ProtectedRoute allowedRoles={["learner"]}>
+                <OrganizationBilling />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route path="/admin" element={
             <ProtectedRoute allowedRoles={["admin"]}>
@@ -244,6 +255,11 @@ const App = () => {
             <Route path="retake-requests" element={
               <ProtectedRoute allowedRoles={["organization"]}>
                 <OrganizationRetakeRequests />
+              </ProtectedRoute>
+            } />
+            <Route path="subscription" element={
+              <ProtectedRoute allowedRoles={["organization"]}>
+                <OrganizationSubscription />
               </ProtectedRoute>
             } />
             <Route path="billing" element={

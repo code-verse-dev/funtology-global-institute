@@ -34,6 +34,9 @@ function descriptionFromPayment(p: PaymentDoc): string {
   if (p.type === "QUIZ_RETAKE") {
     return "Quiz Retake";
   }
+  if (p.type === "UPGRADE_SUBSCRIPTION") {
+    return "Upgrade Plan";
+  }
   return p.type as string;
 }
 

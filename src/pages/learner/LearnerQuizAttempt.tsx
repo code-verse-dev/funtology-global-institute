@@ -140,6 +140,7 @@ const LearnerQuizAttempt = () => {
         });
         return;
       }
+      toast.error(res?.message || "Could not submit quiz response.");
       navigate(`/dashboard/courses/${courseId}`, { replace: true });
     } catch (err: unknown) {
       console.log(err, 'err');

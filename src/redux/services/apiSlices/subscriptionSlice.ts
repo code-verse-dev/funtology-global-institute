@@ -6,9 +6,10 @@ export const subscriptionSlice = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Subscription"],
   endpoints: (builder) => ({
-    getLearnerSeatFee: builder.query<any, void>({
+    
+    getMySubscription: builder.query<any, void>({
       query: () => ({
-        url: "/subscription/learner-seat-fee",
+        url: "/subscription/my",
         method: "GET",
       }),
       providesTags: ["Subscription"],
@@ -17,4 +18,4 @@ export const subscriptionSlice = createApi({
   }),
 });
 
-export const { useGetLearnerSeatFeeQuery } = subscriptionSlice;
+export const { useGetMySubscriptionQuery } = subscriptionSlice;

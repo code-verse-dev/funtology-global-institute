@@ -95,15 +95,15 @@ const Register = () => {
             <img
               src={fgiLogo}
               alt="FGI Logo"
-              className="w-32 h-32 mx-auto drop-shadow-2xl"
+              className="w-36 h-36 mx-auto drop-shadow-2xl"
             />
           </div>
           <h2 className="font-heading text-3xl font-bold text-primary-foreground mb-4">
             Start Your Learning Journey Today
           </h2>
           <p className="text-primary-foreground/80 text-lg mb-8">
-            Join thousands of professionals advancing their careers with 
-            ongoing education courses.
+            Join Thousands of Professionals Advancing Their Careers with 
+            Ongoing Education Courses.
           </p>
           
           <div className="space-y-4 text-left bg-primary-foreground/10 rounded-xl p-6">
@@ -148,7 +148,7 @@ const Register = () => {
             Create Account
           </h1>
           <p className="text-muted-foreground mb-6">
-            Join FGI and start earning professional certifications
+            Join FGI and Start Earning Professional Certifications
           </p>
 
           <Tabs

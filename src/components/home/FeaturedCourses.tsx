@@ -94,7 +94,7 @@ const FeaturedCourses = () => {
             Professional Development Certificates
           </h3>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive training program designed to build foundational and advanced career skills through structured, measurable learning experiences.
+            A Comprehensive Training Program Designed to Build Foundational and Advanced Career Skills Through Structured, Measurable Learning Experiences.
           </p>
         </motion.div>
 
