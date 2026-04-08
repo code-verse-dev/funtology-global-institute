@@ -252,7 +252,7 @@ export default function PdfFlipViewer({
 
       <div
         ref={containerRef}
-        className="relative flex w-full items-center justify-center overflow-auto overscroll-contain bg-muted"
+        className="relative flex w-full min-h-0 flex-1 items-center justify-center overflow-hidden bg-muted"
         style={{
           minHeight: pageHeight > 0 ? Math.min(pageHeight + 48, 520) : 400,
           maxHeight: layoutExpanded ? "min(92vh, 960px)" : "min(85vh, 820px)",
@@ -315,7 +315,7 @@ export default function PdfFlipViewer({
             loading=""
           >
             {numPages > 0 && displayPageWidth > 0 && displayPageHeight > 0 ? (
-              <div className="py-6 drop-shadow-2xl">
+              <div className="flex max-h-full max-w-full items-center justify-center overflow-hidden py-2 drop-shadow-2xl">
                 <HTMLFlipBook
                   ref={bookRef}
                   width={displayPageWidth}

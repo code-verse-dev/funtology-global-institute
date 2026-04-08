@@ -14,9 +14,9 @@ import { useLoginMutation } from "@/redux/services/apiSlices/authSlice";
 import type { LoginRole } from "@/types/loginRole";
 
 const roleOptions = [
-  { id: "learner" as LoginRole, label: "Learner", icon: GraduationCap, desc: "Access courses & certificates", route: "/dashboard" },
-  { id: "organization" as LoginRole, label: "Organization", icon: Building2, desc: "Manage team learning", route: "/organization" },
-  { id: "admin" as LoginRole, label: "Administrator", icon: Shield, desc: "System administration", route: "/admin" },
+  { id: "learner" as LoginRole, label: "Learner", icon: GraduationCap, desc: "Access Courses & Certificates", route: "/dashboard" },
+  { id: "organization" as LoginRole, label: "Organization", icon: Building2, desc: "Manage Team Learning", route: "/organization" },
+  { id: "admin" as LoginRole, label: "Administrator", icon: Shield, desc: "System Administration", route: "/admin" },
 ];
 
 const Login = () => {

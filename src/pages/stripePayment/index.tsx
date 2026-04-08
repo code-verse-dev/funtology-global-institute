@@ -17,7 +17,7 @@ import type { CourseRate } from "@/utils/upgradeSubscriptionPricing";
 import { computeUpgradeSubscriptionPricing } from "@/utils/upgradeSubscriptionPricing";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Loader2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -58,13 +58,13 @@ const Payment = () => {
   }, [isUpgradeSubscription, isOrganization, isStandaloneSubscriberLearner, navigate]);
 
   const [totalLearners, setTotalLearners] = useState(0);
-  useEffect(() => {
-    if (isOrganization && isSubscription) {
-      setTotalLearners((n) => (n < 1 ? 1 : n));
-    } else {
-      setTotalLearners(0);
-    }
-  }, [isOrganization, isSubscription]);
+  // useEffect(() => {
+  //   if (isOrganization && isSubscription) {
+  //     setTotalLearners((n) => (n < 1 ? 1 : n));
+  //   } else {
+  //     setTotalLearners(0);
+  //   }
+  // }, [isOrganization, isSubscription]);
 
   const {
     data: subApiRes,
@@ -392,12 +392,21 @@ const Payment = () => {
     const totalAfter = prevTotalLearners + (showUpgradeSeatControls ? additionalLearners : 0);
     const newCourseLines = upgradePricing.lines.filter((l) => l.section === "new_courses");
     const newSeatLines = upgradePricing.lines.filter((l) => l.section === "new_seats");
-
     return (
       <div className="min-h-screen bg-muted">
         <div className="container-wide mx-auto max-w-6xl px-4 py-6 lg:py-10">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div>
+            <div className="min-w-0">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="-ml-2 mb-2 h-9 gap-1.5 px-2 text-muted-foreground hover:text-foreground"
+                onClick={() => navigate(returnPath)}
+              >
+                <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
+                Go Back
+              </Button>
               <h1 className="font-heading text-2xl font-bold text-foreground">Upgrade Plan</h1>
               <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
                 Add published courses not already on your plan and/or increase learner seats. New seats apply the rate for your learner count
@@ -449,9 +458,14 @@ const Payment = () => {
                         >
                           <div className="min-w-0 pr-2">
                             <p className="text-sm font-medium text-foreground">{title}</p>
+                            {isOrganization ? (
                             <p className="text-xs text-muted-foreground">
-                              Standard Rate (1–2 Learners): ${amount.toFixed(2)} per Learner <br /> Group Rate (3+ Learners): ${groupAmt.toFixed(2)} per Learner
+                              Standard Rate (1–2 Learners): ${amount.toFixed(2)} per Learner <br />
+                              Group Rate (3+ Learners): ${groupAmt.toFixed(2)} per Learner
                             </p>
+                          ) : (
+                            <p className="text-xs text-muted-foreground">${amount.toFixed(2)} USD</p>
+                          )}
                           </div>
                           {selected ? <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" /> : null}
                         </button>
@@ -492,7 +506,7 @@ const Payment = () => {
                 {upgradePricing.error ? (
                   <p className="text-sm text-destructive">{upgradePricing.error}</p>
                 ) : selectedNewCourseIds.length === 0 && (showUpgradeSeatControls ? additionalLearners <= 0 : true) ? (
-                  <p className="text-sm text-muted-foreground">Select new courses and/or add learner seats to see line items.</p>
+                  <p className="text-sm text-muted-foreground">Select new courses.</p>
                 ) : (
                   <div className="space-y-6">
                     {newCourseLines.length > 0 ? (
@@ -514,8 +528,10 @@ const Payment = () => {
                                 <tr key={`nc-${line.courseId}`} className="border-b border-border/80 last:border-0">
                                   <td className="px-3 py-2.5 align-top">
                                     <span className="font-medium text-foreground">{line.title}</span>
-                                    <p className="mt-0.5 text-xs text-muted-foreground">{line.tierLabel}</p>
-                                    <p className="text-xs text-muted-foreground">× {line.learners} learners</p>
+                                    <p className="mt-0.5 text-xs text-muted-foreground">
+                                      {isOrganization ? line.tierLabel : "Standard rate"}
+                                    </p>
+                                    {isOrganization ? <p className="text-xs text-muted-foreground">× {line.learners} learners</p> : null}
                                   </td>
                                   <td className="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${line.perSeat.toFixed(2)}</td>
                                   <td className="whitespace-nowrap px-3 py-2.5 text-right font-medium tabular-nums">
@@ -548,7 +564,9 @@ const Payment = () => {
                                 <tr key={`ns-${line.courseId}`} className="border-b border-border/80 last:border-0">
                                   <td className="px-3 py-2.5 align-top">
                                     <span className="font-medium text-foreground">{line.title}</span>
-                                    <p className="mt-0.5 text-xs text-muted-foreground">{line.tierLabel}</p>
+                                    <p className="mt-0.5 text-xs text-muted-foreground">
+                                      {isOrganization ? line.tierLabel : "Standard rate"}
+                                    </p>
                                     <p className="text-xs text-muted-foreground">× {line.newSeats} new seats</p>
                                   </td>
                                   <td className="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${line.perSeat.toFixed(2)}</td>
@@ -677,7 +695,8 @@ const Payment = () => {
                           <p className="text-sm font-medium text-foreground">{title}</p>
                           {isOrganization ? (
                             <p className="text-xs text-muted-foreground">
-                              Standard Rate (1–2 Learners): ${amount.toFixed(2)} per Learner <br /> Group Rate (3+ Learners): ${groupAmt.toFixed(2)} per Learner
+                              Standard Rate (1–2 Learners): ${amount.toFixed(2)} per Learner <br />
+                              Group Rate (3+ Learners): ${groupAmt.toFixed(2)} per Learner
                             </p>
                           ) : (
                             <p className="text-xs text-muted-foreground">${amount.toFixed(2)} USD</p>

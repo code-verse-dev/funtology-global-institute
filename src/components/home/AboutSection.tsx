@@ -72,7 +72,7 @@ const AboutSection = () => {
               <Target className="w-10 h-10 text-secondary mb-4" />
               <h3 className="font-heading text-xl font-semibold mb-2">Our Mission</h3>
               <p className="text-sm text-primary-foreground/80">
-                Empowering professionals with measurable skills and recognized credentials.
+                Empowering Professionals with Measurable Skills and Recognized Credentials.
               </p>
             </motion.div>
 
@@ -85,7 +85,7 @@ const AboutSection = () => {
               <Shield className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold mb-2">Standards-Aligned</h3>
               <p className="text-sm text-primary/80">
-                Our programs are thoughtfully designed to align with industry best practices, ensuring high-quality, engaging, and impactful learning experiences for every participant.
+                Our Programs are Thoughtfully Designed to Align with Industry Best Practices, Ensuring High-Quality, Engaging, and Impactful Learning Experiences for Every Participant.
               </p>
             </motion.div>
 
@@ -98,7 +98,7 @@ const AboutSection = () => {
               <Award className="w-10 h-10 text-secondary mb-4" />
               <h3 className="font-heading text-xl font-semibold mb-2">Certified</h3>
               <p className="text-sm text-muted-foreground">
-                Earn professional certificates upon successful course completion.
+                Earn Professional Certificates Upon Successful Course Completion.
               </p>
             </motion.div>
 

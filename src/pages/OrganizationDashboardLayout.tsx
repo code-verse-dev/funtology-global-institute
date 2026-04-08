@@ -50,7 +50,7 @@ const OrganizationDashboardLayout = () => {
     navigate("/login", { replace: true });
   };
 
-  const user = useSelector((state: RootState) => state.user.userData);
+  const user = useSelector((state: any) => state.user.userData);
   const profileImage = userProfileImageSrc(user?.image);
 
   return (

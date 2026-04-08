@@ -3,9 +3,9 @@ import { OrganizationCoursesList } from "@/pages/organization/OrganizationCourse
 
 const LearnerCourses = () => (
   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-    <h2 className="font-heading text-lg font-bold">My courses</h2>
+    <h2 className="font-heading text-lg font-bold">My Courses</h2>
     <p className="text-sm text-muted-foreground -mt-4">
-      Published courses available to you. Open a course to view PDF materials and quiz content.
+      Published Courses Available to You. Open a Course to View PDF Materials and Quiz Content.
     </p>
     <OrganizationCoursesList variant="full" linkBase="/dashboard/courses" />
   </motion.div>
