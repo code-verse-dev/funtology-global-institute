@@ -72,7 +72,7 @@ function displayCoursePrice(course: CourseInSubscription, totalLearners: number)
 }
 
 const OrganizationSubscription = () => {
-  const user = useSelector((s: RootState) => s.user.userData) as Record<string, unknown> | undefined;
+  const user = useSelector((s: any) => s.user.userData) as Record<string, unknown> | undefined;
   const isLearner = String(user?.role ?? "").toLowerCase().trim() === "learner";
   const isStandaloneLearner = isLearner && !hasParentOrganization(user);
   const subscriptionBasePath = isStandaloneLearner ? "/dashboard/subscription" : "/organization/subscription";

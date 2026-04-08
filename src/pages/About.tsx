@@ -139,13 +139,13 @@ const whatWeProvideItems = [
 ];
 
 const whyFuntologyItems = [
-  "Proven national impact",
-  "Multi-program career pathways",
-  "Hands-on + digital integration",
-  "High student engagement",
-  "Trusted by schools since 2016",
-  "Scalable for large implementations",
-  "Built for workforce readiness",
+  "Proven National Impact",
+  "Multi-Program Career Pathways",
+  "Hands-on + Digital Integration",
+  "High Student Engagement",
+  "Trusted by Schools Since 2016",
+  "Scalable for Large Implementations",
+  "Built for Workforce Readiness",
 ];
 
 const aboutImagery = {
@@ -397,7 +397,7 @@ const About = () => {
               </div>
               <h2 className="font-heading text-3xl font-bold text-foreground md:text-4xl">Visual Proof</h2>
               <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-                Funtology is not theoretical—it is actively implemented in schools, organizations, and training environments.
+                Funtology is Not Theoretical—It is Actively Implemented in Schools, Organizations, and Training Environments.
               </p>
             </motion.div>
             <motion.div
@@ -415,7 +415,7 @@ const About = () => {
         <section id="trusted-proven" className="scroll-mt-24 py-16 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 flex items-center gap-3"
+              className="mb-10 flex items-center justify-center gap-2"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -448,10 +448,10 @@ const About = () => {
               <Network className="h-8 w-8 text-secondary" aria-hidden />
               <div>
                 <h2 className="font-heading text-3xl font-bold text-foreground md:text-4xl">Program Ecosystem</h2>
-                <p className="mt-2 text-muted-foreground">Comprehensive career pathways</p>
+                <p className="mt-2 text-muted-foreground">Comprehensive Career Pathways</p>
               </div>
             </motion.div>
-            <p className="mb-8 text-lg text-muted-foreground">Funtology offers a full ecosystem of programs:</p>
+            <p className="mb-8 text-lg text-muted-foreground">Funtology Offers a Full Ecosystem of Programs:</p>
             <div className="grid items-start gap-12 lg:grid-cols-12">
               <motion.ul
                 className="space-y-4 lg:col-span-5"
@@ -504,10 +504,10 @@ const About = () => {
                 <p className="mb-6 text-muted-foreground">
                   Funtology Global Institute for Career Innovation is committed to delivering structured, measurable learning experiences.
                 </p>
-                <p className="mb-4 font-medium text-foreground">Our programs are:</p>
+                <p className="mb-4 font-medium text-foreground">Our Programs Are:</p>
                 <BulletList items={complianceQualityItems} />
                 <blockquote className="mt-10 rounded-2xl border border-secondary/30 bg-secondary/5 p-6 font-medium leading-relaxed text-foreground">
-                  “Our commitment to quality is aligned with ANSI/IACET ongoing educational standards to ensure structured, measurable learning experiences.”
+                  “Our Commitment to Quality is Aligned with ANSI/IACET Ongoing Educational Standards to Ensure Structured, Measurable Learning Experiences.”
                 </blockquote>
               </motion.div>
               <AboutPhoto src={aboutImagery.compliance.src} alt={aboutImagery.compliance.alt} aspectClassName="aspect-[4/3] lg:sticky lg:top-28" />
@@ -532,13 +532,13 @@ const About = () => {
               </div>
               <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
                 <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                  <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">Who we serve</h3>
+                  <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">Who We Serve</h3>
                   <BulletList items={whoWeServeItems} />
                 </motion.div>
                 <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }}>
-                  <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">What we provide</h3>
+                  <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">What We Provide</h3>
                   <BulletList items={whatWeProvideItems} />
-                </motion.div>
+                </motion.div>What Sets Us Apart?
               </div>
             </div>
           </div>
@@ -601,7 +601,7 @@ const About = () => {
                 Our Core Values
               </h2>
               <p className="text-muted-foreground">
-                The principles that guide everything we do
+                The Principles that Guide Everything We Do
               </p>
             </motion.div>
 
@@ -685,7 +685,7 @@ const About = () => {
                 Meet Our Team
               </h2>
               <p className="text-muted-foreground">
-                Industry experts dedicated to your professional growth
+                Industry Experts Dedicated to Your Professional Growth
               </p>
             </motion.div>
 

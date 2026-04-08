@@ -194,7 +194,7 @@ const Footer = () => {
             © {currentYear} Funtology Global Institute for Career Innovation. All rights reserved.
           </p>
           <p className="text-xs text-primary-foreground/50 text-center md:text-right">
-            Certificates issued are non-academic professional credentials.
+            Certificates Issued are Non-Academic Professional Credentials.
           </p>
         </div>
       </div>
