@@ -496,157 +496,157 @@ Assessment Methods:
 Commitment to Quality
 FGI is committed to delivering high-quality ongoing education programs that support professional advancement and workforce development. Through structured governance, systematic instructional design, and continuous program evaluation, FGI ensures that educational offerings meet established standards of quality and effectiveness.`
   },
-  {
-    id: "instructor-qualification",
-    icon: FileText, // UserCheck/Award/BadgeCheck (Lucide: FileText as placeholder)
-    title: "Instructor Qualification Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) ensures that all individuals involved in the development or delivery of educational programs possess appropriate qualifications, experience, and subject matter expertise relevant to the learning objectives of the program.
+//   {
+//     id: "instructor-qualification",
+//     icon: FileText, // UserCheck/Award/BadgeCheck (Lucide: FileText as placeholder)
+//     title: "Instructor Qualification Policy",
+//     content: `Funtology Global Institute for Career Innovation (FGI) ensures that all individuals involved in the development or delivery of educational programs possess appropriate qualifications, experience, and subject matter expertise relevant to the learning objectives of the program.
 
-FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its ongoing education programs.
+// FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its ongoing education programs.
 
-Instructor qualifications may include one or more of the following:
-• Demonstrated professional experience in the relevant field
-• Academic credentials related to the subject area
-• Industry certifications or licensure where applicable
-• Documented professional accomplishments or leadership experience
-• Proven expertise in workforce development, education, or professional training
+// Instructor qualifications may include one or more of the following:
+// • Demonstrated professional experience in the relevant field
+// • Academic credentials related to the subject area
+// • Industry certifications or licensure where applicable
+// • Documented professional accomplishments or leadership experience
+// • Proven expertise in workforce development, education, or professional training
 
-Subject Matter Experts (SMEs) may be engaged to assist with curriculum development, program design, and instructional review. FGI maintains documentation verifying instructor qualifications and ensures instructors are familiar with course objectives, assessment procedures, and instructional expectations.
+// Subject Matter Experts (SMEs) may be engaged to assist with curriculum development, program design, and instructional review. FGI maintains documentation verifying instructor qualifications and ensures instructors are familiar with course objectives, assessment procedures, and instructional expectations.
 
-All instructors and SMEs must adhere to FGI institutional policies and ethical standards.`,
-  },
-  {
-    id: "conflict-of-interest",
-    icon: Scale, // ⚖️ Scale/Balance/AlertTriangle (Lucide: Scale)
-    title: "Conflict of Interest Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining objectivity, fairness, and transparency in the development and delivery of its educational programs.
+// All instructors and SMEs must adhere to FGI institutional policies and ethical standards.`,
+//   },
+//   {
+//     id: "conflict-of-interest",
+//     icon: Scale, // ⚖️ Scale/Balance/AlertTriangle (Lucide: Scale)
+//     title: "Conflict of Interest Policy",
+//     content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining objectivity, fairness, and transparency in the development and delivery of its educational programs.
 
-Individuals involved in program governance, curriculum development, instructional delivery, or evaluation must disclose any potential conflicts of interest that could influence educational decisions or outcomes.
+// Individuals involved in program governance, curriculum development, instructional delivery, or evaluation must disclose any potential conflicts of interest that could influence educational decisions or outcomes.
 
-A conflict of interest may exist when an individual's personal, professional, or financial interests could compromise the impartiality of educational content, assessment processes, or program administration.
+// A conflict of interest may exist when an individual's personal, professional, or financial interests could compromise the impartiality of educational content, assessment processes, or program administration.
 
-All instructors, staff members, and subject matter experts are expected to:
-• Disclose potential conflicts of interest
-• Avoid situations that could compromise professional judgment
-• Maintain impartiality in all educational activities
+// All instructors, staff members, and subject matter experts are expected to:
+// • Disclose potential conflicts of interest
+// • Avoid situations that could compromise professional judgment
+// • Maintain impartiality in all educational activities
 
-FGI leadership will review disclosed conflicts and take appropriate actions to ensure educational integrity is maintained.`,
-  },
-  {
-    id: "ethics",
-    icon: CheckCircle, // ✅ CheckCircle/Star/ShieldCheck (Lucide: CheckCircle)
-    title: "Ethical Standards Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) upholds the highest ethical standards in all educational activities. FGI is committed to providing an educational environment that reflects integrity, professionalism, respect, and accountability.
+// FGI leadership will review disclosed conflicts and take appropriate actions to ensure educational integrity is maintained.`,
+//   },
+//   {
+//     id: "ethics",
+//     icon: CheckCircle, // ✅ CheckCircle/Star/ShieldCheck (Lucide: CheckCircle)
+//     title: "Ethical Standards Policy",
+//     content: `Funtology Global Institute for Career Innovation (FGI) upholds the highest ethical standards in all educational activities. FGI is committed to providing an educational environment that reflects integrity, professionalism, respect, and accountability.
 
-All instructors, staff members, and participants are expected to conduct themselves in accordance with ethical principles including:
-• Honesty and transparency in educational practices
-• Respect for diverse perspectives and experiences
-• Fair and unbiased assessment of learner performance
-• Protection of intellectual property and academic integrity
-• Professional conduct in all communications and instructional activities
+// All instructors, staff members, and participants are expected to conduct themselves in accordance with ethical principles including:
+// • Honesty and transparency in educational practices
+// • Respect for diverse perspectives and experiences
+// • Fair and unbiased assessment of learner performance
+// • Protection of intellectual property and academic integrity
+// • Professional conduct in all communications and instructional activities
 
-FGI prohibits any form of academic dishonesty, misrepresentation, or unethical conduct in educational programming. Violations of ethical standards may result in corrective actions including removal from educational programs or institutional disciplinary review.`,
-  },
-  {
-    id: "non-discrimination",
-    icon: Users, // Users/Globe/Heart (Lucide: Users)
-    title: "Non-Discrimination Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) is committed to providing equal access to educational opportunities for all learners.
+// FGI prohibits any form of academic dishonesty, misrepresentation, or unethical conduct in educational programming. Violations of ethical standards may result in corrective actions including removal from educational programs or institutional disciplinary review.`,
+//   },
+//   {
+//     id: "non-discrimination",
+//     icon: Users, // Users/Globe/Heart (Lucide: Users)
+//     title: "Non-Discrimination Policy",
+//     content: `Funtology Global Institute for Career Innovation (FGI) is committed to providing equal access to educational opportunities for all learners.
 
-FGI does not discriminate on the basis of race, color, national origin, ethnicity, religion, gender, gender identity, sexual orientation, age, disability, socioeconomic status, or any other protected characteristic in the administration of its educational programs, policies, or activities.
+// FGI does not discriminate on the basis of race, color, national origin, ethnicity, religion, gender, gender identity, sexual orientation, age, disability, socioeconomic status, or any other protected characteristic in the administration of its educational programs, policies, or activities.
 
-FGI strives to create an inclusive and respectful learning environment where individuals from diverse backgrounds are welcomed and supported. All participants in FGI programs are expected to contribute to an atmosphere of mutual respect and professional conduct.`,
-  },
-  {
-    id: "privacy-data-protection",
-    icon: Shield, // Lock/ShieldLock/EyeOff (Lucide: Shield as closest match)
-    title: "Privacy & Data Protection Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) recognizes the importance of protecting learner information and maintaining the confidentiality of personal and educational records.
+// FGI strives to create an inclusive and respectful learning environment where individuals from diverse backgrounds are welcomed and supported. All participants in FGI programs are expected to contribute to an atmosphere of mutual respect and professional conduct.`,
+//   },
+//   {
+//     id: "privacy-data-protection",
+//     icon: Shield, // Lock/ShieldLock/EyeOff (Lucide: Shield as closest match)
+//     title: "Privacy & Data Protection Policy",
+//     content: `Funtology Global Institute for Career Innovation (FGI) recognizes the importance of protecting learner information and maintaining the confidentiality of personal and educational records.
 
-FGI collects and maintains learner data solely for the purpose of administering educational programs, tracking course participation, and issuing certificates of completion.
+// FGI collects and maintains learner data solely for the purpose of administering educational programs, tracking course participation, and issuing certificates of completion.
 
-The FGI Learning Management System (LMS) maintains secure digital records of:
-• Learner registration information
-• Course participation
-• Assessment results
-• Certificate issuance records
+// The FGI Learning Management System (LMS) maintains secure digital records of:
+// • Learner registration information
+// • Course participation
+// • Assessment results
+// • Certificate issuance records
 
-FGI implements reasonable administrative, technical, and security measures to safeguard personal information from unauthorized access, misuse, or disclosure. Learner records are maintained in accordance with institutional policies governing data retention and educational documentation.
+// FGI implements reasonable administrative, technical, and security measures to safeguard personal information from unauthorized access, misuse, or disclosure. Learner records are maintained in accordance with institutional policies governing data retention and educational documentation.
 
-FGI does not sell or distribute learner information to third parties except where required by law or necessary to support educational services.`,
-  },
-  {
-    id: "On-going Education Hours-administration",
-    icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
-    title: "On-going Education Hours Administration Policy",
-    content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
+// FGI does not sell or distribute learner information to third parties except where required by law or necessary to support educational services.`,
+//   },
+//   {
+//     id: "On-going Education Hours-administration",
+//     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
+//     title: "On-going Education Hours Administration Policy",
+//     content: `Policy Statement
+// Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
-All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
+// All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
-On-going Education Hours Definition
-A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
+// On-going Education Hours Definition
+// A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
-FGI awards On-going Education Hourss only for programs that include:
-• Clearly defined learning objectives
-• Organized instructional content
-• Measurable learning outcomes
-• Participant verification of completion
-• Documented program evaluation procedures
+// FGI awards On-going Education Hourss only for programs that include:
+// • Clearly defined learning objectives
+// • Organized instructional content
+// • Measurable learning outcomes
+// • Participant verification of completion
+// • Documented program evaluation procedures
 
-On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
+// On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
 
-Contact Hour Definition
-A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
+// Contact Hour Definition
+// A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
 
-Contact hours may include:
-• Instructional reading
-• Multimedia learning modules
-• Guided educational content
-• Structured training activities
-• Verified participation in course instruction
+// Contact hours may include:
+// • Instructional reading
+// • Multimedia learning modules
+// • Guided educational content
+// • Structured training activities
+// • Verified participation in course instruction
 
-Contact hours do NOT include:
-• Breaks
-• Meals
-• Unstructured discussion
-• Unrelated activities
+// Contact hours do NOT include:
+// • Breaks
+// • Meals
+// • Unstructured discussion
+// • Unrelated activities
 
-FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
+// FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
-On-going Education Hours Calculation Formula
-FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
-10 Contact Hours = 1.0 On-going Education Hours
-The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
+// On-going Education Hours Calculation Formula
+// FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
+// 10 Contact Hours = 1.0 On-going Education Hours
+// The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
-On-going Education Hours Structure for FGI Certification Levels — TABLE:
-[[On-going Education Hours_TABLE]]
+// On-going Education Hours Structure for FGI Certification Levels — TABLE:
+// [[On-going Education Hours_TABLE]]
 
-Completion Requirements
-To receive On-going Education Hours credit, participants must:
-• Complete all required course modules
-• Participate in the full instructional content of the course
-• Successfully pass the required course assessment
-• Achieve the minimum passing score established for the program
-Learners who successfully meet all completion requirements will receive:
-• A certificate of completion
-• The On-going Education Hours value awarded for the program
-• A unique certificate number for verification
-Completion records are maintained within the FGI Learning Management System for documentation and transcript purposes.
+// Completion Requirements
+// To receive On-going Education Hours credit, participants must:
+// • Complete all required course modules
+// • Participate in the full instructional content of the course
+// • Successfully pass the required course assessment
+// • Achieve the minimum passing score established for the program
+// Learners who successfully meet all completion requirements will receive:
+// • A certificate of completion
+// • The On-going Education Hours value awarded for the program
+// • A unique certificate number for verification
+// Completion records are maintained within the FGI Learning Management System for documentation and transcript purposes.
 
-On-going Education Hours Recordkeeping
-FGI maintains secure digital records documenting:
-• Learner registration
-• Course participation
-• Assessment results
-• On-going Education Hours credits awarded
-• Certificate issuance
-These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of On-going Education Hours completion or program participation as needed for professional or educational purposes.
+// On-going Education Hours Recordkeeping
+// FGI maintains secure digital records documenting:
+// • Learner registration
+// • Course participation
+// • Assessment results
+// • On-going Education Hours credits awarded
+// • Certificate issuance
+// These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of On-going Education Hours completion or program participation as needed for professional or educational purposes.
 
-Policy Review
-This On-going Education Hours Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
-`,
-  },
+// Policy Review
+// This On-going Education Hours Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
+// `,
+//   },
 ];
 
 const Policies = () => {
@@ -793,7 +793,7 @@ const Policies = () => {
                 Have Questions About Our Policies?
               </h3>
               <p className="text-muted-foreground mb-4">
-                Our compliance team is here to help clarify any policy questions.
+                Our Compliance Team is Here to Help Clarify Any Policy Questions.
               </p>
               <a
                 href="mailto:info@funtologyglobalinstitute.com"
