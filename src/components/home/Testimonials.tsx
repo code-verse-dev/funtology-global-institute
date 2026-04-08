@@ -66,7 +66,7 @@ const Testimonials = () => {
             What Participants & Partners Are Saying
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Student experiences, family perspectives, instructor impact, and institutional partners who trust Funtology in their programs.
+            Student Experiences, Family Perspectives, Instructor Impact, and Institutional Partners Who Trust Funtology in Their Programs.
           </p>
         </motion.div>
 

@@ -99,6 +99,14 @@ export const courseApiSlice = createApi({
       }),
       providesTags: (_result, _err, id) => [{ type: "Course", id }],
     }),
+    
+    getPublicCourseById: builder.query<CourseDetailApiResponse, string>({
+      query: (id) => ({
+        url: `/course/getCourseById/${id}`,
+        method: "GET",
+      }),
+      providesTags: (_result, _err, id) => [{ type: "Course", id }],
+    }),
 
     updateCourse: builder.mutation<
       CourseDetailApiResponse,
@@ -147,4 +155,5 @@ export const {
   useUpdateCourseMutation,
   useUpdateCourseStatusMutation,
   useGetAllCoursesQuery,
+  useGetPublicCourseByIdQuery,
 } = courseApiSlice;

@@ -17,11 +17,14 @@ import {
   Download,
   GraduationCap,
   TrendingUp,
+  Activity,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useGetLearnerStatsQuery } from "@/redux/services/apiSlices/learnerSlice";
+import { useGetAllNotificationsQuery } from "@/redux/services/apiSlices/notificationSlice";
+import { formatDistanceToNow } from "date-fns";
 
 function learnerFirstName(user: Record<string, unknown> | null | undefined) {
   if (!user || typeof user !== "object") return "there";
@@ -31,19 +34,6 @@ function learnerFirstName(user: Record<string, unknown> | null | undefined) {
   if (email) return email.split("@")[0] ?? "there";
   return "there";
 }
-
-const userData = {
-  enrolledCourses: 4,
-  completedCourses: 2,
-  totalCeHours: 12,
-  certificates: 0,
-};
-
-const recentActivity = [
-  { action: "Completed lesson", course: "Infection Control", time: "2 hours ago" },
-  { action: "Started assessment", course: "Ethics & Standards", time: "Yesterday" },
-  { action: "Downloaded certificate", course: "Business Management", time: "2 days ago" },
-];
 
 type LearnerCertificate = {
   _id: string;
@@ -83,6 +73,26 @@ const DashboardHome = () => {
   const passedCourses = passedCoursesData?.courses ?? [];
   const passThresholdPercent = passedCoursesData?.passThresholdPercent ?? 0;
   const { data: learnerStats } = useGetLearnerStatsQuery();
+  const { data: notificationsData, isLoading: notificationsLoading } = useGetAllNotificationsQuery({
+    page: 1,
+    limit: 3,
+  });
+
+  const recentNotifications = useMemo(() => {
+    const docs =
+      (notificationsData?.data?.notifications?.docs as
+        | Array<{
+            _id: string;
+            title?: string;
+            content?: string;
+            createdAt?: string;
+          }>
+        | undefined) ?? [];
+    return [...docs].sort(
+      (a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime(),
+    ).slice(0, 3);
+  }, [notificationsData]);
+
   const totalCeHours = passedCourses.reduce((acc, curr) => acc + (curr.course?.ceHours ?? 0), 0);
   useEffect(() => {
     if (!stateTab) return;
@@ -274,7 +284,7 @@ const DashboardHome = () => {
               <Button variant="secondary" className="w-full justify-start" asChild>
                 <Link to="/dashboard/courses">
                   <BookOpen className="w-4 h-4 mr-2" />
-                  My courses
+                  My Courses
                 </Link>
               </Button>
               <Button variant="outline" className="w-full justify-start" asChild>
@@ -295,22 +305,36 @@ const DashboardHome = () => {
           </Card>
 
           <Card>
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="font-heading text-lg">Recent Activity</CardTitle>
+              <Button variant="ghost" size="sm" className="h-8 text-xs" asChild>
+                <Link to="/dashboard/notifications">View all</Link>
+              </Button>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-secondary mt-2" />
-                    <div>
-                      <p className="text-sm text-foreground">{activity.action}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {activity.course} • {activity.time}
-                      </p>
+              <div className="space-y-3">
+                {notificationsLoading ? (
+                  <p className="text-sm text-muted-foreground py-6 text-center">Loading activity…</p>
+                ) : recentNotifications.length === 0 ? (
+                  <p className="text-sm text-muted-foreground py-6 text-center">No notifications yet.</p>
+                ) : (
+                  recentNotifications.map((n) => (
+                    <div key={n._id} className="flex items-start gap-3 rounded-lg bg-muted p-3">
+                      <Activity className="mt-1 h-4 w-4 shrink-0 text-secondary" aria-hidden />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium text-foreground">{n.title ?? "Notification"}</p>
+                        {n.content ? (
+                          <p className="line-clamp-2 text-xs text-muted-foreground">{n.content}</p>
+                        ) : null}
+                      </div>
+                      <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">
+                        {n.createdAt
+                          ? formatDistanceToNow(new Date(n.createdAt), { addSuffix: true })
+                          : "—"}
+                      </span>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
