@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useGetAllCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&q=60";
@@ -66,9 +64,6 @@ const Courses = () => {
     });
   }, [publishedCourses, searchQuery]);
 
-  const user = useSelector((state: RootState) => state.user.userData);
-  const isLearner = user?.role && user?.role === "learner";
-  const isAdmin = user?.role && user?.role === "admin";
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -303,7 +298,7 @@ const Courses = () => {
                               <span className="text-sm text-muted-foreground">See details</span>
                             )}
                             <Button variant="secondary" size="sm" className="font-heading font-semibold" asChild>
-                              <Link to={isLearner ? `/dashboard/courses/${course._id}` : isAdmin ? `/admin/courses` : `/organization/courses/${course._id}`}>
+                              <Link to={`/courses/view/${course._id}`}>
                                 View Details
                                 <ChevronRight className="w-4 h-4 ml-1" />
                               </Link>

@@ -9,6 +9,7 @@ export type CourseRate = {
   title?: string;
 };
 
+
 export function perSeatUsd(course: CourseRate, seatCountForGroupRule: number): number {
   const useGroup = seatCountForGroupRule >= 3;
   return useGroup ? Number(course.groupAmount) || 0 : Number(course.amount) || 0;
@@ -56,7 +57,8 @@ export function computeUpgradeSubscriptionPricing(params: {
   const uniqueNewCourses = [...new Set(selectedNewCourseIds.map(String))].filter((id) => id && !existingSet.has(id));
 
   if (uniqueNewCourses.length === 0 && newLearnersCount <= 0) {
-    return { total: 0, uniqueNewCourseIds: [], lines: [], error: "Add new courses and/or additional learner seats." };
+    const error = "Upgrade your plan by adding new courses.";
+    return { total: 0, uniqueNewCourseIds: [], lines: [], error };
   }
 
   const totalAfterUpgrade = prevTotalLearners + newLearnersCount;

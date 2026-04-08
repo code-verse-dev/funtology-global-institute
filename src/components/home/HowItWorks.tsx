@@ -7,31 +7,31 @@ const steps = [
   {
     icon: Users,
     title: "Register",
-    description: "Create your account and set up your learner profile with your credentials",
+    description: "Create Your Account and Set Up Your Learner Profile with Your Credentials",
     color: "from-blue-500 to-blue-600",
   },
   {
     icon: BookOpen,
     title: "Enroll",
-    description: "Browse our courses and enroll via payment.",
+    description: "Browse Our Courses and Enroll via Payment.",
     color: "from-purple-500 to-purple-600",
   },
   {
     icon: FileText,
     title: "Learn",
-    description: "Access course materials in our immersive interactive digital learning format",
+    description: "Access Course Materials in Our Immersive Interactive Digital Learning Format",
     color: "from-green-500 to-green-600",
   },
   {
     icon: ClipboardCheck,
     title: "Assess",
-    description: "Complete the assessment with minimum 70% score to demonstrate mastery",
+    description: "Complete the Assessment with Minimum 70% Score to Demonstrate Mastery",
     color: "from-orange-500 to-orange-600",
   },
   {
     icon: Award,
     title: "Certify",
-    description: "Receive your ongoing education certificate instantly upon successful completion",
+    description: "Receive Your Ongoing Education Certificate Instantly Upon Successful Completion",
     color: "from-secondary to-gold-dark",
   },
 ];
@@ -76,7 +76,7 @@ const HowItWorks = () => {
             How It Works
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/70 max-w-2xl mx-auto">
-          From enrollment to certification, our streamlined process makes earning your ongoing education credits straightforward and efficient.          </p>
+          From Enrollment to Certification, Our Streamlined Process Makes Earning Your Ongoing Education Credits Straightforward and Efficient.          </p>
         </motion.div>
 
         {/* Steps */}
@@ -173,7 +173,7 @@ const HowItWorks = () => {
                   Organization Accounts
                 </h3>
                 <p className="text-primary-foreground/70 max-w-md">
-                  Bulk enrollment, centralized billing, comprehensive progress tracking, and dedicated support for your entire team.
+                  Bulk Enrollment, Centralized Billing, Comprehensive Progress Tracking, and Dedicated Support for Your Entire Team.
                 </p>
               </div>
             </div>

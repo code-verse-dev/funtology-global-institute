@@ -113,7 +113,7 @@ const Register = () => {
             <ul className="space-y-3 text-primary-foreground/90">
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-bold shrink-0">✓</span>
-                Access to 50+ professional courses
+                Access to 09+ professional courses
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-bold shrink-0">✓</span>

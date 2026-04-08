@@ -33,7 +33,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             scale: [1, 1.2, 1],
             opacity: [0.2, 0.4, 0.2],
             x: [0, 50, 0],
@@ -43,7 +43,7 @@ const HeroSection = () => {
         />
         <motion.div
           className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             scale: [1.2, 1, 1.2],
             opacity: [0.3, 0.5, 0.3],
             x: [0, -30, 0],
@@ -52,7 +52,7 @@ const HeroSection = () => {
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
         {/* Grid Pattern */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `linear-gradient(hsl(43 65% 59%) 1px, transparent 1px),
@@ -81,14 +81,14 @@ const HeroSection = () => {
             >
               <Award className="w-4 h-4 text-secondary" />
               <span className="text-sm font-medium text-secondary">
-              Funtology Global Institute for Career Innovation (FGI) 
+                Funtology Global Institute for Career Innovation (FGI)
               </span>
               <Sparkles className="w-4 h-4 text-secondary" />
             </motion.div>
 
             <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-tight mb-6">
               Advance Your
-              <motion.span 
+              <motion.span
                 className="block text-gradient-gold"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -98,18 +98,16 @@ const HeroSection = () => {
               </motion.span>
             </h1>
 
-            <motion.p 
+            <motion.p
               className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              {/* Elevate your expertise with standards-aligned ongoing education programs. 
-              Earn recognized certifications that advance your career and demonstrate mastery. */}
-              Elevate your expertise, ongoing education programs designed to support career readiness, workforce development, and professional growth.
+              Elevate Your Expertise Using Ongoing Education Programs Designed to Support Career Readiness, Workforce Development, and Professional Growth.
               <br />
               <br />
-              Earn recognized certifications that validate skill development, strengthen resumes, and demonstrate mastery of essential career competencies.
+              Earn Recognized Certifications That Validate Skill Development, Strengthen Resumes, and Demonstrate Mastery of Essential Career Competencies.
             </motion.p>
 
             {/* Feature List */}
@@ -137,15 +135,15 @@ const HeroSection = () => {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
             >
-              <Button 
-                size="xl" 
-                variant="secondary" 
+              <Button
+                size="xl"
+                variant="secondary"
                 className="font-heading font-semibold text-lg shadow-gold hover:shadow-lg transition-all duration-300 group"
                 asChild
               >
@@ -160,9 +158,9 @@ const HeroSection = () => {
                   </motion.div>
                 </Link>
               </Button>
-              <Button 
-                size="xl" 
-                variant="outline" 
+              <Button
+                size="xl"
+                variant="outline"
                 className="font-heading font-semibold text-lg border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground group"
                 asChild
               >
@@ -174,7 +172,7 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Stats */}
-            <motion.div 
+            <motion.div
               className="grid grid-cols-3 gap-4 md:gap-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -182,7 +180,7 @@ const HeroSection = () => {
             >
               {[
                 // { value: "10K+", label: "Certified Professionals" },
-                { value: "50+", label: "Courses Available" },
+                { value: "09+", label: "Courses Available" },
                 { value: "98%", label: "Satisfaction Rate" },
               ].map((stat, index) => (
                 <motion.div
@@ -192,7 +190,7 @@ const HeroSection = () => {
                   transition={{ delay: 1.1 + index * 0.1 }}
                   className="text-center lg:text-left"
                 >
-                  <motion.p 
+                  <motion.p
                     className="font-heading text-3xl md:text-4xl font-bold text-secondary"
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 300 }}
@@ -220,7 +218,7 @@ const HeroSection = () => {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <motion.div 
+                  <motion.div
                     className="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary to-gold-dark flex items-center justify-center shadow-lg"
                     whileHover={{ rotate: 10 }}
                   >
@@ -231,12 +229,12 @@ const HeroSection = () => {
                     {/* <p className="text-sm text-muted-foreground">Start your journey today</p> */}
                   </div>
                 </div>
-                
+
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
                   Start Your Journey Today
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                A comprehensive training program designed with standards-aligned on-going education hours to build measurable skills that support career advancement.
+                  A comprehensive training program designed with standards-aligned on-going education hours to build measurable skills that support career advancement.
                 </p>
 
                 {/* Progress Preview */}
@@ -246,7 +244,7 @@ const HeroSection = () => {
                     <span className="font-semibold text-secondary">75%</span>
                   </div>
                   <div className="h-2 bg-background rounded-full overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       className="h-full bg-gradient-to-r from-secondary to-gold-light rounded-full"
                       initial={{ width: 0 }}
                       animate={{ width: "75%" }}
@@ -254,7 +252,7 @@ const HeroSection = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-muted-foreground" />
@@ -282,7 +280,7 @@ const HeroSection = () => {
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
               >
                 <div className="flex items-center gap-2">
-                  <motion.div 
+                  <motion.div
                     className="w-3 h-3 rounded-full bg-green-500"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
