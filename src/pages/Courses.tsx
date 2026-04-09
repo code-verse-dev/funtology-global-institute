@@ -254,14 +254,14 @@ const Courses = () => {
                             {levelLabel}
                           </Badge>}
 
-                          {typeof course.ceHours === "number" ? (
+                          {/* {typeof course.ceHours === "number" ? (
                             <div className="absolute bottom-4 left-4 flex items-center gap-2">
                               <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm font-semibold">
                                 <Award className="w-4 h-4" />
                                 {course.ceHours} CE Hours
                               </div>
                             </div>
-                          ) : null}
+                          ) : null} */}
                         </div>
 
                         <div className="p-5 md:p-6">

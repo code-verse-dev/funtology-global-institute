@@ -19,6 +19,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useNonprofitAdminMode } from "@/contexts/NonprofitAdminContext";
+import {
+  useGetNonprofitTicketsQuery,
+  useGetNonprofitTicketsStatsQuery,
+  useUpdateNonprofitTicketStatusMutation,
+} from "@/redux/services/apiSlices/nonprofitAdminApiSlice";
 import {
   useGetTicketsQuery,
   useGetTicketsStatsQuery,
@@ -63,6 +69,8 @@ function formatDate(iso?: string) {
 }
 
 export default function AdminComplaints() {
+  const nonprofitAdmin = useNonprofitAdminMode();
+
   const [keywordInput, setKeywordInput] = useState("");
   const [query, setQuery] = useState<{ page: number; limit: number; keyword?: string }>({
     page: 1,
@@ -74,9 +82,18 @@ export default function AdminComplaints() {
   const [selected, setSelected] = useState<ApiTicket | null>(null);
   const [statusDraft, setStatusDraft] = useState<TicketStatus>("open");
 
-  const { data: listRes, isLoading, isFetching, isError, error, refetch } = useGetTicketsQuery(query);
-  const { data: statsRes, isLoading: statsLoading } = useGetTicketsStatsQuery();
-  const [updateStatus, { isLoading: updating }] = useUpdateTicketStatusMutation();
+  const mainList = useGetTicketsQuery(query, { skip: nonprofitAdmin });
+  const npList = useGetNonprofitTicketsQuery(query, { skip: !nonprofitAdmin });
+  const { data: listRes, isLoading, isFetching, isError, error, refetch } = nonprofitAdmin ? npList : mainList;
+
+  const mainStats = useGetTicketsStatsQuery(undefined, { skip: nonprofitAdmin });
+  const npStats = useGetNonprofitTicketsStatsQuery(undefined, { skip: !nonprofitAdmin });
+  const { data: statsRes, isLoading: statsLoading } = nonprofitAdmin ? npStats : mainStats;
+
+  const [updateStatusMain, { isLoading: updatingMain }] = useUpdateTicketStatusMutation();
+  const [updateStatusNp, { isLoading: updatingNp }] = useUpdateNonprofitTicketStatusMutation();
+  const updateStatus = nonprofitAdmin ? updateStatusNp : updateStatusMain;
+  const updating = nonprofitAdmin ? updatingNp : updatingMain;
 
   const pageData = listRes?.data;
   const tickets = pageData?.docs ?? [];

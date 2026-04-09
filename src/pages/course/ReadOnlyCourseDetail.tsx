@@ -387,7 +387,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
             </Button>
             <div className="min-w-0">
               <h2 className="font-heading text-lg font-bold truncate">{course.title}</h2>
-              <p className="text-sm text-muted-foreground">{course.ceHours} CE hours</p>
+              {/* <p className="text-sm text-muted-foreground">{course.ceHours} CE hours</p> */}
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">

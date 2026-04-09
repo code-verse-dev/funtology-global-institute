@@ -11,10 +11,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useNonprofitAdminMode } from "@/contexts/NonprofitAdminContext";
 import {
   useToggleNotificationMutation,
   useMarkAllReadMutation,
 } from "@/redux/services/apiSlices/notificationSlice";
+import {
+  useToggleNonprofitNotificationMutation,
+  useMarkAllNonprofitNotificationsReadMutation,
+} from "@/redux/services/apiSlices/nonprofitAdminApiSlice";
 import socket from "@/config/socket";
 import { useRoleBasedNotificationsQuery } from "@/hooks/useRoleBasedNotificationsQuery";
 
@@ -40,14 +45,20 @@ function NotificationsChrome({ backLink, children }: NotificationsChromeProps) {
 
 export function NotificationsPageContent() {
   const [filter, setFilter] = useState<FilterType>("all");
+  const nonprofitAdmin = useNonprofitAdminMode();
 
   const queryArg =
     filter === "unread" ? { isRead: false } : filter === "read" ? { isRead: true } : {};
 
   const { data: notificationsData, isLoading, refetch } =
     useRoleBasedNotificationsQuery(queryArg, { refetchOnMountOrArgChange: true });
-  const [toggleNotification] = useToggleNotificationMutation();
-  const [markAllRead] = useMarkAllReadMutation();
+  const [toggleNotificationMain] = useToggleNotificationMutation();
+  const [markAllReadMain] = useMarkAllReadMutation();
+  const [toggleNotificationNp] = useToggleNonprofitNotificationMutation();
+  const [markAllReadNp] = useMarkAllNonprofitNotificationsReadMutation();
+
+  const toggleNotification = nonprofitAdmin ? toggleNotificationNp : toggleNotificationMain;
+  const markAllRead = nonprofitAdmin ? markAllReadNp : markAllReadMain;
 
   useEffect(() => {
     document.title = "Notifications • FGI";
@@ -196,6 +207,14 @@ export default function LearnerNotifications() {
 export function AdminNotifications() {
   return (
     <NotificationsChrome backLink={{ to: "/admin/overview", label: "← Back to admin" }}>
+      <NotificationsPageContent />
+    </NotificationsChrome>
+  );
+}
+
+export function NonprofitAdminNotifications() {
+  return (
+    <NotificationsChrome backLink={{ to: "/admin/nonprofit/organization-requests", label: "← Back to non-profit admin" }}>
       <NotificationsPageContent />
     </NotificationsChrome>
   );

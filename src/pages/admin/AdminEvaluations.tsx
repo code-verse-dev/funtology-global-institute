@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useNonprofitAdminMode } from "@/contexts/NonprofitAdminContext";
+import { useGetNonprofitAdminEvaluationsQuery } from "@/redux/services/apiSlices/nonprofitAdminApiSlice";
 import { useGetAdminEvaluationsQuery } from "@/redux/services/apiSlices/evaluationSlice";
 import { motion } from "framer-motion";
 import { ClipboardList, Loader2, Search } from "lucide-react";
@@ -67,6 +69,8 @@ function avgScore(doc: AdminEvaluationDoc): number | null {
 }
 
 export default function AdminEvaluations() {
+  const nonprofitAdmin = useNonprofitAdminMode();
+
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
@@ -101,7 +105,9 @@ export default function AdminEvaluations() {
     [page, debouncedKeyword, debouncedLessonId, fromDate, toDate],
   );
 
-  const { data: evalRes, isLoading, isFetching, isError } = useGetAdminEvaluationsQuery(queryArg);
+  const mainEval = useGetAdminEvaluationsQuery(queryArg, { skip: nonprofitAdmin });
+  const npEval = useGetNonprofitAdminEvaluationsQuery(queryArg, { skip: !nonprofitAdmin });
+  const { data: evalRes, isLoading, isFetching, isError } = nonprofitAdmin ? npEval : mainEval;
 
   const paginated = evalRes?.data as
     | {
