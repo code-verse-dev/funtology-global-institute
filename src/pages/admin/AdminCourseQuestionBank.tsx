@@ -72,6 +72,12 @@ const emptyQuestionForm = {
   points: "1",
 };
 
+const MC_INDEX_VALUES = ["0", "1", "2", "3"] as const;
+
+function selectMcIndexValue(raw: string): string | undefined {
+  return raw !== "" && MC_INDEX_VALUES.includes(raw as (typeof MC_INDEX_VALUES)[number]) ? raw : undefined;
+}
+
 const AdminCourseQuestionBank = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const [addOpen, setAddOpen] = useState(false);
@@ -551,13 +557,21 @@ const AdminCourseQuestionBank = () => {
                   placeholder={"Option A\nOption B"}
                 />
                 <div className="space-y-2">
-                  <Label>Correct option (0 = first line)</Label>
-                  <Input
-                    type="number"
-                    min={0}
-                    value={addForm.correctMcIndex}
-                    onChange={(e) => setAddForm((f) => ({ ...f, correctMcIndex: e.target.value }))}
-                  />
+                  <Label>Correct option</Label>
+                  <Select
+                    value={selectMcIndexValue(addForm.correctMcIndex)}
+                    onValueChange={(v) => setAddForm((f) => ({ ...f, correctMcIndex: v }))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select A–D (1st–4th line)" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">A (1st line)</SelectItem>
+                      <SelectItem value="1">B (2nd line)</SelectItem>
+                      <SelectItem value="2">C (3rd line)</SelectItem>
+                      <SelectItem value="3">D (4th line)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             )}
@@ -655,14 +669,21 @@ const AdminCourseQuestionBank = () => {
                     rows={4}
                   />
                   <div className="space-y-2">
-                    <Label>Correct option index (0 = first option)</Label>
-                    <Input
-                      type="number"
-                      min={0}
-                      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                      value={editForm.correctMcIndex}
-                      onChange={(e) => setEditForm((f) => ({ ...f, correctMcIndex: e.target.value }))}
-                    />
+                    <Label>Correct option</Label>
+                    <Select
+                      value={selectMcIndexValue(editForm.correctMcIndex)}
+                      onValueChange={(v) => setEditForm((f) => ({ ...f, correctMcIndex: v }))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select A–D (1st–4th line)" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="0">A (1st line)</SelectItem>
+                        <SelectItem value="1">B (2nd line)</SelectItem>
+                        <SelectItem value="2">C (3rd line)</SelectItem>
+                        <SelectItem value="3">D (4th line)</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               )}

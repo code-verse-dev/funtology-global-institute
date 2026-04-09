@@ -147,8 +147,13 @@ export default function PdfFlipViewer({
   const baseFlipMaxHeight = layoutExpanded ? 900 : 640;
   const flipMaxHeight = Math.max(baseFlipMaxHeight, displayPageHeight);
 
-  const flipNext = () => bookRef.current?.pageFlip()?.flipNext();
-  const flipPrev = () => bookRef.current?.pageFlip()?.flipPrev();
+  const flipNext = React.useCallback(() => {
+    bookRef.current?.pageFlip()?.flipNext();
+  }, []);
+
+  const flipPrev = React.useCallback(() => {
+    bookRef.current?.pageFlip()?.flipPrev();
+  }, []);
 
   const isFirstSpread = currentPage === 0;
   const isLastSpread = currentPage >= numPages - 2;
@@ -159,6 +164,36 @@ export default function PdfFlipViewer({
   const directUrl =
     fileUrl.startsWith("blob:") || fileUrl.startsWith("data:") ? fileUrl : null;
   const readyFile: string | ArrayBuffer | null = directUrl ?? fileData;
+
+  React.useEffect(() => {
+    if (numPages <= 0 || isLoading) return;
+
+    const isEditableTarget = (target: EventTarget | null) => {
+      if (!target || !(target instanceof HTMLElement)) return false;
+      const el = target;
+      if (el.isContentEditable) return true;
+      const tag = el.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+      return Boolean(el.closest("input, textarea, select, [contenteditable='true']"));
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (e.defaultPrevented) return;
+      if (isEditableTarget(e.target)) return;
+
+      if (e.key === "ArrowLeft" && !isFirstSpread) {
+        e.preventDefault();
+        flipPrev();
+      } else if (e.key === "ArrowRight" && !isLastSpread) {
+        e.preventDefault();
+        flipNext();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [numPages, isLoading, isFirstSpread, isLastSpread, flipPrev, flipNext]);
 
   return (
     <div className={`flex w-full flex-col overflow-hidden ${className}`}>

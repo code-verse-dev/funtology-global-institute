@@ -507,7 +507,7 @@ const About = () => {
                 <p className="mb-4 font-medium text-foreground">Our Programs Are:</p>
                 <BulletList items={complianceQualityItems} />
                 <blockquote className="mt-10 rounded-2xl border border-secondary/30 bg-secondary/5 p-6 font-medium leading-relaxed text-foreground">
-                  “Our Commitment to Quality is Aligned with ANSI/IACET Ongoing Educational Standards to Ensure Structured, Measurable Learning Experiences.”
+                  “Our Commitment to Quality is Aligned with Continuing Educational Standards to Ensure Structured, Measurable Learning Experiences.”
                 </blockquote>
               </motion.div>
               <AboutPhoto src={aboutImagery.compliance.src} alt={aboutImagery.compliance.alt} aspectClassName="aspect-[4/3] lg:sticky lg:top-28" />

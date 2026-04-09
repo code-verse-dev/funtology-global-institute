@@ -22,6 +22,8 @@ import LearnerCourses from "./pages/learner/LearnerCourses";
 import LearnerCourseDetail from "./pages/learner/LearnerCourseDetail";
 import LearnerQuizAttempt from "./pages/learner/LearnerQuizAttempt";
 import AdminDashboardLayout from "./pages/AdminDashboardLayout";
+import AdminNonprofitDashboardLayout from "./pages/AdminNonprofitDashboardLayout";
+import AdminNonprofitOrganizationRequests from "./pages/admin/AdminNonprofitOrganizationRequests";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminUserDetail from "./pages/admin/AdminUserDetail";
@@ -52,6 +54,7 @@ import Payment from "./pages/stripePayment";
 import Profile from "./pages/Profile";
 import LearnerNotifications, {
   AdminNotifications,
+  NonprofitAdminNotifications,
   OrganizationNotifications,
 } from "./pages/Notifications";
 import MySupportTickets from "./pages/MySupportTickets";
@@ -225,6 +228,64 @@ const App = () => {
                 <AdminNotifications />
               </ProtectedRoute>
             } />
+          </Route>
+          <Route
+            path="/admin/nonprofit"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminNonprofitDashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate to="organization-requests" replace />} />
+            <Route
+              path="organization-requests"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminNonprofitOrganizationRequests />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="users"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminUsers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="users/:userId"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminUserDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="evaluations"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminEvaluations />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="complaints"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminComplaints />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="notifications"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <NonprofitAdminNotifications />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route
             path="/organization"

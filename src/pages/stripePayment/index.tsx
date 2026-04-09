@@ -130,7 +130,11 @@ const Payment = () => {
   });
   const [selectedCourseIds, setSelectedCourseIds] = useState<string[]>([]);
   const [selectedNewCourseIds, setSelectedNewCourseIds] = useState<string[]>([]);
-  const [additionalLearners, setAdditionalLearners] = useState(0);
+  const [additionalLearnersInput, setAdditionalLearnersInput] = useState("");
+  const additionalLearners =
+    additionalLearnersInput === ""
+      ? 0
+      : Math.max(0, Number.parseInt(additionalLearnersInput, 10) || 0);
 
   const allCourses = useMemo(() => {
     const raw = allCoursesRes?.data;
@@ -241,7 +245,7 @@ const Payment = () => {
     return undefined;
   }, [isUpgradeSubscription, isSubscription, upgradePricing.error, upgradePricing.total, coursesSubtotal, totalFromState]);
 
- 
+
 
   const orgSubscriptionLines = useMemo(() => {
     if (!isSubscription || !isOrganization || selectedCourses.length === 0) return [];
@@ -397,16 +401,28 @@ const Payment = () => {
         <div className="container-wide mx-auto max-w-6xl px-4 py-6 lg:py-10">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="-ml-2 mb-2 h-9 gap-1.5 px-2 text-muted-foreground hover:text-foreground"
-                onClick={() => navigate(returnPath)}
-              >
-                <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
-                Go Back
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="-ml-2 mb-2 h-9 gap-1.5 px-2 text-muted-foreground hover:text-foreground"
+                  onClick={() => navigate("/")}
+                >
+                  <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
+                  Go to Home
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="-ml-2 mb-2 h-9 gap-1.5 px-2 text-muted-foreground hover:text-foreground"
+                  onClick={() => navigate(returnPath)}
+                >
+                  <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
+                  Go Back
+                </Button>
+              </div>
               <h1 className="font-heading text-2xl font-bold text-foreground">Upgrade Plan</h1>
               <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
                 Add published courses not already on your plan and/or increase learner seats. New seats apply the rate for your learner count
@@ -459,13 +475,13 @@ const Payment = () => {
                           <div className="min-w-0 pr-2">
                             <p className="text-sm font-medium text-foreground">{title}</p>
                             {isOrganization ? (
-                            <p className="text-xs text-muted-foreground">
-                              Standard Rate (1–2 Learners): ${amount.toFixed(2)} per Learner <br />
-                              Group Rate (3+ Learners): ${groupAmt.toFixed(2)} per Learner
-                            </p>
-                          ) : (
-                            <p className="text-xs text-muted-foreground">${amount.toFixed(2)} USD</p>
-                          )}
+                              <p className="text-xs text-muted-foreground">
+                                Standard Rate (1–2 Learners): ${amount.toFixed(2)} per Learner <br />
+                                Group Rate (3+ Learners): ${groupAmt.toFixed(2)} per Learner
+                              </p>
+                            ) : (
+                              <p className="text-xs text-muted-foreground">${amount.toFixed(2)} USD</p>
+                            )}
                           </div>
                           {selected ? <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" /> : null}
                         </button>
@@ -481,15 +497,14 @@ const Payment = () => {
                     </Label>
                     <Input
                       id="upgrade-additional-learners"
-                      type="number"
-                      min={0}
-                      step={1}
-                      className="[-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                      value={additionalLearners}
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      className="tabular-nums"
+                      value={additionalLearnersInput}
                       onChange={(e) => {
-                        const v = parseInt(e.target.value, 10);
-                        if (Number.isNaN(v)) setAdditionalLearners(0);
-                        else setAdditionalLearners(Math.max(0, v));
+                        const digitsOnly = e.target.value.replace(/\D/g, "");
+                        setAdditionalLearnersInput(digitsOnly);
                       }}
                     />
                     <p className="text-xs text-muted-foreground">

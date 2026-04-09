@@ -19,9 +19,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UPLOADS_URL } from "@/constants/api";
+import { NONPROFIT_UPLOADS_URL, UPLOADS_URL } from "@/constants/api";
+import { useNonprofitAdminMode } from "@/contexts/NonprofitAdminContext";
 import {
-  
+  useExportNonprofitUsersXlsxMutation,
+  useGetNonprofitUsersQuery,
+  useUpdateNonprofitUserStatusMutation,
+} from "@/redux/services/apiSlices/nonprofitAdminApiSlice";
+import {
   useExportUsersXlsxMutation,
   useGetUsersQuery,
   useUpdateUserStatusMutation,
@@ -49,6 +54,10 @@ import { formatRole, formatUserStatusLabel, userStatusBadgeVariant } from "./use
 const PAGE_SIZE = 10;
 
 const AdminUsers = () => {
+  const nonprofitAdmin = useNonprofitAdminMode();
+  const adminBase = nonprofitAdmin ? "/admin/nonprofit" : "/admin";
+  const uploadsBase = nonprofitAdmin ? NONPROFIT_UPLOADS_URL : UPLOADS_URL;
+
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
@@ -57,16 +66,20 @@ const AdminUsers = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [exportUsersXlsx] = useExportUsersXlsxMutation();
+  const [exportNonprofitUsersXlsx] = useExportNonprofitUsersXlsxMutation();
 
   const handleExport = async () => {
+    const params = {
+      keyword: debouncedKeyword,
+      role: roleFilter === "all" ? undefined : roleFilter,
+      status: statusFilter === "all" ? undefined : (statusFilter as UserStatus),
+      from: fromDate || undefined,
+      to: toDate || undefined,
+    };
     try {
-      const blob = await exportUsersXlsx({
-        keyword: debouncedKeyword,
-        role: roleFilter === "all" ? undefined : roleFilter,
-        status: statusFilter === "all" ? undefined : (statusFilter as UserStatus),
-        from: fromDate || undefined,
-        to: toDate || undefined,
-      }).unwrap();
+      const blob = nonprofitAdmin
+        ? await exportNonprofitUsersXlsx(params).unwrap()
+        : await exportUsersXlsx(params).unwrap();
   
       const url = window.URL.createObjectURL(blob);
   
@@ -91,7 +104,7 @@ const AdminUsers = () => {
     setPage(1);
   }, [debouncedKeyword, roleFilter, statusFilter, fromDate, toDate]);
 
-  const { data, isLoading, isFetching, isError, error, refetch } = useGetUsersQuery({
+  const queryArgs = {
     page,
     limit: PAGE_SIZE,
     keyword: debouncedKeyword || undefined,
@@ -99,13 +112,21 @@ const AdminUsers = () => {
     status: statusFilter === "all" ? undefined : (statusFilter as UserStatus),
     from: fromDate || undefined,
     to: toDate || undefined,
-  });
+  };
 
-  const [updateStatus] = useUpdateUserStatusMutation();
+  const mainUsers = useGetUsersQuery(queryArgs, { skip: nonprofitAdmin });
+  const npUsers = useGetNonprofitUsersQuery(queryArgs, { skip: !nonprofitAdmin });
+
+  const { data, isLoading, isFetching, isError, error, refetch } = nonprofitAdmin ? npUsers : mainUsers;
+
+  const [updateStatusMain] = useUpdateUserStatusMutation();
+  const [updateStatusNp] = useUpdateNonprofitUserStatusMutation();
 
   const onSetStatus = async (id: string, status: UserStatus) => {
     try {
-      const res = await updateStatus({ id, status }).unwrap();
+      const res = nonprofitAdmin
+        ? await updateStatusNp({ id, status }).unwrap()
+        : await updateStatusMain({ id, status }).unwrap();
       if (res.status) toast.success(res.message || "Status updated");
       else toast.error(res.message || "Could not update status");
     } catch {
@@ -119,7 +140,7 @@ const AdminUsers = () => {
   const totalDocs = paginated?.totalDocs ?? 0;
 
   const userImageSrc = (image?: string) =>
-    image ? `${UPLOADS_URL.replace(/\/$/, "")}/${String(image).replace(/^\//, "")}` : undefined;
+    image ? `${uploadsBase.replace(/\/$/, "")}/${String(image).replace(/^\//, "")}` : undefined;
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
@@ -274,7 +295,7 @@ const AdminUsers = () => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-52">
                             <DropdownMenuItem asChild>
-                              <Link to={`/admin/users/${user._id}`} className="cursor-pointer flex items-center">
+                              <Link to={`${adminBase}/users/${user._id}`} className="cursor-pointer flex items-center">
                                 <Eye className="w-4 h-4 mr-2" />
                                 View details
                               </Link>

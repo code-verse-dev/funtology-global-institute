@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { RootState } from "@/redux/store";
 import socket from "@/config/socket";
+import { useNonprofitAdminMode } from "@/contexts/NonprofitAdminContext";
 import {
   notificationsListPathForRole,
   useRoleBasedNotificationsQuery,
@@ -26,7 +27,8 @@ type NotificationBellProps = {
 
 export function NotificationBell({ triggerClassName, panelClassName }: NotificationBellProps) {
   const role = useSelector((s: RootState) => s.user.userData?.role as string | undefined);
-  const listPath = notificationsListPathForRole(role);
+  const nonprofitAdmin = useNonprofitAdminMode();
+  const listPath = notificationsListPathForRole(role, nonprofitAdmin && role === "admin");
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
