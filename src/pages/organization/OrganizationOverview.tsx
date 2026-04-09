@@ -62,10 +62,10 @@ const OrganizationOverview = () => {
                 Add Learners
               </Link>
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2" type="button">
+            {/* <Button variant="outline" className="w-full justify-start gap-2" type="button">
               <Upload className="w-4 h-4" />
               Import CSV
-            </Button>
+            </Button> */}
             <Button variant="outline" className="w-full justify-start gap-2" asChild>
               <Link to="/organization/courses">
                 <BookOpen className="w-4 h-4" />

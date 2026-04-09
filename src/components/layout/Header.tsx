@@ -154,7 +154,7 @@ const Header = () => {
               </Link>
             </Button>}
             {user._id && <Button variant="outline" className="font-medium gap-2 text-xs" size="sm" asChild>
-              <Link to="/dashboard">
+              <Link to={user.role === "learner" ? "/dashboard" : user.role === "organization" ? "/organization/overview" : "/"}>
                 Dashboard
               </Link>
             </Button>}

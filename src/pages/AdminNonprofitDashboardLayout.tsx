@@ -1,5 +1,10 @@
 import fgiLogo from "@/assets/fgi-logo.png";
-import { AdminDashboardSidebarNav, pageTitleForAdminPath } from "@/components/admin/AdminDashboardSidebarNav";
+import {
+  NonprofitAdminSidebarNav,
+  pageTitleForNonprofitAdminPath,
+} from "@/components/admin/NonprofitAdminSidebarNav";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { NonprofitAdminProvider } from "@/contexts/NonprofitAdminContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,8 +19,7 @@ import { useLogoutMutation } from "@/redux/services/apiSlices/authSlice";
 import { removeUser } from "@/redux/services/Slices/userSlice";
 import type { RootState } from "@/redux/store";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
-import { NotificationBell } from "@/components/notifications/NotificationBell";
-import { HeartHandshake, LogOut, Settings, Shield, User } from "lucide-react";
+import { HeartHandshake, LogOut, Settings, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { adminData } from "./admin/data";
@@ -44,7 +48,7 @@ function userProfileImageSrc(raw: unknown): string | undefined {
   return lessonFileUrl(s) ?? undefined;
 }
 
-const AdminDashboardLayout = () => {
+function AdminNonprofitDashboardLayoutInner() {
   const location = useLocation();
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
@@ -53,6 +57,7 @@ const AdminDashboardLayout = () => {
   const headerName = adminDisplayName(userData);
   const headerEmail = typeof userData?.email === "string" ? userData.email : "";
   const profileImage = userProfileImageSrc(userData?.image);
+  const pageTitle = pageTitleForNonprofitAdminPath(location.pathname);
 
   const onLogout = async () => {
     await logout().unwrap();
@@ -60,29 +65,27 @@ const AdminDashboardLayout = () => {
     navigate("/login", { replace: true });
   };
 
-  const pageTitle = pageTitleForAdminPath(location.pathname);
-
   return (
     <div className="min-h-screen bg-muted flex">
       <aside className="hidden lg:flex w-64 bg-primary flex-col fixed inset-y-0 left-0 z-40">
         <div className="p-6 border-b border-primary-foreground/10">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/admin/overview" className="flex items-center gap-3">
             <img src={fgiLogo} alt="FGI" className="h-10 w-10" />
             <div>
               <p className="font-heading font-bold text-primary-foreground leading-tight">FGI Admin</p>
-              <p className="text-xs text-secondary">Control Panel</p>
+              <p className="text-xs text-secondary">Non-profit</p>
             </div>
           </Link>
         </div>
-        <AdminDashboardSidebarNav orientation="vertical" />
-        <div className="p-4 border-t border-primary-foreground/10">
+        <NonprofitAdminSidebarNav orientation="vertical" />
+        <div className="p-4 border-t border-primary-foreground/10 mt-auto">
           <div className="flex items-center gap-3 px-4 py-2">
             <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
-              <Shield className="w-4 h-4 text-secondary-foreground" />
+              <HeartHandshake className="w-4 h-4 text-secondary-foreground" />
             </div>
             <div>
-              <p className="text-sm font-medium text-primary-foreground">{adminData.name}</p>
-              <p className="text-xs text-primary-foreground/60">{adminData.role}</p>
+              <p className="text-sm font-medium text-primary-foreground">Non-profit API</p>
+              <p className="text-xs text-primary-foreground/60">Separate backend</p>
             </div>
           </div>
         </div>
@@ -90,22 +93,19 @@ const AdminDashboardLayout = () => {
 
       <main className="flex-1 lg:ml-64">
         <header className="sticky top-0 z-30 bg-background border-b border-border">
-          <div className="flex items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between px-6 py-4 gap-4 flex-wrap">
+            <div className="flex items-center gap-4 min-w-0">
               <div className="lg:hidden">
-                <Link to="/">
+                <Link to="/admin/overview">
                   <img src={fgiLogo} alt="FGI" className="h-8 w-8" />
                 </Link>
               </div>
-              <h1 className="font-heading text-xl font-bold text-foreground">{pageTitle}</h1>
+              <h1 className="font-heading text-xl font-bold text-foreground truncate">{pageTitle}</h1>
             </div>
-            <div className="flex items-center gap-3">
-              {/* <Button variant="outline" size="sm" className="shrink-0 gap-1.5" asChild>
-                <Link to="/admin/nonprofit/organization-requests">
-                  <HeartHandshake className="h-4 w-4" />
-                  Non-profit
-                </Link>
-              </Button> */}
+            <div className="flex items-center gap-2 flex-wrap justify-end">
+              <Button variant="outline" size="sm" className="shrink-0" asChild>
+                <Link to="/admin/overview">Main admin</Link>
+              </Button>
               <NotificationBell />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -151,13 +151,20 @@ const AdminDashboardLayout = () => {
 
         <div className="p-6 space-y-6">
           <div className="lg:hidden">
-            <AdminDashboardSidebarNav orientation="horizontal" />
+            <NonprofitAdminSidebarNav orientation="horizontal" />
           </div>
           <Outlet />
         </div>
       </main>
     </div>
   );
-};
+}
 
-export default AdminDashboardLayout;
+/** Wraps non-profit admin routes; enables `useNonprofitAdminMode()` for API switching. */
+export default function AdminNonprofitDashboardLayout() {
+  return (
+    <NonprofitAdminProvider>
+      <AdminNonprofitDashboardLayoutInner />
+    </NonprofitAdminProvider>
+  );
+}

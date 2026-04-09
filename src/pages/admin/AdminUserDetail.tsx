@@ -3,7 +3,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { UPLOADS_URL } from "@/constants/api";
+import { NONPROFIT_UPLOADS_URL, UPLOADS_URL } from "@/constants/api";
+import { useNonprofitAdminMode } from "@/contexts/NonprofitAdminContext";
+import {
+  useGetNonprofitUserByIdQuery,
+  useUpdateNonprofitUserStatusMutation,
+} from "@/redux/services/apiSlices/nonprofitAdminApiSlice";
 import { useGetUserByIdQuery, useUpdateUserStatusMutation, type UserStatus } from "@/redux/services/apiSlices/userSlice";
 import type { ReactNode } from "react";
 import { ArrowLeft, CheckCircle2, Clock, Loader2, XCircle } from "lucide-react";
@@ -19,16 +24,27 @@ const Row = ({ label, value }: { label: string; value: ReactNode }) => (
 );
 
 const AdminUserDetail = () => {
+  const nonprofitAdmin = useNonprofitAdminMode();
+  const adminUsersPath = nonprofitAdmin ? "/admin/nonprofit/users" : "/admin/users";
+  const uploadsBase = nonprofitAdmin ? NONPROFIT_UPLOADS_URL : UPLOADS_URL;
+
   const { userId } = useParams<{ userId: string }>();
-  const { data, isLoading, isError, error } = useGetUserByIdQuery(userId!, { skip: !userId });
-  const [updateStatus, { isLoading: isUpdating }] = useUpdateUserStatusMutation();
+  const mainQ = useGetUserByIdQuery(userId!, { skip: !userId || nonprofitAdmin });
+  const npQ = useGetNonprofitUserByIdQuery(userId!, { skip: !userId || !nonprofitAdmin });
+  const { data, isLoading, isError, error } = nonprofitAdmin ? npQ : mainQ;
+
+  const [updateStatusMain, { isLoading: updatingMain }] = useUpdateUserStatusMutation();
+  const [updateStatusNp, { isLoading: updatingNp }] = useUpdateNonprofitUserStatusMutation();
+  const isUpdating = nonprofitAdmin ? updatingNp : updatingMain;
 
   const user = data?.data;
 
   const onSetStatus = async (status: UserStatus) => {
     if (!userId) return;
     try {
-      const res = await updateStatus({ id: userId, status }).unwrap();
+      const res = nonprofitAdmin
+        ? await updateStatusNp({ id: userId, status }).unwrap()
+        : await updateStatusMain({ id: userId, status }).unwrap();
       if (res.status) toast.success(res.message || "Status updated");
       else toast.error(res.message || "Could not update status");
     } catch {
@@ -40,7 +56,7 @@ const AdminUserDetail = () => {
     return (
       <div className="text-center text-muted-foreground py-12">
         Invalid user link.{" "}
-        <Link to="/admin/users" className="text-primary underline">
+        <Link to={adminUsersPath} className="text-primary underline">
           Back to users
         </Link>
       </div>
@@ -65,7 +81,7 @@ const AdminUserDetail = () => {
       <div className="text-center py-12 space-y-4">
         <p className="text-destructive">{msg}</p>
         <Button variant="outline" asChild>
-          <Link to="/admin/users">Back to users</Link>
+          <Link to={adminUsersPath}>Back to users</Link>
         </Button>
       </div>
     );
@@ -73,15 +89,13 @@ const AdminUserDetail = () => {
 
   const fullName = `${user.firstName} ${user.lastName}`.trim();
   const initials = `${user.firstName?.[0] ?? ""}${user.lastName?.[0] ?? ""}`.toUpperCase() || "?";
-  const imageSrc = user.image
-    ? UPLOADS_URL + user.image
-    : undefined;
+  const imageSrc = user.image ? uploadsBase + user.image : undefined;
 
   return (
     <div className="space-y-6 max-w-3xl">
       <div className="flex flex-wrap items-center gap-4">
         <Button variant="ghost" size="sm" className="gap-2 -ml-2" asChild>
-          <Link to="/admin/users">
+          <Link to={adminUsersPath}>
             <ArrowLeft className="w-4 h-4" />
             Users
           </Link>
