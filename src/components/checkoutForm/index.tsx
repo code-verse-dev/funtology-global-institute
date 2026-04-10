@@ -145,7 +145,7 @@ const CheckoutForm = ({
         const goPath =
           typeof returnPath === "string" && returnPath.length > 0 ? returnPath : "/organization/subscription";
         if (res?.status) {
-          swal("Success", res?.message || "Payment completed successfully", "success");
+          swal("Success", res?.message || "Payment completed successfully, now you can access your courses in your dashboard", "success");
           navigate(goPath, { replace: true });
         } else {
           swal("Error", res?.data?.error?.message || res?.error?.message || "We could not complete the upgrade. Please try again or contact support.", "error");
