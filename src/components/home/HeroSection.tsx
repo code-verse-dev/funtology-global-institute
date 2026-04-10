@@ -134,6 +134,19 @@ const HeroSection = () => {
               ))}
             </motion.div>
 
+            <section
+                className="my-8 mx-auto max-w-7xl rounded-xl bg-yellow-100 border border-yellow-300 px-6 py-5 flex items-center justify-center shadow-md"
+                aria-label="Accreditation Status"
+              >
+                <div className="w-full text-center">
+                  <div className="font-heading text-md md:text-lg font-bold text-yellow-900 mb-2">
+                  FGI courses are designed in alignment with ANSI/IACET standards. Acceptance of continuing
+                  education credits is determined by individual state licensing boards.
+                  </div>
+                </div>
+              </section>
+
+
             {/* CTA Buttons */}
             <motion.div
               className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-12"
