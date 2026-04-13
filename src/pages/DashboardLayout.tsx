@@ -97,7 +97,7 @@ const DashboardLayout = () => {
                   <NavLink to="/dashboard/subscription" className={navClass}>
                     <span className="inline-flex items-center gap-1.5">
                       <Package className="w-4 h-4" />
-                      Platform Fees
+                      Course Fees
                     </span>
                   </NavLink>
                 ) : null}
@@ -160,7 +160,7 @@ const DashboardLayout = () => {
             </NavLink>
             {showPlatformFeesNav ? (
               <NavLink to="/dashboard/subscription" className={navClass}>
-                Platform Fees
+                Course Fees
               </NavLink>
             ) : null}
             <NavLink to="/dashboard/support" className={navClass}>

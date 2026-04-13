@@ -96,11 +96,13 @@ const CheckoutForm = ({
     | { id: string; card?: { brand?: string; last4?: string; exp_month?: number; exp_year?: number } }
     | undefined;
 
+  const paymentSuccessState = { fromPayment: true as const };
+
   const navigateAfterSubscription = () => {
     if (effectiveRole(user?.role) === "organization") {
-      navigate("/organization/overview", { replace: true });
+      navigate("/organization/overview", { replace: true, state: paymentSuccessState });
     } else {
-      navigate("/dashboard", { replace: true });
+      navigate("/dashboard", { replace: true, state: paymentSuccessState });
     }
   };
 
@@ -142,11 +144,12 @@ const CheckoutForm = ({
             newLearnersCount: upgradeNewLearnersCount,
           },
         }).unwrap();
-        const goPath =
-          typeof returnPath === "string" && returnPath.length > 0 ? returnPath : "/organization/subscription";
         if (res?.status) {
           swal("Success", res?.message || "Payment completed successfully, now you can access your courses in your dashboard", "success");
-          navigate(goPath, { replace: true });
+          const path = effectiveRole(user?.role) === "organization"
+            ? "/organization/courses"
+            : "/dashboard/courses";
+          navigate(path, { replace: true, state: paymentSuccessState });
         } else {
           swal("Error", res?.data?.error?.message || res?.error?.message || "We could not complete the upgrade. Please try again or contact support.", "error");
         }
@@ -158,8 +161,8 @@ const CheckoutForm = ({
           const from = (location.state as { from?: string } | null)?.from;
           const go =
             typeof from === "string" && from.length > 0
-              ? () => navigate(from, { replace: true, state: { retakePaid: true } })
-              : () => navigate("/dashboard/courses", { replace: true });
+              ? () => navigate(from, { replace: true, state: { retakePaid: true, fromPayment: true } })
+              : () => navigate("/dashboard/courses", { replace: true, state: paymentSuccessState });
           setPaymentResult({
             open: true,
             success: true,

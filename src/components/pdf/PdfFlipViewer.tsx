@@ -9,11 +9,14 @@ import {
   Columns2,
   FileText,
   Maximize2,
-  X,
 } from "lucide-react";
 
-/** CSS scale applied on click (transform-origin = click point). */
+/** CSS scale applied on double-click (transform-origin = click point). */
 const ZOOM_SCALE = 2.25;
+
+/** Pixels pointer must move before pan starts (avoids pan stealing double-click). */
+const DRAG_THRESHOLD_PX = 6;
+const DRAG_THRESHOLD_SQ = DRAG_THRESHOLD_PX * DRAG_THRESHOLD_PX;
 
 const bundledWorkerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 const cdnWorkerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -58,17 +61,81 @@ const FlipPage = React.forwardRef<
     pageNumber: number;
     slotWidth: number;
     slotHeight: number;
-    isSelected: boolean;
-    onSelectPage: (pageNumber: number) => void;
   }
->(({ pageNumber, slotWidth, slotHeight, isSelected, onSelectPage }, ref) => {
-  const contentRef = React.useRef<HTMLDivElement>(null);
+>(({ pageNumber, slotWidth, slotHeight }, ref) => {
   const [isZoomed, setIsZoomed] = React.useState(false);
   const [origin, setOrigin] = React.useState("50% 50%");
   const [scale, setScale] = React.useState(1);
+  const [pan, setPan] = React.useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = React.useState(false);
 
   const [cursorPos, setCursorPos] = React.useState<{ x: number; y: number } | null>(null);
   const [hoveringSlot, setHoveringSlot] = React.useState(false);
+
+  const dragSessionRef = React.useRef<{
+    pointerId: number;
+    panActive: boolean;
+    startClient: { x: number; y: number };
+    startPan: { x: number; y: number };
+    el: HTMLElement;
+  } | null>(null);
+  const panRafRef = React.useRef<number | null>(null);
+  const pendingPanRef = React.useRef<{ x: number; y: number } | null>(null);
+
+  const cancelPanRaf = React.useCallback(() => {
+    if (panRafRef.current != null) {
+      cancelAnimationFrame(panRafRef.current);
+      panRafRef.current = null;
+    }
+  }, []);
+
+  const flushPendingPan = React.useCallback(() => {
+    panRafRef.current = null;
+    const p = pendingPanRef.current;
+    if (p) {
+      setPan(p);
+      pendingPanRef.current = null;
+    }
+  }, []);
+
+  const resetZoomAndPan = React.useCallback(() => {
+    const d = dragSessionRef.current;
+    if (d) {
+      try {
+        d.el.releasePointerCapture(d.pointerId);
+      } catch {
+        /* already released */
+      }
+    }
+    dragSessionRef.current = null;
+    cancelPanRaf();
+    pendingPanRef.current = null;
+    setScale(1);
+    setIsZoomed(false);
+    setOrigin("50% 50%");
+    setPan({ x: 0, y: 0 });
+    setIsDragging(false);
+  }, [cancelPanRaf]);
+
+  const releaseDragSession = React.useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      const d = dragSessionRef.current;
+      if (!d || e.pointerId !== d.pointerId) return;
+      try {
+        d.el.releasePointerCapture(e.pointerId);
+      } catch {
+        /* already released */
+      }
+      cancelPanRaf();
+      if (pendingPanRef.current) {
+        setPan(pendingPanRef.current);
+        pendingPanRef.current = null;
+      }
+      dragSessionRef.current = null;
+      setIsDragging(false);
+    },
+    [cancelPanRaf],
+  );
 
   const setRefs = React.useCallback(
     (node: HTMLDivElement | null) => {
@@ -78,73 +145,116 @@ const FlipPage = React.forwardRef<
     [ref],
   );
 
-  React.useEffect(() => {
-    if (!isSelected) {
-      setIsZoomed(false);
-      setScale(1);
-      setOrigin("50% 50%");
-      setCursorPos(null);
-      setHoveringSlot(false);
-    }
-  }, [isSelected]);
-
-  const showMagnifierCursor =
-    isSelected && !isZoomed && hoveringSlot && typeof document !== "undefined";
+  const showMagnifierCursor = !isZoomed && hoveringSlot && typeof document !== "undefined";
 
   const onMouseMoveSlot = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isSelected || isZoomed) return;
+    if (isZoomed) return;
     setCursorPos({ x: e.clientX, y: e.clientY });
-  }, [isSelected, isZoomed]);
+  }, [isZoomed]);
 
   const onMouseEnterSlot = React.useCallback(() => {
-    if (isSelected && !isZoomed) setHoveringSlot(true);
-  }, [isSelected, isZoomed]);
+    if (!isZoomed) setHoveringSlot(true);
+  }, [isZoomed]);
 
   const onMouseLeaveSlot = React.useCallback(() => {
     setHoveringSlot(false);
     setCursorPos(null);
   }, []);
 
-  const handleClick = React.useCallback(
+  const handleDoubleClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
       e.stopPropagation();
-      if (!isSelected) {
-        onSelectPage(pageNumber);
-        return;
-      }
+
       if (isZoomed) {
-        setScale(1);
-        setIsZoomed(false);
-        setOrigin("50% 50%");
+        resetZoomAndPan();
         return;
       }
-      const el = contentRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
+
+      cancelPanRaf();
+      pendingPanRef.current = null;
+      const d = dragSessionRef.current;
+      if (d) {
+        try {
+          d.el.releasePointerCapture(d.pointerId);
+        } catch {
+          /* noop */
+        }
+        dragSessionRef.current = null;
+        setIsDragging(false);
+      }
+
+      const rect = e.currentTarget.getBoundingClientRect();
       const ox = e.clientX - rect.left;
       const oy = e.clientY - rect.top;
+      setPan({ x: 0, y: 0 });
       setOrigin(`${ox}px ${oy}px`);
       setScale(ZOOM_SCALE);
       setIsZoomed(true);
     },
-    [isSelected, isZoomed, onSelectPage, pageNumber],
+    [isZoomed, resetZoomAndPan, cancelPanRaf],
+  );
+
+  const onPointerDown = React.useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!isZoomed || e.button !== 0) return;
+      e.stopPropagation();
+      cancelPanRaf();
+      pendingPanRef.current = null;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      dragSessionRef.current = {
+        pointerId: e.pointerId,
+        panActive: false,
+        startClient: { x: e.clientX, y: e.clientY },
+        startPan: { x: pan.x, y: pan.y },
+        el: e.currentTarget,
+      };
+    },
+    [isZoomed, pan.x, pan.y, cancelPanRaf],
+  );
+
+  const onPointerMove = React.useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      const d = dragSessionRef.current;
+      if (!d || e.pointerId !== d.pointerId || !isZoomed) return;
+      const dx = e.clientX - d.startClient.x;
+      const dy = e.clientY - d.startClient.y;
+      if (!d.panActive) {
+        if (dx * dx + dy * dy < DRAG_THRESHOLD_SQ) return;
+        d.panActive = true;
+        setIsDragging(true);
+      }
+      const nx = d.startPan.x + dx;
+      const ny = d.startPan.y + dy;
+      pendingPanRef.current = { x: nx, y: ny };
+      if (panRafRef.current == null) {
+        panRafRef.current = requestAnimationFrame(flushPendingPan);
+      }
+    },
+    [isZoomed, flushPendingPan],
+  );
+
+  const onPointerUp = React.useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      releaseDragSession(e);
+    },
+    [releaseDragSession],
   );
 
   React.useEffect(() => {
-    if (!isZoomed || !isSelected) return;
+    if (!isZoomed) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setScale(1);
-        setIsZoomed(false);
-        setOrigin("50% 50%");
+        resetZoomAndPan();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isZoomed, isSelected]);
+  }, [isZoomed, resetZoomAndPan]);
 
-  const slotCursorClass =
-    isSelected && !isZoomed ? "cursor-none" : isZoomed ? "cursor-zoom-out" : "cursor-pointer";
+  React.useEffect(() => () => cancelPanRaf(), [cancelPanRaf]);
+
+  const slotCursorClass = !isZoomed ? "cursor-none" : isDragging ? "cursor-grabbing" : "cursor-grab";
 
   const magnifierPortal =
     showMagnifierCursor && cursorPos
@@ -171,18 +281,33 @@ const FlipPage = React.forwardRef<
         ref={setRefs}
         role="button"
         tabIndex={0}
-        aria-label={`Page ${pageNumber}${
-          isSelected ? (isZoomed ? ", zoomed — click to reset" : ", selected — click to zoom in") : ""
-        }`}
-        aria-pressed={isSelected}
-        onClick={handleClick}
+        aria-label={
+          isZoomed
+            ? `Page ${pageNumber}, zoomed — double-click or Escape to zoom out, drag to pan`
+            : `Page ${pageNumber} — double-click to zoom in at pointer`
+        }
+        aria-pressed={isZoomed}
+        onDoubleClick={handleDoubleClick}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
         onMouseMove={onMouseMoveSlot}
         onMouseEnter={onMouseEnterSlot}
         onMouseLeave={onMouseLeaveSlot}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            onSelectPage(pageNumber);
+            if (isZoomed) {
+              resetZoomAndPan();
+            } else {
+              cancelPanRaf();
+              pendingPanRef.current = null;
+              setPan({ x: 0, y: 0 });
+              setOrigin("50% 50%");
+              setScale(ZOOM_SCALE);
+              setIsZoomed(true);
+            }
           }
         }}
         style={{
@@ -190,21 +315,25 @@ const FlipPage = React.forwardRef<
           height: slotHeight,
           overflow: "hidden",
           position: "relative",
+          touchAction: isZoomed ? "none" : undefined,
         }}
-        className={`bg-white select-none outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${slotCursorClass} ${
-          isSelected ? "ring-2 ring-primary ring-inset" : ""
-        }`}
+        className={`bg-white select-none outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${slotCursorClass}`}
       >
         <div
-          ref={contentRef}
           style={{
-            width: slotWidth,
-            transform: `scale(${scale})`,
-            transformOrigin: origin,
-            transition: "transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)",
-            willChange: "transform",
+            transform: `translate3d(${pan.x}px, ${pan.y}px, 0)`,
+            willChange: isDragging ? "transform" : undefined,
           }}
         >
+          <div
+            style={{
+              width: slotWidth,
+              transform: `scale(${scale})`,
+              transformOrigin: origin,
+              transition: isDragging ? "none" : "transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)",
+              willChange: "transform",
+            }}
+          >
           {isZoomed ? (
             <div
               style={{
@@ -243,6 +372,7 @@ const FlipPage = React.forwardRef<
               loading=""
             />
           )}
+          </div>
         </div>
       </div>
     </>
@@ -267,7 +397,6 @@ export default function PdfFlipViewer({
   const [pageWidth, setPageWidth] = React.useState(0);
   const [fileData, setFileData] = React.useState<ArrayBuffer | null>(null);
   const [fetchError, setFetchError] = React.useState(false);
-  const [selectedPage, setSelectedPage] = React.useState<number | null>(null);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -277,7 +406,6 @@ export default function PdfFlipViewer({
     setNumPages(0);
     setCurrentPage(0);
     setFileData(null);
-    setSelectedPage(null);
 
     const isDirect = fileUrl.startsWith("blob:") || fileUrl.startsWith("data:");
     if (isDirect) {
@@ -329,23 +457,6 @@ export default function PdfFlipViewer({
 
   const basePageWidth = pageWidth > 0 ? Math.max(100, pageWidth) : 0;
   const basePageHeight = pageHeight > 0 ? Math.max(140, pageHeight) : 0;
-
-  const clearPageSelection = React.useCallback(() => {
-    setSelectedPage(null);
-  }, []);
-
-  const onSelectPage = React.useCallback((pageNumber: number) => {
-    setSelectedPage((prev) => {
-      if (prev === pageNumber) return prev;
-      return pageNumber;
-    });
-  }, []);
-
-  React.useEffect(() => {
-    if (selectedPage !== null && selectedPage > numPages) {
-      setSelectedPage(null);
-    }
-  }, [numPages, selectedPage]);
 
   const baseFlipMaxHeight = layoutExpanded ? 900 : 640;
   const flipMaxHeight = Math.max(baseFlipMaxHeight, basePageHeight);
@@ -410,27 +521,9 @@ export default function PdfFlipViewer({
               {currentSpread} / {totalSpreads}
             </span>
           ) : null}
-          {numPages > 0 && !isLoading && selectedPage !== null ? (
-            <div className="flex items-center gap-1.5 rounded-lg border border-border bg-background px-2 py-0.5 shadow-sm">
-              <MagnifierCursorGlyph className="h-3.5 w-3.5 text-primary shrink-0" />
-              <span className="text-xs font-medium text-foreground">Page {selectedPage}</span>
-              <span className="text-[10px] text-muted-foreground hidden sm:inline">Click page to zoom · again to reset</span>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6 text-muted-foreground hover:text-foreground"
-                onClick={clearPageSelection}
-                aria-label="Clear page selection"
-                title="Clear selection"
-              >
-                <X className="h-3.5 w-3.5" />
-              </Button>
-            </div>
-          ) : null}
-          {numPages > 0 && !isLoading && selectedPage === null ? (
-            <span className="text-xs text-muted-foreground hidden sm:inline max-w-[14rem] truncate" title="Tip">
-              Click a page to select, then click again to zoom
+          {numPages > 0 && !isLoading ? (
+            <span className="text-xs text-muted-foreground hidden sm:inline max-w-[16rem] truncate" title="Tip">
+              Double-click to zoom · double-click again or Escape to reset · drag to pan when zoomed
             </span>
           ) : null}
           {showLayoutToggle && onLayoutExpandedChange ? (
@@ -550,8 +643,6 @@ export default function PdfFlipViewer({
                       pageNumber={i + 1}
                       slotWidth={basePageWidth}
                       slotHeight={basePageHeight}
-                      isSelected={selectedPage === i + 1}
-                      onSelectPage={onSelectPage}
                     />
                   ))}
                 </HTMLFlipBook>

@@ -18,7 +18,7 @@ const navItems = [
     href: "/about",
     children: [
       { label: "Our Mission", href: "/about#mission" },
-      { label: "Accreditation", href: "/about#accreditation" },
+      // { label: "Accreditation", href: "/about#accreditation" },
       { label: "Our Team", href: "/about#team" },
     ]
   },

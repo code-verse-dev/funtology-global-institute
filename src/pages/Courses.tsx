@@ -114,7 +114,7 @@ const Courses = () => {
                 Course Catalog
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
-                Browse Our Standards-Aligned, Ongoing Education Programs Designed to Support Career Advancement, Workforce Readiness, and Professional Growth.
+              Browse our ongoing education programs designed to support career advancement, workforce readiness, and professional growth.
               </p>
 
               {/* Search Bar */}
@@ -350,7 +350,7 @@ const Courses = () => {
                 Ready to Advance Your Career?
               </h2>
               <p className="text-primary-foreground/80 text-lg mb-8">
-                Join a growing network of learners who have completed standards-aligned, career-focused programs through Funtology Global Institute for Career Innovation (FGI).
+                Join a growing network of learners who have completed, career-focused programs through Funtology Global Institute for Career Innovation (FGI).
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="secondary" size="lg" className="font-heading font-semibold" asChild>

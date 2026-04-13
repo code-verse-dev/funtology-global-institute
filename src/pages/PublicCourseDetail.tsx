@@ -39,6 +39,7 @@ export type CatalogCourseDetail = {
   learningObjectives?: string[];
   createdAt?: string;
   updatedAt?: string;
+  ongoingHours?: number;
 };
 
 function formatDate(iso?: string) {
@@ -71,19 +72,21 @@ const PublicCourseDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  console.log(course, 'course');
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
 
       <main className="flex-1 pt-20">
-          <div className="container-wide">
+        <div className="container-wide">
           <Button variant="ghost" size="sm" className="mt-8 text-center gap-1.5 text-muted-foreground" asChild>
             <Link to="/courses">
               <ArrowLeft className="h-4 w-4" aria-hidden />
               Back to catalog
             </Link>
           </Button>
-          </div>
+        </div>
 
         {!courseId ? (
           <div className="container-wide py-16 text-center text-muted-foreground">
@@ -164,7 +167,7 @@ const PublicCourseDetail = () => {
                         </div>
                       </div>
                     ) : null}
-               
+
                   </div>
 
                   <div>
@@ -185,7 +188,7 @@ const PublicCourseDetail = () => {
                       </ul>
                     </div>
                   ) : null}
-
+                  {course?.ongoingHours && <h2 className="font-heading text-xl font-semibold text-foreground mb-4">{course.ongoingHours + '.0'} On-going Education Hours</h2>}
                 </div>
 
                 <aside className="lg:sticky lg:top-24 rounded-2xl border border-border bg-card p-6 shadow-sm space-y-6">
@@ -212,10 +215,10 @@ const PublicCourseDetail = () => {
                         navigate("/organization/subscription");
                       } else if (isLearner) {
                         navigate("/dashboard/subscription");
-                      } else if(!user?._id) {
+                      } else if (!user?._id) {
                         navigate("/login");
                       }
-                      else{
+                      else {
                         return;
                       }
                     }}
