@@ -51,8 +51,8 @@ const team = [
 
 const accreditations = [
   {
-    title: "Standards-Aligned Provider",
-    description: "Designed and Implemented Using ANSI 1-2018 as a Guiding Framework While Preparing to Apply",
+    title: "Structured Learning Provider",
+    description: "Designed and implemented using a consistent, quality-driven framework to deliver organized and measurable learning experiences.",
     icon: Award,
   },
   {
@@ -61,8 +61,8 @@ const accreditations = [
     icon: Shield,
   },
   {
-    title: "Industry Recognition",
-    description: "As we launch our programs, our commitment to quality is aligned with ANSI/IACET continuing education standards, ensuring structured, measurable learning experiences from the very beginning.",
+    title: "Industry-Focused Learning",
+    description: "As we launch our programs, our commitment to quality is reflected in structured, measurable learning experiences designed to support real-world skill development.",
     icon: CheckCircle,
   },
 ];
@@ -115,7 +115,7 @@ const programFeatureItems = [
 ];
 
 const complianceQualityItems = [
-  "Aligned with International Association for Continuing Education and Training standards (pending)",
+  // "Aligned with International Association for Continuing Education and Training standards (pending)",
   "Built on measurable learning objectives",
   "Supported by assessments and evaluations",
   "Designed for workforce and professional development",
@@ -500,10 +500,10 @@ const About = () => {
             </motion.div>
             <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-14">
               <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <h3 className="mb-2 font-heading text-xl font-semibold text-foreground">Standards-Aligned Education</h3>
+                {/* <h3 className="mb-2 font-heading text-xl font-semibold text-foreground">Standards-Aligned Education</h3>
                 <p className="mb-6 text-muted-foreground">
                   Funtology Global Institute for Career Innovation is committed to delivering structured, measurable learning experiences.
-                </p>
+                </p> */}
                 <p className="mb-4 font-medium text-foreground">Our Programs Are:</p>
                 <BulletList items={complianceQualityItems} />
                 <blockquote className="mt-10 rounded-2xl border border-secondary/30 bg-secondary/5 p-6 font-medium leading-relaxed text-foreground">
@@ -633,7 +633,7 @@ const About = () => {
         </section>
 
         {/* Accreditation Section */}
-        <section id="accreditation" className="py-16 md:py-24 scroll-mt-24">
+        {/* <section id="accreditation" className="py-16 md:py-24 scroll-mt-24">
           <div className="container-wide">
             <motion.div
               className="text-center max-w-2xl mx-auto mb-12"
@@ -642,10 +642,10 @@ const About = () => {
               viewport={{ once: true }}
             >
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Standards & Recognition
+              Standards & Quality
               </h2>
               <p className="text-muted-foreground">
-              Our Commitment to Quality is Aligned with ANSI/IACET Ongoing Education Standards to Ensure Structured, Measurable Learning Experiences.
+              Our commitment to quality is demonstrated through a structured learning designed to deliver clear, measurable outcomes.
               </p>
             </motion.div>
 
@@ -670,7 +670,7 @@ const About = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Team Section */}
         <section id="team" className="py-16 md:py-24 bg-muted/30 scroll-mt-24">

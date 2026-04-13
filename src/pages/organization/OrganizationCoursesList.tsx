@@ -8,7 +8,7 @@ import { useGetCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
 import { motion } from "framer-motion";
 import { BookOpen, ChevronLeft, ChevronRight, Loader2, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 const OVERVIEW_LIMIT = 6;
@@ -80,10 +80,12 @@ export type OrganizationCoursesListProps = {
 };
 
 export function OrganizationCoursesList({ variant, linkBase = "/organization/courses" }: OrganizationCoursesListProps) {
+  const location = useLocation();
   const [keywordInput, setKeywordInput] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const refetchedForPaymentNavKeyRef = useRef<string | null>(null);
 
   const isOverview = variant === "overview";
 
@@ -110,6 +112,18 @@ export function OrganizationCoursesList({ variant, linkBase = "/organization/cou
     : { page, limit: PAGE_SIZE, status: "published" as const, keyword: debouncedKeyword };
 
   const { data, isLoading, isFetching, isError, error, refetch } = useGetCoursesQuery(queryArgs);
+
+  useEffect(() => {
+    const fromPayment =
+      location.state &&
+      typeof location.state === "object" &&
+      "fromPayment" in location.state &&
+      Boolean((location.state as { fromPayment?: boolean }).fromPayment);
+    if (!fromPayment) return;
+    if (refetchedForPaymentNavKeyRef.current === location.key) return;
+    refetchedForPaymentNavKeyRef.current = location.key;
+    void refetch();
+  }, [location.key, location.state, refetch]);
 
   const pageData = data?.data;
   const courses = pageData?.docs ?? [];

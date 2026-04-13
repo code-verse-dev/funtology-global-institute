@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const heroFeatures = [
   {
     title: "Interactive Digital Learning Format",
-    subheading: "Engaging, hands-on instruction combining theory, application, and real-world scenarios",
+    subheading: "Structured online instruction combining knowledge-based learning, real-world concepts, and measurable outcomes",
   },
   {
     title: "Earn Documented Learning Hours",
@@ -87,14 +87,16 @@ const HeroSection = () => {
             </motion.div>
 
             <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-tight mb-6">
-              Advance Your
+              {/* Advance Your */}
+              Elevate Your Skills
               <motion.span
                 className="block text-gradient-gold"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                Professional Career
+                {/* Professional Career */}
+                Expand Your Future
               </motion.span>
             </h1>
 
@@ -107,7 +109,7 @@ const HeroSection = () => {
               Elevate Your Expertise Using Ongoing Education Programs Designed to Support Career Readiness, Workforce Development, and Professional Growth.
               <br />
               <br />
-              Earn Recognized Certifications That Validate Skill Development, Strengthen Resumes, and Demonstrate Mastery of Essential Career Competencies.
+              Earn Career-Focused Certifications That Validate Skill Development, Strengthen Resumes, and Demonstrate Mastery of Essential Career Competencies.
             </motion.p>
 
             {/* Feature List */}
