@@ -136,7 +136,7 @@ const HeroSection = () => {
               ))}
             </motion.div>
 
-            <section
+            {/* <section
                 className="my-8 mx-auto max-w-7xl rounded-xl bg-yellow-100 border border-yellow-300 px-6 py-5 flex items-center justify-center shadow-md"
                 aria-label="Accreditation Status"
               >
@@ -146,7 +146,7 @@ const HeroSection = () => {
                   education credits is determined by individual state licensing boards.
                   </div>
                 </div>
-              </section>
+              </section> */}
 
 
             {/* CTA Buttons */}
