@@ -633,7 +633,7 @@ const About = () => {
         </section>
 
         {/* Accreditation Section */}
-        {/* <section id="accreditation" className="py-16 md:py-24 scroll-mt-24">
+        <section id="accreditation" className="py-16 md:py-24 scroll-mt-24">
           <div className="container-wide">
             <motion.div
               className="text-center max-w-2xl mx-auto mb-12"
@@ -670,7 +670,7 @@ const About = () => {
               ))}
             </div>
           </div>
-        </section> */}
+        </section>
 
         {/* Team Section */}
         <section id="team" className="py-16 md:py-24 bg-muted/30 scroll-mt-24">
