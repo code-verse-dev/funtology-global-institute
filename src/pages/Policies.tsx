@@ -117,21 +117,21 @@ FGI does not sell or distribute learner information to third parties except wher
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
     title: "On-going Education Hours Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hours) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hours are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
 All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
 On-going Education Hours Definition
 A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
-FGI awards On-going Education Hourss only for programs that include:
+FGI awards On-going Education Hours only for programs that include:
 • Clearly defined learning objectives
 • Organized instructional content
 • Measurable learning outcomes
 • Participant verification of completion
 • Documented program evaluation procedures
 
-On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
+On-going Education Hours are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
 
 Contact Hour Definition
 A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
@@ -152,7 +152,7 @@ Contact hours do NOT include:
 FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
 On-going Education Hours Calculation Formula
-FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
+FGI calculates On-going Education Hours using the standard formula recognized by our standards:
 10 Contact Hours = 1.0 On-going Education Hours
 The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
@@ -188,42 +188,61 @@ This On-going Education Hours Administration Policy is reviewed periodically by 
   {
     id: "needs-analysis",
     icon: FileText, // Search/BarChart/ClipboardList (Lucide: FileText as placeholder)
-    title: "Needs Analysis Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) conducts a formal Needs Analysis process to ensure that all ongoing education and professional development programs are designed to address identified learning needs, workforce demands, and industry competency gaps.
+    // title: "Needs Analysis Policy",
+    title: "Needs Analysis & Program Development Approach",
+    //     content: `Funtology Global Institute for Career Innovation (FGI) conducts a formal Needs Analysis process to ensure that all ongoing education and professional development programs are designed to address identified learning needs, workforce demands, and industry competency gaps.
 
-FGI uses a structured needs assessment methodology to determine the educational and professional development requirements of its target audiences, including youth, emerging professionals, entrepreneurs, workforce participants, and industry practitioners.
+    // FGI uses a structured needs assessment methodology to determine the educational and professional development requirements of its target audiences, including youth, emerging professionals, entrepreneurs, workforce participants, and industry practitioners.
 
-Purpose of Needs Analysis — The process aims to:
-• Identify gaps in knowledge, skills, or professional competencies
-• Determine workforce readiness requirements within targeted industries
-• Support development of relevant ongoing education programs
-• Align training with professional and career advancement pathways
-• Ensure learning objectives are based on measurable workforce needs
+    // Purpose of Needs Analysis — The process aims to:
+    // • Identify gaps in knowledge, skills, or professional competencies
+    // • Determine workforce readiness requirements within targeted industries
+    // • Support development of relevant ongoing education programs
+    // • Align training with professional and career advancement pathways
+    // • Ensure learning objectives are based on measurable workforce needs
 
-Sources of Needs Assessment Data
-FGI collects workforce and educational needs data from multiple sources including:
-• Workforce development research and labor market trends
-• Employer and industry feedback
-• Educational institutions and youth development organizations
-• Small business and entrepreneurship communities
-• Professional associations and industry leaders
-• Participant feedback from prior programs
-• Program evaluation results
+    // Sources of Needs Assessment Data
+    // FGI collects workforce and educational needs data from multiple sources including:
+    // • Workforce development research and labor market trends
+    // • Employer and industry feedback
+    // • Educational institutions and youth development organizations
+    // • Small business and entrepreneurship communities
+    // • Professional associations and industry leaders
+    // • Participant feedback from prior programs
+    // • Program evaluation results
 
-Needs Analysis Process — Steps:
-Step 1: Identification of Target Audience
-Determining the learner group and professional sector served by the educational program.
-Step 2: Workforce Skill Gap Analysis
-Evaluating current workforce requirements and identifying gaps between existing competencies and desired performance outcomes.
-Step 3: Stakeholder Consultation
-Collecting input from industry partners, educators, employers, and program participants.
-Step 4: Data Review and Documentation
-Reviewing workforce data, research findings, and stakeholder feedback to identify priority learning needs.
-Step 5: Program Development Alignment
-Designing courses and certification programs that address the identified needs through measurable learning objectives and structured training activities.
+    // Needs Analysis Process — Steps:
+    // Step 1: Identification of Target Audience
+    // Determining the learner group and professional sector served by the educational program.
+    // Step 2: Workforce Skill Gap Analysis
+    // Evaluating current workforce requirements and identifying gaps between existing competencies and desired performance outcomes.
+    // Step 3: Stakeholder Consultation
+    // Collecting input from industry partners, educators, employers, and program participants.
+    // Step 4: Data Review and Documentation
+    // Reviewing workforce data, research findings, and stakeholder feedback to identify priority learning needs.
+    // Step 5: Program Development Alignment
+    // Designing courses and certification programs that address the identified needs through measurable learning objectives and structured training activities.
 
-Continuous Improvement
-Needs analysis is an ongoing process at FGI. The institute regularly reviews program outcomes and learner feedback to identify new training opportunities and ensure educational programs remain relevant and effective.`
+    // Continuous Improvement
+    // Needs analysis is an ongoing process at FGI. The institute regularly reviews program outcomes and learner feedback to identify new training opportunities and ensure educational programs remain relevant and effective.`
+    content: `Funtology Global Institute for Career Innovation (FGI) utilizes a structured Needs Analysis approach to ensure
+all ongoing education and professional development programs are purpose-driven, relevant, and aligned with
+real-world learning and workforce expectations. This process allows FGI to design programs that support skill
+development, career readiness, and practical application across a diverse range of learners, including youth,
+emerging professionals, entrepreneurs, and workforce participants.
+
+FGI’s Needs Analysis process focuses on identifying learning priorities, skill gaps, and areas for growth within
+each field of study. Through this approach, programs are developed to strengthen foundational knowledge,
+build technical competencies, and support career exploration and advancement. Course objectives and learning
+outcomes are designed to reflect measurable progress and meaningful skill development aligned with industry
+practices.
+
+This process also supports the continuous evolution of FGI programs. By reviewing learner engagement,
+performance outcomes, and program effectiveness, FGI refines and expands its course offerings to ensure they
+remain relevant, impactful, and responsive to the needs of participants. This ongoing approach ensures that all
+programs consistently deliver high-quality learning experiences that support personal growth, career
+development, and workforce readiness.
+    `
   },
   // 9
   {
@@ -593,21 +612,21 @@ FGI is committed to delivering high-quality ongoing education programs that supp
   //     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
   //     title: "On-going Education Hours Administration Policy",
   //     content: `Policy Statement
-  // Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
+  // Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hours) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hours are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
   // All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
   // On-going Education Hours Definition
   // A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
-  // FGI awards On-going Education Hourss only for programs that include:
+  // FGI awards On-going Education Hours only for programs that include:
   // • Clearly defined learning objectives
   // • Organized instructional content
   // • Measurable learning outcomes
   // • Participant verification of completion
   // • Documented program evaluation procedures
 
-  // On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
+  // On-going Education Hours are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
 
   // Contact Hour Definition
   // A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
@@ -628,7 +647,7 @@ FGI is committed to delivering high-quality ongoing education programs that supp
   // FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
   // On-going Education Hours Calculation Formula
-  // FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
+  // FGI calculates On-going Education Hours using the standard formula recognized by our standards:
   // 10 Contact Hours = 1.0 On-going Education Hours
   // The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
@@ -741,7 +760,7 @@ const Policies = () => {
                                   <tr className="bg-primary text-primary-foreground">
                                     <th className="px-4 py-2 text-left">Program Level</th>
                                     <th className="px-4 py-2 text-left">Contact Hours</th>
-                                    <th className="px-4 py-2 text-left">On-going Education Hourss Awarded</th>
+                                    <th className="px-4 py-2 text-left">On-going Education Hours Awarded</th>
                                     <th className="px-4 py-2 text-left">Price</th>
                                   </tr>
                                 </thead>
@@ -754,8 +773,8 @@ const Policies = () => {
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 2 – Professional Advancement</td>
-                                    <td className="px-4 py-2">30 hours</td>
-                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
+                                    <td className="px-4 py-2">50 hours</td>
+                                    <td className="px-4 py-2">5.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$49</td>
                                   </tr>
                                   <tr>
@@ -766,8 +785,8 @@ const Policies = () => {
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 4 – Executive Strategy</td>
-                                    <td className="px-4 py-2">40 hours</td>
-                                    <td className="px-4 py-2">4.0 On-going Education Hours</td>
+                                    <td className="px-4 py-2">30 hours</td>
+                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$69</td>
                                   </tr>
                                   <tr>
