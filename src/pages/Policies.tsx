@@ -117,21 +117,21 @@ FGI does not sell or distribute learner information to third parties except wher
     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
     title: "On-going Education Hours Administration Policy",
     content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
+Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hours) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hours are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
 All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
 On-going Education Hours Definition
 A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
-FGI awards On-going Education Hourss only for programs that include:
+FGI awards On-going Education Hours only for programs that include:
 • Clearly defined learning objectives
 • Organized instructional content
 • Measurable learning outcomes
 • Participant verification of completion
 • Documented program evaluation procedures
 
-On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
+On-going Education Hours are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
 
 Contact Hour Definition
 A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
@@ -152,7 +152,7 @@ Contact hours do NOT include:
 FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
 On-going Education Hours Calculation Formula
-FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
+FGI calculates On-going Education Hours using the standard formula recognized by our standards:
 10 Contact Hours = 1.0 On-going Education Hours
 The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
@@ -188,64 +188,95 @@ This On-going Education Hours Administration Policy is reviewed periodically by 
   {
     id: "needs-analysis",
     icon: FileText, // Search/BarChart/ClipboardList (Lucide: FileText as placeholder)
-    title: "Needs Analysis Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) conducts a formal Needs Analysis process to ensure that all ongoing education and professional development programs are designed to address identified learning needs, workforce demands, and industry competency gaps.
+    // title: "Needs Analysis Policy",
+    title: "Needs Analysis & Program Development Approach",
+    //     content: `Funtology Global Institute for Career Innovation (FGI) conducts a formal Needs Analysis process to ensure that all ongoing education and professional development programs are designed to address identified learning needs, workforce demands, and industry competency gaps.
 
-FGI uses a structured needs assessment methodology to determine the educational and professional development requirements of its target audiences, including youth, emerging professionals, entrepreneurs, workforce participants, and industry practitioners.
+    // FGI uses a structured needs assessment methodology to determine the educational and professional development requirements of its target audiences, including youth, emerging professionals, entrepreneurs, workforce participants, and industry practitioners.
 
-Purpose of Needs Analysis — The process aims to:
-• Identify gaps in knowledge, skills, or professional competencies
-• Determine workforce readiness requirements within targeted industries
-• Support development of relevant ongoing education programs
-• Align training with professional and career advancement pathways
-• Ensure learning objectives are based on measurable workforce needs
+    // Purpose of Needs Analysis — The process aims to:
+    // • Identify gaps in knowledge, skills, or professional competencies
+    // • Determine workforce readiness requirements within targeted industries
+    // • Support development of relevant ongoing education programs
+    // • Align training with professional and career advancement pathways
+    // • Ensure learning objectives are based on measurable workforce needs
 
-Sources of Needs Assessment Data
-FGI collects workforce and educational needs data from multiple sources including:
-• Workforce development research and labor market trends
-• Employer and industry feedback
-• Educational institutions and youth development organizations
-• Small business and entrepreneurship communities
-• Professional associations and industry leaders
-• Participant feedback from prior programs
-• Program evaluation results
+    // Sources of Needs Assessment Data
+    // FGI collects workforce and educational needs data from multiple sources including:
+    // • Workforce development research and labor market trends
+    // • Employer and industry feedback
+    // • Educational institutions and youth development organizations
+    // • Small business and entrepreneurship communities
+    // • Professional associations and industry leaders
+    // • Participant feedback from prior programs
+    // • Program evaluation results
 
-Needs Analysis Process — Steps:
-Step 1: Identification of Target Audience
-Determining the learner group and professional sector served by the educational program.
-Step 2: Workforce Skill Gap Analysis
-Evaluating current workforce requirements and identifying gaps between existing competencies and desired performance outcomes.
-Step 3: Stakeholder Consultation
-Collecting input from industry partners, educators, employers, and program participants.
-Step 4: Data Review and Documentation
-Reviewing workforce data, research findings, and stakeholder feedback to identify priority learning needs.
-Step 5: Program Development Alignment
-Designing courses and certification programs that address the identified needs through measurable learning objectives and structured training activities.
+    // Needs Analysis Process — Steps:
+    // Step 1: Identification of Target Audience
+    // Determining the learner group and professional sector served by the educational program.
+    // Step 2: Workforce Skill Gap Analysis
+    // Evaluating current workforce requirements and identifying gaps between existing competencies and desired performance outcomes.
+    // Step 3: Stakeholder Consultation
+    // Collecting input from industry partners, educators, employers, and program participants.
+    // Step 4: Data Review and Documentation
+    // Reviewing workforce data, research findings, and stakeholder feedback to identify priority learning needs.
+    // Step 5: Program Development Alignment
+    // Designing courses and certification programs that address the identified needs through measurable learning objectives and structured training activities.
 
-Continuous Improvement
-Needs analysis is an ongoing process at FGI. The institute regularly reviews program outcomes and learner feedback to identify new training opportunities and ensure educational programs remain relevant and effective.`
+    // Continuous Improvement
+    // Needs analysis is an ongoing process at FGI. The institute regularly reviews program outcomes and learner feedback to identify new training opportunities and ensure educational programs remain relevant and effective.`
+    content: `Funtology Global Institute for Career Innovation (FGI) utilizes a structured Needs Analysis approach to ensure
+all ongoing education and professional development programs are purpose-driven, relevant, and aligned with
+real-world learning and workforce expectations. This process allows FGI to design programs that support skill
+development, career readiness, and practical application across a diverse range of learners, including youth,
+emerging professionals, entrepreneurs, and workforce participants.
+
+FGI’s Needs Analysis process focuses on identifying learning priorities, skill gaps, and areas for growth within
+each field of study. Through this approach, programs are developed to strengthen foundational knowledge,
+build technical competencies, and support career exploration and advancement. Course objectives and learning
+outcomes are designed to reflect measurable progress and meaningful skill development aligned with industry
+practices.
+
+This process also supports the continuous evolution of FGI programs. By reviewing learner engagement,
+performance outcomes, and program effectiveness, FGI refines and expands its course offerings to ensure they
+remain relevant, impactful, and responsive to the needs of participants. This ongoing approach ensures that all
+programs consistently deliver high-quality learning experiences that support personal growth, career
+development, and workforce readiness.
+    `
   },
   // 9
   {
     id: "course-development-process",
     icon: FileText, // ClipboardEdit/Layers/BookOpen (Lucide: FileText as placeholder)
     title: "Course Development Process",
-    content: `Policy Statement
-Funtology Global Institute for Career Innovation (FGI) follows a structured course development process to ensure that all educational programs are designed to meet clearly defined learning objectives, workforce development needs, and measurable learning outcomes.
+    content: `Funtology Global Institute for Career Innovation (FGI) utilizes a structured course
+development framework to ensure all programs are intentionally designed to deliver clear
+learning objectives, support workforce development, and produce measurable learning
+outcomes.
 
-FGI uses a systematic instructional design approach based on the ADDIE Model (Analysis, Design, Development, Implementation, Evaluation) to ensure quality and consistency across all ongoing education programs.
+FGI follows a systematic instructional design process to maintain consistency, quality, and
+effectiveness across all digital learning programs.
 
 Course Development Stages:
 1. Analysis
-FGI identifies the purpose of the course and the learning needs of the target audience. This includes review of workforce development needs, identification of learner skill gaps, definition of target audience characteristics, determination of expected learning outcomes, and alignment with program certification level.
+FGI defines the purpose of each course by identifying the learning needs of the target
+audience. This includes assessing skill gaps, understanding learner characteristics,
+establishing intended outcomes, and aligning content with the appropriate certification levels.
 2. Design
-FGI establishes the instructional structure of the course — development of learning objectives, identification of competencies, determination of content sequence, selection of assessment methods, and determination of instructional time and On-going Education Hours value.
+FGI develops the instructional structure of the course by establishing learning objectives,
+identifying key competencies, organizing content sequence, determining assessment methods,
+and defining instructional time and learning hour values.
 3. Development
-Instructional materials are created including written course content, multimedia materials, online learning modules, assessments and examinations, and instructional resources.
+FGI creates course materials and learning resources, including structured content, digital
+modules, and assessments designed to support knowledge acquisition and learner comprehension.
 4. Implementation
-Course delivery through the FGI Learning Management System — learner registration, access to course materials, monitoring learner progress, administering assessments, and providing certification upon successful completion.
+Courses are delivered through the FGI Learning Management System, where learners access
+materials, progress through content, complete assessments, and receive certification upon
+successful completion.  
 5. Evaluation
-FGI conducts regular evaluations of its educational programs to ensure effectiveness and continuous improvement. Evaluation methods include learner feedback surveys, assessment results analysis, program completion data, and stakeholder input.`
+FGI conducts ongoing evaluations to ensure course effectiveness and continuous
+improvement. This includes reviewing learner feedback, analyzing assessment performance
+and monitoring completion data.`
   },
   // 10
   {
@@ -437,10 +468,11 @@ FGI supports continuous improvement through regular program evaluations, analysi
     id: "marketing-compliance-policy",
     icon: FileText, // Megaphone/Broadcast/FileText (Lucide: FileText as placeholder)
     title: "Marketing Compliance Policy",
-    content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining accuracy, transparency, and ethical standards in all marketing, promotional, and informational communications related to its educational programs.
+    content: `FGI leadership reviews all marketing materials related to educational programs prior to
+publication to ensure accuracy, consistency, and compliance.
 
-Accreditation Representation
-FGI will not represent itself as  unless and until official accreditation has been granted by the International Accreditors for Ongoing Education and Training. Until accreditation is formally approved, all references to our standards will clearly indicate the institute's status in a manner that avoids misrepresentation.
+FGI is committed to providing clear and accurate information and avoids any misleading or
+exaggerated statements about educational outcomes, certifications, or career advancement.
 
 All marketing materials must accurately describe:
 • Course titles and descriptions
@@ -457,10 +489,11 @@ This policy applies to all marketing channels:
 • Advertisements and promotional campaigns
 • Presentations or public announcements regarding educational programs
 
-FGI leadership reviews marketing materials related to educational programs to ensure compliance prior to publication. FGI will not engage in misleading, deceptive, or exaggerated claims regarding educational outcomes, certifications, or professional advancement opportunities.
+FGI leadership reviews all marketing materials related to educational programs prior to publication to ensure accuracy, consistency, and compliance.
+FGI is committed to providing clear and accurate information and avoids any misleading or exaggerated statements about educational outcomes, certifications, or career advancement.
 
 Policy Review
-This Marketing Compliance Policy is periodically reviewed by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation requirements.`
+This Marketing Compliance Policy is periodically reviewed by the FGI Team to ensure continued quality standards and evolving educational best practices.`
   },
   // Accordion 16 — Institutional Overview & Standards
   {
@@ -481,7 +514,7 @@ The Academic Leadership Team is responsible for:
 • Evaluation of program effectiveness
 • Policy review and compliance
 
-Instructional Design — ADDIE Model:
+Instructional Design:
 • Analysis
 • Design
 • Development
@@ -490,163 +523,162 @@ Instructional Design — ADDIE Model:
 
 Assessment Methods:
 • Multiple-choice examinations
-• Knowledge verification quizzes
 • Competency-based evaluation questions
 
 Commitment to Quality
 FGI is committed to delivering high-quality ongoing education programs that support professional advancement and workforce development. Through structured governance, systematic instructional design, and continuous program evaluation, FGI ensures that educational offerings meet established standards of quality and effectiveness.`
   },
-//   {
-//     id: "instructor-qualification",
-//     icon: FileText, // UserCheck/Award/BadgeCheck (Lucide: FileText as placeholder)
-//     title: "Instructor Qualification Policy",
-//     content: `Funtology Global Institute for Career Innovation (FGI) ensures that all individuals involved in the development or delivery of educational programs possess appropriate qualifications, experience, and subject matter expertise relevant to the learning objectives of the program.
+  //   {
+  //     id: "instructor-qualification",
+  //     icon: FileText, // UserCheck/Award/BadgeCheck (Lucide: FileText as placeholder)
+  //     title: "Instructor Qualification Policy",
+  //     content: `Funtology Global Institute for Career Innovation (FGI) ensures that all individuals involved in the development or delivery of educational programs possess appropriate qualifications, experience, and subject matter expertise relevant to the learning objectives of the program.
 
-// FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its ongoing education programs.
+  // FGI recognizes instructors, facilitators, and subject matter experts as essential contributors to the quality of its ongoing education programs.
 
-// Instructor qualifications may include one or more of the following:
-// • Demonstrated professional experience in the relevant field
-// • Academic credentials related to the subject area
-// • Industry certifications or licensure where applicable
-// • Documented professional accomplishments or leadership experience
-// • Proven expertise in workforce development, education, or professional training
+  // Instructor qualifications may include one or more of the following:
+  // • Demonstrated professional experience in the relevant field
+  // • Academic credentials related to the subject area
+  // • Industry certifications or licensure where applicable
+  // • Documented professional accomplishments or leadership experience
+  // • Proven expertise in workforce development, education, or professional training
 
-// Subject Matter Experts (SMEs) may be engaged to assist with curriculum development, program design, and instructional review. FGI maintains documentation verifying instructor qualifications and ensures instructors are familiar with course objectives, assessment procedures, and instructional expectations.
+  // Subject Matter Experts (SMEs) may be engaged to assist with curriculum development, program design, and instructional review. FGI maintains documentation verifying instructor qualifications and ensures instructors are familiar with course objectives, assessment procedures, and instructional expectations.
 
-// All instructors and SMEs must adhere to FGI institutional policies and ethical standards.`,
-//   },
-//   {
-//     id: "conflict-of-interest",
-//     icon: Scale, // ⚖️ Scale/Balance/AlertTriangle (Lucide: Scale)
-//     title: "Conflict of Interest Policy",
-//     content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining objectivity, fairness, and transparency in the development and delivery of its educational programs.
+  // All instructors and SMEs must adhere to FGI institutional policies and ethical standards.`,
+  //   },
+  //   {
+  //     id: "conflict-of-interest",
+  //     icon: Scale, // ⚖️ Scale/Balance/AlertTriangle (Lucide: Scale)
+  //     title: "Conflict of Interest Policy",
+  //     content: `Funtology Global Institute for Career Innovation (FGI) is committed to maintaining objectivity, fairness, and transparency in the development and delivery of its educational programs.
 
-// Individuals involved in program governance, curriculum development, instructional delivery, or evaluation must disclose any potential conflicts of interest that could influence educational decisions or outcomes.
+  // Individuals involved in program governance, curriculum development, instructional delivery, or evaluation must disclose any potential conflicts of interest that could influence educational decisions or outcomes.
 
-// A conflict of interest may exist when an individual's personal, professional, or financial interests could compromise the impartiality of educational content, assessment processes, or program administration.
+  // A conflict of interest may exist when an individual's personal, professional, or financial interests could compromise the impartiality of educational content, assessment processes, or program administration.
 
-// All instructors, staff members, and subject matter experts are expected to:
-// • Disclose potential conflicts of interest
-// • Avoid situations that could compromise professional judgment
-// • Maintain impartiality in all educational activities
+  // All instructors, staff members, and subject matter experts are expected to:
+  // • Disclose potential conflicts of interest
+  // • Avoid situations that could compromise professional judgment
+  // • Maintain impartiality in all educational activities
 
-// FGI leadership will review disclosed conflicts and take appropriate actions to ensure educational integrity is maintained.`,
-//   },
-//   {
-//     id: "ethics",
-//     icon: CheckCircle, // ✅ CheckCircle/Star/ShieldCheck (Lucide: CheckCircle)
-//     title: "Ethical Standards Policy",
-//     content: `Funtology Global Institute for Career Innovation (FGI) upholds the highest ethical standards in all educational activities. FGI is committed to providing an educational environment that reflects integrity, professionalism, respect, and accountability.
+  // FGI leadership will review disclosed conflicts and take appropriate actions to ensure educational integrity is maintained.`,
+  //   },
+  //   {
+  //     id: "ethics",
+  //     icon: CheckCircle, // ✅ CheckCircle/Star/ShieldCheck (Lucide: CheckCircle)
+  //     title: "Ethical Standards Policy",
+  //     content: `Funtology Global Institute for Career Innovation (FGI) upholds the highest ethical standards in all educational activities. FGI is committed to providing an educational environment that reflects integrity, professionalism, respect, and accountability.
 
-// All instructors, staff members, and participants are expected to conduct themselves in accordance with ethical principles including:
-// • Honesty and transparency in educational practices
-// • Respect for diverse perspectives and experiences
-// • Fair and unbiased assessment of learner performance
-// • Protection of intellectual property and academic integrity
-// • Professional conduct in all communications and instructional activities
+  // All instructors, staff members, and participants are expected to conduct themselves in accordance with ethical principles including:
+  // • Honesty and transparency in educational practices
+  // • Respect for diverse perspectives and experiences
+  // • Fair and unbiased assessment of learner performance
+  // • Protection of intellectual property and academic integrity
+  // • Professional conduct in all communications and instructional activities
 
-// FGI prohibits any form of academic dishonesty, misrepresentation, or unethical conduct in educational programming. Violations of ethical standards may result in corrective actions including removal from educational programs or institutional disciplinary review.`,
-//   },
-//   {
-//     id: "non-discrimination",
-//     icon: Users, // Users/Globe/Heart (Lucide: Users)
-//     title: "Non-Discrimination Policy",
-//     content: `Funtology Global Institute for Career Innovation (FGI) is committed to providing equal access to educational opportunities for all learners.
+  // FGI prohibits any form of academic dishonesty, misrepresentation, or unethical conduct in educational programming. Violations of ethical standards may result in corrective actions including removal from educational programs or institutional disciplinary review.`,
+  //   },
+  //   {
+  //     id: "non-discrimination",
+  //     icon: Users, // Users/Globe/Heart (Lucide: Users)
+  //     title: "Non-Discrimination Policy",
+  //     content: `Funtology Global Institute for Career Innovation (FGI) is committed to providing equal access to educational opportunities for all learners.
 
-// FGI does not discriminate on the basis of race, color, national origin, ethnicity, religion, gender, gender identity, sexual orientation, age, disability, socioeconomic status, or any other protected characteristic in the administration of its educational programs, policies, or activities.
+  // FGI does not discriminate on the basis of race, color, national origin, ethnicity, religion, gender, gender identity, sexual orientation, age, disability, socioeconomic status, or any other protected characteristic in the administration of its educational programs, policies, or activities.
 
-// FGI strives to create an inclusive and respectful learning environment where individuals from diverse backgrounds are welcomed and supported. All participants in FGI programs are expected to contribute to an atmosphere of mutual respect and professional conduct.`,
-//   },
-//   {
-//     id: "privacy-data-protection",
-//     icon: Shield, // Lock/ShieldLock/EyeOff (Lucide: Shield as closest match)
-//     title: "Privacy & Data Protection Policy",
-//     content: `Funtology Global Institute for Career Innovation (FGI) recognizes the importance of protecting learner information and maintaining the confidentiality of personal and educational records.
+  // FGI strives to create an inclusive and respectful learning environment where individuals from diverse backgrounds are welcomed and supported. All participants in FGI programs are expected to contribute to an atmosphere of mutual respect and professional conduct.`,
+  //   },
+  //   {
+  //     id: "privacy-data-protection",
+  //     icon: Shield, // Lock/ShieldLock/EyeOff (Lucide: Shield as closest match)
+  //     title: "Privacy & Data Protection Policy",
+  //     content: `Funtology Global Institute for Career Innovation (FGI) recognizes the importance of protecting learner information and maintaining the confidentiality of personal and educational records.
 
-// FGI collects and maintains learner data solely for the purpose of administering educational programs, tracking course participation, and issuing certificates of completion.
+  // FGI collects and maintains learner data solely for the purpose of administering educational programs, tracking course participation, and issuing certificates of completion.
 
-// The FGI Learning Management System (LMS) maintains secure digital records of:
-// • Learner registration information
-// • Course participation
-// • Assessment results
-// • Certificate issuance records
+  // The FGI Learning Management System (LMS) maintains secure digital records of:
+  // • Learner registration information
+  // • Course participation
+  // • Assessment results
+  // • Certificate issuance records
 
-// FGI implements reasonable administrative, technical, and security measures to safeguard personal information from unauthorized access, misuse, or disclosure. Learner records are maintained in accordance with institutional policies governing data retention and educational documentation.
+  // FGI implements reasonable administrative, technical, and security measures to safeguard personal information from unauthorized access, misuse, or disclosure. Learner records are maintained in accordance with institutional policies governing data retention and educational documentation.
 
-// FGI does not sell or distribute learner information to third parties except where required by law or necessary to support educational services.`,
-//   },
-//   {
-//     id: "On-going Education Hours-administration",
-//     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
-//     title: "On-going Education Hours Administration Policy",
-//     content: `Policy Statement
-// Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hourss) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hourss are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
+  // FGI does not sell or distribute learner information to third parties except where required by law or necessary to support educational services.`,
+  //   },
+  //   {
+  //     id: "On-going Education Hours-administration",
+  //     icon: FileText, // GraduationCap/Award/BookOpen (Lucide: FileText as placeholder)
+  //     title: "On-going Education Hours Administration Policy",
+  //     content: `Policy Statement
+  // Funtology Global Institute for Career Innovation (FGI) administers Ongoing Education Units (On-going Education Hours) in accordance with the guidelines established by the International Accreditors for Ongoing Education and Training. FGI maintains structured procedures to ensure that On-going Education Hours are awarded only for verified participation in organized ongoing education and training activities that meet defined learning objectives and completion requirements.
 
-// All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
+  // All On-going Education Hours-bearing programs offered through the FGI Learning Management System (LMS) follow documented policies for course design, instructional delivery, learner participation, and assessment.
 
-// On-going Education Hours Definition
-// A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
+  // On-going Education Hours Definition
+  // A Ongoing Education Unit is a nationally recognized measure used to quantify participation in structured ongoing education and professional development programs. One (1) On-going Education Hours represents ten (10) contact hours of participation in an organized ongoing education experience under responsible sponsorship, capable direction, and qualified instruction.
 
-// FGI awards On-going Education Hourss only for programs that include:
-// • Clearly defined learning objectives
-// • Organized instructional content
-// • Measurable learning outcomes
-// • Participant verification of completion
-// • Documented program evaluation procedures
+  // FGI awards On-going Education Hours only for programs that include:
+  // • Clearly defined learning objectives
+  // • Organized instructional content
+  // • Measurable learning outcomes
+  // • Participant verification of completion
+  // • Documented program evaluation procedures
 
-// On-going Education Hourss are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
+  // On-going Education Hours are awarded solely for educational activities that support professional growth, workforce development, leadership advancement, or career readiness.
 
-// Contact Hour Definition
-// A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
+  // Contact Hour Definition
+  // A contact hour is defined as sixty (60) minutes of active participation in a structured learning activity.
 
-// Contact hours may include:
-// • Instructional reading
-// • Multimedia learning modules
-// • Guided educational content
-// • Structured training activities
-// • Verified participation in course instruction
+  // Contact hours may include:
+  // • Instructional reading
+  // • Multimedia learning modules
+  // • Guided educational content
+  // • Structured training activities
+  // • Verified participation in course instruction
 
-// Contact hours do NOT include:
-// • Breaks
-// • Meals
-// • Unstructured discussion
-// • Unrelated activities
+  // Contact hours do NOT include:
+  // • Breaks
+  // • Meals
+  // • Unstructured discussion
+  // • Unrelated activities
 
-// FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
+  // FGI calculates instructional time based on the actual time required to complete the learning activities and instructional materials within each course module.
 
-// On-going Education Hours Calculation Formula
-// FGI calculates On-going Education Hourss using the standard formula recognized by our standards:
-// 10 Contact Hours = 1.0 On-going Education Hours
-// The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
+  // On-going Education Hours Calculation Formula
+  // FGI calculates On-going Education Hours using the standard formula recognized by our standards:
+  // 10 Contact Hours = 1.0 On-going Education Hours
+  // The On-going Education Hours value assigned to a program is determined by the total number of verified instructional contact hours required for course completion.
 
-// On-going Education Hours Structure for FGI Certification Levels — TABLE:
-// [[On-going Education Hours_TABLE]]
+  // On-going Education Hours Structure for FGI Certification Levels — TABLE:
+  // [[On-going Education Hours_TABLE]]
 
-// Completion Requirements
-// To receive On-going Education Hours credit, participants must:
-// • Complete all required course modules
-// • Participate in the full instructional content of the course
-// • Successfully pass the required course assessment
-// • Achieve the minimum passing score established for the program
-// Learners who successfully meet all completion requirements will receive:
-// • A certificate of completion
-// • The On-going Education Hours value awarded for the program
-// • A unique certificate number for verification
-// Completion records are maintained within the FGI Learning Management System for documentation and transcript purposes.
+  // Completion Requirements
+  // To receive On-going Education Hours credit, participants must:
+  // • Complete all required course modules
+  // • Participate in the full instructional content of the course
+  // • Successfully pass the required course assessment
+  // • Achieve the minimum passing score established for the program
+  // Learners who successfully meet all completion requirements will receive:
+  // • A certificate of completion
+  // • The On-going Education Hours value awarded for the program
+  // • A unique certificate number for verification
+  // Completion records are maintained within the FGI Learning Management System for documentation and transcript purposes.
 
-// On-going Education Hours Recordkeeping
-// FGI maintains secure digital records documenting:
-// • Learner registration
-// • Course participation
-// • Assessment results
-// • On-going Education Hours credits awarded
-// • Certificate issuance
-// These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of On-going Education Hours completion or program participation as needed for professional or educational purposes.
+  // On-going Education Hours Recordkeeping
+  // FGI maintains secure digital records documenting:
+  // • Learner registration
+  // • Course participation
+  // • Assessment results
+  // • On-going Education Hours credits awarded
+  // • Certificate issuance
+  // These records are retained within the FGI Learning Management System in accordance with institutional recordkeeping policies. Learners may request verification of On-going Education Hours completion or program participation as needed for professional or educational purposes.
 
-// Policy Review
-// This On-going Education Hours Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
-// `,
-//   },
+  // Policy Review
+  // This On-going Education Hours Administration Policy is reviewed periodically by the FGI Academic Leadership Team to ensure continued alignment with professional ongoing education standards and applicable accreditation guidelines. FGI remains committed to maintaining high standards in ongoing education delivery, learner assessment, and professional development training.
+  // `,
+  //   },
 ];
 
 const Policies = () => {
@@ -656,7 +688,7 @@ const Policies = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      
+
       <main className="flex-1 pt-20">
         {/* Hero Section */}
         <section className="bg-gradient-hero py-16 md:py-24">
@@ -674,7 +706,7 @@ const Policies = () => {
                 Our Commitment to Transparency, Accessibility, and Ethical Practices
               </p>
               <h2 className="font-heading text-3xl font-bold text-foreground mb-3 text-white mt-2">
-              Have Questions About Our Policies?
+                Have Questions About Our Policies?
               </h2>
               <p className="text-lg md:text-xl text-primary-foreground/80">
                 Our Compliance Team is Here to Help Clarify Any Policy Questions.
@@ -728,7 +760,7 @@ const Policies = () => {
                                   <tr className="bg-primary text-primary-foreground">
                                     <th className="px-4 py-2 text-left">Program Level</th>
                                     <th className="px-4 py-2 text-left">Contact Hours</th>
-                                    <th className="px-4 py-2 text-left">On-going Education Hourss Awarded</th>
+                                    <th className="px-4 py-2 text-left">On-going Education Hours Awarded</th>
                                     <th className="px-4 py-2 text-left">Price</th>
                                   </tr>
                                 </thead>
@@ -741,8 +773,8 @@ const Policies = () => {
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 2 – Professional Advancement</td>
-                                    <td className="px-4 py-2">30 hours</td>
-                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
+                                    <td className="px-4 py-2">50 hours</td>
+                                    <td className="px-4 py-2">5.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$49</td>
                                   </tr>
                                   <tr>
@@ -753,8 +785,8 @@ const Policies = () => {
                                   </tr>
                                   <tr>
                                     <td className="px-4 py-2">Level 4 – Executive Strategy</td>
-                                    <td className="px-4 py-2">40 hours</td>
-                                    <td className="px-4 py-2">4.0 On-going Education Hours</td>
+                                    <td className="px-4 py-2">30 hours</td>
+                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
                                     <td className="px-4 py-2">$69</td>
                                   </tr>
                                   <tr>
@@ -805,7 +837,7 @@ const Policies = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );

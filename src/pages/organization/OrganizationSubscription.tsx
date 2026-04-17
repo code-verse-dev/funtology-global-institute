@@ -102,8 +102,8 @@ const OrganizationSubscription = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <h2 className="font-heading text-lg font-bold">Platform Fees</h2>
-          <p className="text-sm text-muted-foreground">Your organization&apos;s platform fees and included courses.</p>
+          <h2 className="font-heading text-lg font-bold">Course Fees</h2>
+          <p className="text-sm text-muted-foreground">Your organization&apos;s course fees and included courses.</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button variant="secondary" size="sm" asChild>

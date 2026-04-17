@@ -100,12 +100,12 @@ const AdminDashboardLayout = () => {
               <h1 className="font-heading text-xl font-bold text-foreground">{pageTitle}</h1>
             </div>
             <div className="flex items-center gap-3">
-              {/* <Button variant="outline" size="sm" className="shrink-0 gap-1.5" asChild>
+              <Button variant="outline" size="sm" className="shrink-0 gap-1.5" asChild>
                 <Link to="/admin/nonprofit/organization-requests">
                   <HeartHandshake className="h-4 w-4" />
                   Non-profit
                 </Link>
-              </Button> */}
+              </Button>
               <NotificationBell />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

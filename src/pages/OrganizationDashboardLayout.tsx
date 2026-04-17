@@ -26,7 +26,7 @@ const orgNavItems = [
   { to: "learners", label: "Learners", icon: Users },
   { to: "courses", label: "Courses", icon: BookOpen },
   { to: "retake-requests", label: "Retake Requests", icon: RefreshCw },
-  { to: "subscription", label: "Platform Fees", icon: Package },
+  { to: "subscription", label: "Course Fees", icon: Package },
   { to: "billing", label: "Billing", icon: CreditCard },
   { to: "certificates", label: "Certificates", icon: Award },
   { to: "support", label: "Support", icon: Headphones },
