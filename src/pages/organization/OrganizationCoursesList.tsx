@@ -55,7 +55,7 @@ function CourseRowCard({
                 {course.description ? (
                   <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{course.description}</p>
                 ) : null}
-                <p className="text-sm text-muted-foreground">{course.ceHours} CE hours</p>
+                <p className="text-sm text-muted-foreground">{course.ceHours} Ongoing hours</p>
               </div>
               <Button variant="outline" size="sm" className="shrink-0 w-full sm:w-auto" asChild>
                 <Link to={detailPath}>

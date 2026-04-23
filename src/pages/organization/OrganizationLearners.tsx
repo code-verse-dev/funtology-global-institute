@@ -543,7 +543,7 @@ const OrganizationLearners = () => {
                       <label htmlFor={`assign-${course._id}`} className="text-sm leading-tight cursor-pointer flex-1">
                         <span className="font-medium">{course.title}</span>
                         {course.ceHours != null ? (
-                          <span className="text-muted-foreground text-xs block">{course.ceHours} CE hours</span>
+                          <span className="text-muted-foreground text-xs block">{course.ceHours} Ongoing hours</span>
                         ) : null}
                       </label>
                     </li>

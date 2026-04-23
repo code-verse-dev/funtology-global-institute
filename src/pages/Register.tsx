@@ -121,7 +121,7 @@ const Register = () => {
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-bold shrink-0">✓</span>
-                Track CE hours automatically
+                Track Ongoing hours automatically
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-bold shrink-0">✓</span>
