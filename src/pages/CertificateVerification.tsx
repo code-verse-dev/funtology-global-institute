@@ -118,7 +118,7 @@ const CertificateVerification = () => {
                             <p className="font-medium text-foreground">{result.course}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider">CE Hours Awarded</p>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wider">Ongoing hours Awarded</p>
                             <p className="font-medium text-foreground">{result.ceHours} Contact Hours</p>
                           </div>
                           <div>

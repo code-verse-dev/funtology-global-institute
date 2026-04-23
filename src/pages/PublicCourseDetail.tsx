@@ -144,7 +144,7 @@ const PublicCourseDetail = () => {
                       <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm">
                         <Award className="h-4 w-4 text-secondary shrink-0" />
                         <div>
-                          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">CE hours</p>
+                          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Ongoing hours</p>
                           <p className="font-semibold text-foreground">{course.ceHours}</p>
                         </div>
                       </div>

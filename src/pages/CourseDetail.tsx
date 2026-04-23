@@ -98,7 +98,7 @@ const courseData = {
     { icon: FileText, text: "Downloadable resources" },
     { icon: BookOpen, text: "Interactive flipbook materials" },
     { icon: Award, text: "Certificate of completion" },
-    { icon: ShieldCheck, text: "Recognized CE hours" },
+    { icon: ShieldCheck, text: "Recognized Ongoing hours" },
   ],
   requirements: [
     "Active license in healthcare or cosmetology field",
@@ -253,7 +253,7 @@ const CourseDetail = () => {
                     <div className="mt-6 pt-6 border-t border-border">
                       <div className="flex items-center gap-2 text-sm">
                         <Award className="w-5 h-5 text-secondary" />
-                        <span className="font-semibold text-secondary">{courseData.ceHours} CE Hours</span>
+                        <span className="font-semibold text-secondary">{courseData.ceHours} Ongoing hours</span>
                         <span className="text-muted-foreground">Contact Hours</span>
                       </div>
                     </div>

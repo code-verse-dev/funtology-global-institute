@@ -119,7 +119,7 @@ const DashboardHome = () => {
         {[
           { icon: BookOpen, label: "Enrolled Courses", value: learnerStats?.data?.assignedCourses, color: "text-primary" },
           { icon: CheckCircle2, label: "Completed", value: learnerStats?.data?.passedCourses, color: "text-green-600" },
-          { icon: Clock, label: "CE Hours Earned", value: totalCeHours, color: "text-secondary" },
+          { icon: Clock, label: "Ongoing hours Earned", value: totalCeHours, color: "text-secondary" },
           { icon: Award, label: "Certificates", value: learnerStats?.data?.passedCourses, color: "text-purple-600" },
         ].map((stat, index) => (
           <motion.div
