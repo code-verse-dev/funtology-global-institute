@@ -135,12 +135,12 @@ const FeaturedCourses = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
                     <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-                      {typeof course.ceHours === "number" ? (
+                      {/* {typeof course.ceHours === "number" ? (
                         <Badge className="bg-secondary text-secondary-foreground font-semibold shadow-lg">
                           <Award className="w-3 h-3 mr-1" />
                           {course.ceHours} CE
                         </Badge>
-                      ) : null}
+                      ) : null} */}
                       {typeof course.level === "number" ? (
                         <Badge className="bg-primary text-primary-foreground font-semibold gap-1">
                           <Layers className="w-3 h-3" />
