@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Bell, Check, CheckCheck, ChevronDown, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -15,6 +16,7 @@ import { useNonprofitAdminMode } from "@/contexts/NonprofitAdminContext";
 import {
   useToggleNotificationMutation,
   useMarkAllReadMutation,
+  useMarkAllAdminReadMutation,
 } from "@/redux/services/apiSlices/notificationSlice";
 import {
   useToggleNonprofitNotificationMutation,
@@ -22,6 +24,7 @@ import {
 } from "@/redux/services/apiSlices/nonprofitAdminApiSlice";
 import socket from "@/config/socket";
 import { useRoleBasedNotificationsQuery } from "@/hooks/useRoleBasedNotificationsQuery";
+import type { RootState } from "@/redux/store";
 
 type FilterType = "all" | "unread" | "read";
 
@@ -46,6 +49,8 @@ function NotificationsChrome({ backLink, children }: NotificationsChromeProps) {
 export function NotificationsPageContent() {
   const [filter, setFilter] = useState<FilterType>("all");
   const nonprofitAdmin = useNonprofitAdminMode();
+  const role = useSelector((s: RootState) => s.user.userData?.role as string | undefined);
+  const isAdmin = role === "admin";
 
   const queryArg =
     filter === "unread" ? { isRead: false } : filter === "read" ? { isRead: true } : {};
@@ -54,11 +59,12 @@ export function NotificationsPageContent() {
     useRoleBasedNotificationsQuery(queryArg, { refetchOnMountOrArgChange: true });
   const [toggleNotificationMain] = useToggleNotificationMutation();
   const [markAllReadMain] = useMarkAllReadMutation();
+  const [markAllReadAdmin] = useMarkAllAdminReadMutation();
   const [toggleNotificationNp] = useToggleNonprofitNotificationMutation();
   const [markAllReadNp] = useMarkAllNonprofitNotificationsReadMutation();
 
   const toggleNotification = nonprofitAdmin ? toggleNotificationNp : toggleNotificationMain;
-  const markAllRead = nonprofitAdmin ? markAllReadNp : markAllReadMain;
+  const markAllRead = nonprofitAdmin ? markAllReadNp : isAdmin ? markAllReadAdmin : markAllReadMain;
 
   useEffect(() => {
     document.title = "Notifications • FGI";

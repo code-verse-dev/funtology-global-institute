@@ -18,6 +18,7 @@ import { feedbackSlice } from "./services/apiSlices/feedbackSlice";
 import { evaluationSlice } from "./services/apiSlices/evaluationSlice";
 import { nonprofitAdminApiSlice } from "./services/apiSlices/nonprofitAdminApiSlice";
 import { removeUser } from "./services/Slices/userSlice";
+import { quizResponseSlice } from "./services/apiSlices/quizResponseSlice";
 
 /** User-specific RTK Query caches (same endpoint key for every account) must clear on logout. */
 const logoutListener = createListenerMiddleware();
@@ -46,12 +47,14 @@ const rootReducer = combineReducers({
   [feedbackSlice.reducerPath]: feedbackSlice.reducer,
   [evaluationSlice.reducerPath]: evaluationSlice.reducer,
   [nonprofitAdminApiSlice.reducerPath]: nonprofitAdminApiSlice.reducer,
+  [quizResponseSlice.reducerPath]: quizResponseSlice.reducer,
 });
 
 const persistConfig = {
   key: "global_institute",
   storage,
   blacklist: [authSlice.reducerPath, userApiSlice.reducerPath, courseApiSlice.reducerPath, lessonSlice.reducerPath, ticketSlice.reducerPath, paymentSlice.reducerPath, learnerSlice.reducerPath, certificateSlice.reducerPath, retakeSlice.reducerPath, subscriptionSlice.reducerPath, notificationSlice.reducerPath, feedbackSlice.reducerPath, evaluationSlice.reducerPath, nonprofitAdminApiSlice.reducerPath],
+  [quizResponseSlice.reducerPath]: quizResponseSlice.reducer,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -78,6 +81,7 @@ export const store = configureStore({
         evaluationSlice.middleware,
         nonprofitAdminApiSlice.middleware,
         logoutListener.middleware,
+        quizResponseSlice.middleware,
       )
 });
 
