@@ -77,7 +77,6 @@ export default function AdminPayments() {
     }),
     [page, debouncedKeyword],
   );
-
   const { data: paymentsData, isLoading, isFetching } = useGetPaymentsQuery(queryArg);
 
   const paginated = paymentsData?.data;
@@ -86,9 +85,6 @@ export default function AdminPayments() {
   const totalPages = typeof paginated?.totalPages === "number" ? paginated.totalPages : 0;
   const hasNextPage = Boolean(paginated?.hasNextPage);
   const hasPrevPage = Boolean(paginated?.hasPrevPage);
-
-  const pageSum = docs.reduce((sum, d) => sum + (Number(d.totalAmount) || 0), 0);
-
   const [exportPaymentsXlsx] = useExportPaymentsXlsxMutation();
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
@@ -110,7 +106,6 @@ export default function AdminPayments() {
       console.log("Export error:", err);
     }
   };
-
   const exportPaymentPdf = async (payment: PaymentDoc, rowKey: string) => {
     try {
       setDownloadingId(rowKey);

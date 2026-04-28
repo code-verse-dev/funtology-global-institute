@@ -13,7 +13,23 @@ export const quizResponseSlice = createApi({
       }),
       providesTags: ["QuizResponse"],
     }),
+    getAllResponses: builder.query<any, { page?: number; limit?: number; keyword?: string }>({
+      query: ({ page = 1, limit = 10, keyword } = {}) => ({
+        url: "/lesson-quiz-response/all",
+        method: "GET",
+        params: { page, limit, keyword },
+      }),
+      providesTags: ["QuizResponse"],
+    }),
+    exportResponsesXlsx: builder.mutation({
+      query: (params: any) => ({
+        url: "/lesson-quiz-response/export",
+        method: "GET",
+        params,
+        responseHandler: async (response: any) => await response.blob(), // handles XLSX too
+      }),
+    }),
   }),
 });
 
-export const { useGetStudentCourseOutcomesQuery } = quizResponseSlice;
+export const { useGetStudentCourseOutcomesQuery, useGetAllResponsesQuery, useExportResponsesXlsxMutation } = quizResponseSlice;

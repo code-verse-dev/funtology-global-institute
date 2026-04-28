@@ -38,9 +38,9 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   { segment: "courses", label: "Course Management", icon: BookOpen },
   // { segment: "sme", label: "SME Repository", icon: Briefcase },
   { segment: "payments", label: "Payments & Revenue", icon: DollarSign },
+  { segment: "reports", label: "Reports", icon: BarChart3 },
   { segment: "evaluations", label: "Course evaluations", icon: ClipboardList },
   { segment: "complaints", label: "Complaints & Appeals", icon: MessageSquare },
-  // { segment: "reports", label: "Reports & Analytics", icon: BarChart3 },
   // { segment: "audit", label: "Audit Log", icon: History },
   { segment: "settings", label: "System Settings", icon: Settings },
 ];
