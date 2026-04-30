@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { motion } from "framer-motion";
-import { CheckCircle2, Clock, Download, Search } from "lucide-react";
+import { CheckCircle2, Clock, Download, Loader2, Search } from "lucide-react";
 import { useExportResponsesXlsxMutation, useGetAllResponsesQuery } from "@/redux/services/apiSlices/quizResponseSlice";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -29,6 +29,7 @@ type QuizResponseDoc = {
   percentage?: number;
   result?: string;
   createdAt?: string;
+  totalQuestions?: number;
 };
 
 const PAGE_LIMIT = 10;
@@ -37,6 +38,7 @@ const AdminReports = () => {
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     const t = window.setTimeout(() => setDebouncedKeyword(keyword.trim()), 350);
@@ -68,19 +70,23 @@ const AdminReports = () => {
 
   const handleExport = async () => {
     try {
+      setIsExporting(true);
       const blob = await exportResponsesXlsx({
         keyword: debouncedKeyword,
       }).unwrap();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "quiz-responses-export.xlsx";
+      link.download = "lesson-quiz-responses-report.pdf";
       link.click();
       window.URL.revokeObjectURL(url);
     } catch {
       toast.error("Could not export reports.");
+    } finally {
+      setIsExporting(false);
     }
   };
+
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
@@ -98,9 +104,9 @@ const AdminReports = () => {
                 aria-label="Search quiz reports"
               />
             </div>
-            <Button variant="outline" size="sm" type="button" onClick={handleExport}>
-              <Download className="w-4 h-4 mr-2" />
-              Export Reports
+            <Button variant="outline" size="sm" type="button" onClick={handleExport} disabled={isExporting}>
+              {isExporting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Download className="w-4 h-4 mr-2" />}
+              {isExporting ? "Exporting…" : "Export PDF"}
             </Button>
           </div>
         </CardHeader>
@@ -120,6 +126,7 @@ const AdminReports = () => {
                   <TableHead>Score</TableHead>
                   <TableHead>Percentage</TableHead>
                   <TableHead>Result</TableHead>
+                  <TableHead>Total Questions</TableHead>
                   <TableHead>Date</TableHead>
                 </TableRow>
               </TableHeader>
@@ -139,6 +146,7 @@ const AdminReports = () => {
                     const score = typeof r.score === "number" ? r.score : Number(r.score ?? 0);
                     const percentage = typeof r.percentage === "number" ? r.percentage : Number(r.percentage ?? 0);
                     const passed = String(r.result ?? "").toUpperCase() === "PASSED";
+                    const totalQuestions = r.totalQuestions ?? 0;
                     return (
                       <TableRow key={r._id ?? `response-${page}-${idx}`}>
                         <TableCell className="w-[1%] whitespace-nowrap tabular-nums text-sm font-medium text-foreground">
@@ -159,6 +167,7 @@ const AdminReports = () => {
                             {passed ? "passed" : "failed"}
                           </Badge>
                         </TableCell>
+                        <TableCell>{totalQuestions}</TableCell>
                         <TableCell className="text-muted-foreground">
                           {r.createdAt ? new Date(r.createdAt).toLocaleString() : "—"}
                         </TableCell>
