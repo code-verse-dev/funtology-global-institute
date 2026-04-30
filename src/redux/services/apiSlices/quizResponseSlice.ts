@@ -26,7 +26,7 @@ export const quizResponseSlice = createApi({
         url: "/lesson-quiz-response/export",
         method: "GET",
         params,
-        responseHandler: async (response: any) => await response.blob(), // handles XLSX too
+        responseHandler: async (response: any) => await response.blob(),
       }),
     }),
   }),
