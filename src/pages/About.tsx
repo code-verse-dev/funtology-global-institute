@@ -19,6 +19,9 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Fredrick from "@/assets/Fredrick.png";
 import Tequilla from "@/assets/Tequilla.png";
+import aboutone from "@/assets/about-one.png";
+import aboutPartnership from "@/assets/about-partnership.png";
+import aboutWorkforce from "@/assets/about-workforce.png";
 
 const team = [
   // {
@@ -305,7 +308,8 @@ const About = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop"
+                  // src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop"
+                  src={aboutone}
                   alt="Team collaboration"
                   className="rounded-2xl shadow-gold"
                 />
@@ -352,8 +356,9 @@ const About = () => {
               </motion.div>
               <div className="order-1 lg:order-2">
                 <AboutPhoto
-                  src={aboutImagery.workforce.src}
-                  alt={aboutImagery.workforce.alt}
+                  // src={aboutImagery.workforce.src}
+                  src={aboutWorkforce}
+                  alt="Workforce Readiness"
                   aspectClassName="aspect-[4/5] w-full max-w-md mx-auto lg:max-w-none lg:mx-0"
                 />
               </div>
@@ -530,7 +535,8 @@ const About = () => {
             </motion.div>
             <div className="grid items-start gap-12 lg:grid-cols-12">
               <div className="lg:col-span-5">
-                <AboutPhoto src={aboutImagery.partnership.src} alt={aboutImagery.partnership.alt} aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" />
+                {/* <AboutPhoto src={aboutImagery.partnership.src} alt={aboutImagery.partnership.alt} aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" /> */}
+                <AboutPhoto src={aboutPartnership} alt="Partnership Opportunities" aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" />
               </div>
               <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
                 <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

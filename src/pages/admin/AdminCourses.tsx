@@ -304,7 +304,7 @@ const AdminCourses = () => {
                         <Badge variant={statusBadgeVariant(course.status)}>{course.status}</Badge>
                       </TableCell>
                       <TableCell>{course.sortOrder}</TableCell>
-                      <TableCell>{course.ceHours}</TableCell>
+                      <TableCell>{course.ongoingHours ? course.ongoingHours + '.0' : '—'}</TableCell>
                       <TableCell>{course.learningObjectives?.length ?? 0}</TableCell>
                       <TableCell className="text-muted-foreground text-sm whitespace-nowrap">
                         {formatDate(course.updatedAt)}
@@ -440,7 +440,7 @@ const AdminCourses = () => {
                   <h3 className="font-heading text-xl font-semibold">{previewCourse.title}</h3>
                   <div className="flex flex-wrap gap-2 mt-2">
                     <Badge variant={statusBadgeVariant(previewCourse.status)}>{previewCourse.status}</Badge>
-                    <span className="text-sm text-muted-foreground">{previewCourse.ceHours} Ongoing hours</span>
+                    <span className="text-sm text-muted-foreground">{previewCourse.ongoingHours ? previewCourse.ongoingHours + '.0' : '—'} Ongoing hours</span>
                     <span className="text-sm text-muted-foreground">Order {previewCourse.sortOrder}</span>
                   </div>
                 </div>
