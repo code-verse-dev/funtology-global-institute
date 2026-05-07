@@ -25,7 +25,7 @@ const steps = [
   {
     icon: ClipboardCheck,
     title: "Assess",
-    description: "Complete the Assessment with Minimum 70% Score to Demonstrate Mastery",
+    description: "Complete the Assessment with a Minimum 70% Score to Demonstrate Mastery",
     color: "from-orange-500 to-orange-600",
   },
   {
@@ -173,7 +173,7 @@ const HowItWorks = () => {
                   Organization Accounts
                 </h3>
                 <p className="text-primary-foreground/70 max-w-md">
-                  Bulk Enrollment, Centralized Billing, Comprehensive Progress Tracking, and Dedicated Support for Your Entire Team.
+                  Bulk Enrollment, Comprehensive Progress Tracking, and Dedicated Support for Your Entire Team.
                 </p>
               </div>
             </div>
