@@ -146,6 +146,8 @@ const whyFuntologyItems = [
   "Trusted by Schools Since 2016",
   "Scalable for Large Implementations",
   "Built for Workforce Readiness",
+  "Entrepreneurship & Business Building Built In",
+  "Turnkey Implementation & Teacher-Friendly Design",
 ];
 
 const aboutImagery = {
@@ -270,7 +272,7 @@ const About = () => {
                   </h2>
                 </div>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Funtology Global Institute is committed to delivering high-quality, ongoing education programs designed to enhance workforce competency, promote career advancement, and support lifelong learning
+                  Funtology Global Institute is committed to delivering high-quality, ongoing education programs designed to enhance workforce competency, promote career advancement, and support lifelong learning.
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
                   We believe that education should be accessible, engaging, and directly applicable to real-world professional challenges. Our courses are developed by industry experts and designed to meet the highest standards of individuals continuing their education.
@@ -319,14 +321,14 @@ const About = () => {
         {/* Master Vetting & Funding Portfolio — workforce narrative */}
         <section id="workforce-readiness" className="scroll-mt-24 border-b border-border bg-muted/20 py-16 md:py-24">
           <div className="container-wide">
-            <motion.p
+            {/* <motion.p
               className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-secondary"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
               Master Vetting &amp; Funding Portfolio
-            </motion.p>
+            </motion.p> */}
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 className="order-2 lg:order-1"
@@ -538,7 +540,7 @@ const About = () => {
                 <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }}>
                   <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">What We Provide</h3>
                   <BulletList items={whatWeProvideItems} />
-                </motion.div>What Sets Us Apart?
+                </motion.div>
               </div>
             </div>
           </div>
@@ -608,7 +610,7 @@ const About = () => {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 { icon: GraduationCap, title: "Excellence", description: "We maintain the highest standards in educational content and delivery" },
-                { icon: Users, title: "Accessibility", description: "Quality education should be available to all professionals" },
+                { icon: Users, title: "Accessibility", description: "Quality education should be available to everyone" },
                 { icon: Shield, title: "Integrity", description: "We uphold ethical practices in all our operations" },
               ].map((value, index) => (
                 <motion.div

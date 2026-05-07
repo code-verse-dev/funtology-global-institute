@@ -142,7 +142,7 @@ const Footer = () => {
                 <Mail className="w-5 h-5 text-secondary mt-0.5" />
                 <a
                   href="mailto:info@funtologyglobal.com"
-                  className="text-primary-foreground/70 hover:text-secondary transition-colors"
+                  className="text-primary-foreground/70 hover:text-secondary transition-colors text-sm"
                 >
                   Info@FuntologyGlobalInstitute.com
                 </a>

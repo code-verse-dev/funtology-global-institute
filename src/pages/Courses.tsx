@@ -114,7 +114,7 @@ const Courses = () => {
                 Course Catalog
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
-              Browse our ongoing education programs designed to support career advancement, workforce readiness, and professional growth.
+              Browse Our Ongoing Education Programs Designed to Support Career Advancement, Workforce Readiness, and Professional Growth.
               </p>
 
               {/* Search Bar */}
@@ -190,7 +190,7 @@ const Courses = () => {
                   {searchQuery.trim()
                     ? ` matching “${searchQuery.trim()}”`
                     : " courses"} */}
-                  5+ On-Going Education Courses Available
+                  15+ On-Going Education Courses Available
                 </>
               )}
             </p>

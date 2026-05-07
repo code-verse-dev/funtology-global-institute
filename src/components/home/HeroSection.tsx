@@ -18,7 +18,7 @@ const heroFeatures = [
   },
   {
     title: "Explore Career Pathways",
-    subheading: "Cosmetology • Barbering • Nails • Skincare • Entrepreneurship",
+    subheading: "Professional Development • Cosmetology • Plumbing • Automotive • Fitness & more",
   },
   {
     title: "Advance Your Learning Journey",

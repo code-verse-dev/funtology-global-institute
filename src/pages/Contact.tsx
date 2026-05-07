@@ -185,12 +185,12 @@ const Contact = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <h2 className="font-heading text-3xl font-bold text-foreground mb-6">
-                Whether you have questions about our courses, need technical support, or want to learn more about our certificate programs, we’re here to help.
+                Whether You Have Questions About Our Courses, Need Technical Support, or Want to Learn More About Our Certificate Programs, We're Here to Help.
                 </h2>
-                <p className="text-muted-foreground mb-8">
+                {/* <p className="text-muted-foreground mb-8">
                   Whether you have questions about our courses, need technical support,
                   or want to learn more about our certificate programs, we're here to help.
-                </p>
+                </p> */}
 
                 <div className="grid sm:grid-cols-2 gap-6">
                   {contactInfo.map((item, index) => (

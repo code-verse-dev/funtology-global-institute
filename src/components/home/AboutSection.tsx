@@ -114,7 +114,7 @@ const AboutSection = () => {
                   <p className="text-sm text-primary-foreground/70">CE Hours Awarded</p>
                 </div> */}
                 <div>
-                  <p className="font-heading text-3xl font-bold text-secondary">50+</p>
+                  <p className="font-heading text-3xl font-bold text-secondary">450+</p>
                   <p className="text-sm text-primary-foreground/70">Partner Organizations</p>
                 </div>
               </div>
