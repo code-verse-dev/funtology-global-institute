@@ -24,7 +24,7 @@ const navItems = [
   },
   { label: "Policies", href: "/policies" },
   { label: "Contact", href: "/contact" },
-  { label: "Non Profit", href: "https://nonprofit.funtologyglobalinstitute.com", target: "_blank" },
+  { label: "Non Profit Login", href: "https://nonprofit.funtologyglobalinstitute.com", target: "_blank" },
 ];
 
 const Header = () => {
