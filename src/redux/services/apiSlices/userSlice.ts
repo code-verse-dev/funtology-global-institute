@@ -49,6 +49,13 @@ export type ToggleStatusBody = {
   status: UserStatus;
 };
 
+export type ChangePasswordBody = {
+  email: string;
+  oldPassword: string;
+  password: string;
+  type: "organization" | "admin" | "learner";
+};
+
 export type GetUsersQueryArgs = {
   page?: number;
   limit?: number;
@@ -101,6 +108,13 @@ export const userApiSlice = createApi({
         { type: "User", id },
       ],
     }),
+    changePassword: builder.mutation<any, ChangePasswordBody>({
+      query: (body) => ({
+        url: "/reset/changePassword",
+        method: "POST",
+        body,
+      }),
+    }),
     getAdminStats: builder.query<any, void>({
       query: () => ({
         url: "/user/admin/stats",
@@ -114,6 +128,7 @@ export const {
   useGetUsersQuery,
   useGetUserByIdQuery,
   useUpdateUserStatusMutation,
+  useChangePasswordMutation,
   useGetAdminStatsQuery,
   useExportUsersXlsxMutation,
 } = userApiSlice;
