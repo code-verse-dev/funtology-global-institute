@@ -259,19 +259,19 @@ const FlipPage = React.forwardRef<
   const magnifierPortal =
     showMagnifierCursor && cursorPos
       ? createPortal(
-          <div
-            className="pointer-events-none fixed z-[9999] text-foreground drop-shadow-sm"
-            style={{
-              left: cursorPos.x,
-              top: cursorPos.y,
-              transform: "translate(4px, 4px)",
-            }}
-            aria-hidden
-          >
-            <MagnifierCursorGlyph />
-          </div>,
-          document.body,
-        )
+        <div
+          className="pointer-events-none fixed z-[9999] text-foreground drop-shadow-sm"
+          style={{
+            left: cursorPos.x,
+            top: cursorPos.y,
+            transform: "translate(4px, 4px)",
+          }}
+          aria-hidden
+        >
+          <MagnifierCursorGlyph />
+        </div>,
+        document.body,
+      )
       : null;
 
   return (
@@ -334,44 +334,44 @@ const FlipPage = React.forwardRef<
               willChange: "transform",
             }}
           >
-          {isZoomed ? (
-            <div
-              style={{
-                width: slotWidth,
-                height: slotHeight,
-                overflow: "hidden",
-              }}
-            >
-              {/*
+            {isZoomed ? (
+              <div
+                style={{
+                  width: slotWidth,
+                  height: slotHeight,
+                  overflow: "hidden",
+                }}
+              >
+                {/*
                 Render the page at ZOOM_SCALE × width, then scale down by 1/ZOOM_SCALE so the
                 layout stays slot-sized while the canvas has enough pixels; outer scale(ZOOM_SCALE)
                 then magnifies without upscaling a low-res bitmap (avoids blurry text).
               */}
-              <div
-                style={{
-                  width: slotWidth * ZOOM_SCALE,
-                  transform: `scale(${1 / ZOOM_SCALE})`,
-                  transformOrigin: "top left",
-                }}
-              >
-                <Page
-                  pageNumber={pageNumber}
-                  width={slotWidth * ZOOM_SCALE}
-                  renderAnnotationLayer={false}
-                  renderTextLayer={false}
-                  loading=""
-                />
+                <div
+                  style={{
+                    width: slotWidth * ZOOM_SCALE,
+                    transform: `scale(${1 / ZOOM_SCALE})`,
+                    transformOrigin: "top left",
+                  }}
+                >
+                  <Page
+                    pageNumber={pageNumber}
+                    width={slotWidth * ZOOM_SCALE}
+                    renderAnnotationLayer={false}
+                    renderTextLayer={false}
+                    loading=""
+                  />
+                </div>
               </div>
-            </div>
-          ) : (
-            <Page
-              pageNumber={pageNumber}
-              width={slotWidth}
-              renderAnnotationLayer={false}
-              renderTextLayer={false}
-              loading=""
-            />
-          )}
+            ) : (
+              <Page
+                pageNumber={pageNumber}
+                width={slotWidth}
+                renderAnnotationLayer={false}
+                renderTextLayer={false}
+                loading=""
+              />
+            )}
           </div>
         </div>
       </div>
@@ -397,6 +397,7 @@ export default function PdfFlipViewer({
   const [pageWidth, setPageWidth] = React.useState(0);
   const [fileData, setFileData] = React.useState<ArrayBuffer | null>(null);
   const [fetchError, setFetchError] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -442,6 +443,38 @@ export default function PdfFlipViewer({
   React.useEffect(() => {
     const measure = () => {
       if (!containerRef.current) return;
+
+      const available = containerRef.current.clientWidth;
+
+      const mobile = available < 768;
+      console.log('running', mobile)
+      setIsMobile(mobile);
+
+      // Mobile = single page
+      // Desktop = double page spread
+      const calculatedWidth = mobile
+        ? available - 32
+        : (available - 40) / 2;
+
+      const w = Math.max(Math.floor(calculatedWidth), 200);
+
+      setPageWidth(Math.min(w, maxPageWidth));
+    };
+
+    measure();
+
+    const ro = new ResizeObserver(measure);
+
+    if (containerRef.current) {
+      ro.observe(containerRef.current);
+    }
+
+    return () => ro.disconnect();
+  }, [maxPageWidth, fileUrl, fileData]);
+
+  React.useEffect(() => {
+    const measure = () => {
+      if (!containerRef.current) return;
       const available = containerRef.current.clientWidth;
       const w = Math.max(Math.floor((available - 40) / 2), 200);
       setPageWidth(Math.min(w, maxPageWidth));
@@ -453,28 +486,98 @@ export default function PdfFlipViewer({
     return () => ro.disconnect();
   }, [maxPageWidth, fileUrl, fileData]);
 
-  const pageHeight = pageWidth > 0 ? Math.round(pageWidth * 1.414) : 0;
-
+  // const pageHeight = pageWidth > 0 ? Math.round(pageWidth * 1.414) : 0;
+  const pageHeight =
+    pageWidth > 0
+      ? Math.round(
+        pageWidth * (isMobile ? 1.25 : 1.414)
+      )
+      : 0;
   const basePageWidth = pageWidth > 0 ? Math.max(100, pageWidth) : 0;
   const basePageHeight = pageHeight > 0 ? Math.max(140, pageHeight) : 0;
 
-  const baseFlipMaxHeight = layoutExpanded ? 900 : 640;
+  // const baseFlipMaxHeight = layoutExpanded ? 900 : 640;
+  // const baseFlipMaxHeight = layoutExpanded ? 900 : 640;
+  const baseFlipMaxHeight = isMobile
+    ? window.innerHeight * 0.75
+    : layoutExpanded
+      ? 900
+      : 640;
   const flipMaxHeight = Math.max(baseFlipMaxHeight, basePageHeight);
 
-  const flipNext = React.useCallback(() => {
-    bookRef.current?.pageFlip()?.flipNext();
-  }, []);
+  // const flipNext = React.useCallback(() => {
+  //   bookRef.current?.pageFlip()?.flipNext();
+  // }, []);
 
-  const flipPrev = React.useCallback(() => {
-    bookRef.current?.pageFlip()?.flipPrev();
-  }, []);
+  // const flipPrev = React.useCallback(() => {
+  //   bookRef.current?.pageFlip()?.flipPrev();
+  // }, []);
+  
+  // const isFirstSpread = currentPage === 0;
+  // const isLastSpread = currentPage >= numPages - 2;
 
-  const isFirstSpread = currentPage === 0;
-  const isLastSpread = currentPage >= numPages - 2;
+  // const totalSpreads = numPages > 0 ? Math.ceil(numPages / 2) : 0;
+  // const currentSpread = Math.ceil((currentPage + 1) / 2);
+  const isFirstSpread = currentPage <= 0;
 
-  const totalSpreads = numPages > 0 ? Math.ceil(numPages / 2) : 0;
-  const currentSpread = Math.ceil((currentPage + 1) / 2);
+  const isLastSpread = isMobile
+  ? currentPage >= numPages - 1
+  : currentPage >= numPages - 2;
+  
+  const totalSpreads = isMobile
+  ? numPages
+    : Math.ceil(numPages / 2);
 
+  const currentSpread = isMobile
+    ? currentPage + 1
+    : Math.ceil((currentPage + 1) / 2);
+    
+    // const flipPrev = React.useCallback(() => {
+    //   const api = bookRef.current?.pageFlip();
+    
+    //   if (!api) return;
+    
+    //   if (isMobile) {
+    //     api.flipPrev("top");
+    //   } else {
+    //     api.flipPrev();
+    //   }
+    // }, [isMobile]);
+
+    // const flipNext = React.useCallback(() => {
+    //   const api = bookRef.current?.pageFlip();
+    
+    //   if (!api) return;
+    
+    //   if (isMobile) {
+    //     api.flipNext("top");
+    //   } else {
+    //     api.flipNext();
+    //   }
+    // }, [isMobile]);
+    const flipPrev = React.useCallback(() => {
+      const api = bookRef.current?.pageFlip();
+    
+      if (!api) return;
+    
+      if (isMobile) {
+        api.turnToPrevPage();
+      } else {
+        api.flipPrev();
+      }
+    }, [isMobile]);
+    
+    const flipNext = React.useCallback(() => {
+      const api = bookRef.current?.pageFlip();
+    
+      if (!api) return;
+    
+      if (isMobile) {
+        api.turnToNextPage();
+      } else {
+        api.flipNext();
+      }
+    }, [isMobile]);
   const directUrl = fileUrl.startsWith("blob:") || fileUrl.startsWith("data:") ? fileUrl : null;
   const readyFile: string | ArrayBuffer | null = directUrl ?? fileData;
 
@@ -553,9 +656,22 @@ export default function PdfFlipViewer({
       <div
         ref={containerRef}
         className="relative flex w-full min-h-0 flex-1 items-center justify-center overflow-hidden bg-muted"
+        // style={{
+        //   minHeight: basePageHeight > 0 ? Math.min(basePageHeight + 48, 820) : 400,
+        //   maxHeight: layoutExpanded ? "min(92vh, 960px)" : "min(85vh, 820px)",
+        // }}
         style={{
-          minHeight: basePageHeight > 0 ? Math.min(basePageHeight + 48, 820) : 400,
-          maxHeight: layoutExpanded ? "min(92vh, 960px)" : "min(85vh, 820px)",
+          minHeight: isMobile
+            ? basePageHeight
+            : basePageHeight > 0
+              ? Math.min(basePageHeight + 48, 820)
+              : 400,
+
+          maxHeight: isMobile
+            ? "85vh"
+            : layoutExpanded
+              ? "min(92vh, 960px)"
+              : "min(85vh, 820px)",
         }}
       >
         {isLoading && !loadError && !fetchError ? (
@@ -609,8 +725,14 @@ export default function PdfFlipViewer({
             loading=""
           >
             {numPages > 0 && basePageWidth > 0 && basePageHeight > 0 ? (
-              <div className="flex max-h-full max-w-full items-center justify-center overflow-hidden py-2 drop-shadow-2xl">
+              // <div className="flex max-h-full max-w-full items-center justify-center overflow-hidden py-2 drop-shadow-2xl">
+              <div className={`
+                flex max-h-full max-w-full items-center justify-center
+                overflow-hidden py-2 drop-shadow-2xl
+                ${isMobile ? "px-2" : ""}
+              `}>
                 <HTMLFlipBook
+                  key={isMobile ? "mobile" : "desktop"}
                   ref={bookRef}
                   width={basePageWidth}
                   height={basePageHeight}
@@ -618,13 +740,15 @@ export default function PdfFlipViewer({
                   style={{}}
                   size="fixed"
                   minWidth={100}
-                  maxWidth={Math.max(maxPageWidth, basePageWidth)}
+                  // maxWidth={Math.max(maxPageWidth, basePageWidth)}
+                  maxWidth={isMobile ? basePageWidth : Math.max(maxPageWidth, basePageWidth)}
                   minHeight={140}
                   maxHeight={flipMaxHeight}
                   startPage={0}
                   drawShadow
                   flippingTime={650}
-                  usePortrait={false}
+                  // usePortrait={false}
+                  usePortrait={isMobile}
                   startZIndex={10}
                   autoSize={false}
                   maxShadowOpacity={0.5}
@@ -660,8 +784,15 @@ export default function PdfFlipViewer({
           </Button>
 
           <span className="text-xs text-muted-foreground font-medium tabular-nums">
-            Pages {currentPage + 1}
-            {currentPage + 1 < numPages ? `–${Math.min(currentPage + 2, numPages)}` : ""} of {numPages}
+            {/* Pages {currentPage + 1}
+            {currentPage + 1 < numPages ? `–${Math.min(currentPage + 2, numPages)}` : ""} of {numPages} */}
+            {isMobile
+              ? `Page ${currentPage + 1} of ${numPages}`
+              : `Pages ${currentPage + 1}${currentPage + 1 < numPages
+                ? `–${Math.min(currentPage + 2, numPages)}`
+                : ""
+              } of ${numPages}`
+            }
           </span>
 
           <Button variant="outline" size="sm" className="rounded-full gap-1 h-8" type="button" disabled={isLastSpread} onClick={flipNext}>
