@@ -144,8 +144,8 @@ const PublicCourseDetail = () => {
                       <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm">
                         <Award className="h-4 w-4 text-secondary shrink-0" />
                         <div>
-                          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">CE hours</p>
-                          <p className="font-semibold text-foreground">{course.ceHours}</p>
+                          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Ongoing hours</p>
+                          <p className="font-semibold text-foreground">{course.ongoingHours ? course.ongoingHours + '.0' : '—'}</p>
                         </div>
                       </div>
                     ) : null}
@@ -171,14 +171,14 @@ const PublicCourseDetail = () => {
                   </div>
 
                   <div>
-                    <h2 className="font-heading text-xl font-semibold text-foreground mb-3">About this course</h2>
+                    <h2 className="font-heading text-xl font-semibold text-foreground mb-3">About This Course</h2>
                     <p className="text-muted-foreground whitespace-pre-line leading-relaxed">{course.description ?? "—"}</p>
                   </div>
 
                   {Array.isArray(course.learningObjectives) && course.learningObjectives.length > 0 ? (
                     <div>
-                      <h2 className="font-heading text-xl font-semibold text-foreground mb-4">Learning objectives</h2>
                       <ul className="space-y-3">
+                      <h2 className="font-heading text-xl font-semibold text-foreground mb-4">Learning Objectives</h2>
                         {course.learningObjectives.map((obj, i) => (
                           <li key={i} className="flex gap-3 text-sm text-foreground">
                             <CheckCircle2 className="h-5 w-5 shrink-0 text-secondary mt-0.5" aria-hidden />

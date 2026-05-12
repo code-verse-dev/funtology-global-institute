@@ -4,15 +4,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, Clock, CreditCard, DollarSign, Download, Search } from "lucide-react";
+import { CheckCircle2, Clock, Download, Search } from "lucide-react";
 import { useExportPaymentsXlsxMutation, useGetPaymentsQuery } from "@/redux/services/apiSlices/paymentSlice";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 type PaymentUser = {
+  _id?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
   role?: string;
+  status?: string;
+  organizationName?: string;
+  phoneNumber?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 type PaymentDoc = {
@@ -39,6 +46,13 @@ function learnerDisplayName(user: PaymentUser | undefined): string {
   return user.email ?? "—";
 }
 
+function paymentTypeLabel(type: string | undefined): string {
+  if (type === "SUBSCRIPTION") return "Course Fees";
+  if (type === "QUIZ_RETAKE") return "Quiz Retake";
+  if (type === "UPGRADE_SUBSCRIPTION") return "Upgrade Plan";
+  return type || "—";
+}
+
 const PAGE_LIMIT = 10;
 
 export default function AdminPayments() {
@@ -63,7 +77,6 @@ export default function AdminPayments() {
     }),
     [page, debouncedKeyword],
   );
-
   const { data: paymentsData, isLoading, isFetching } = useGetPaymentsQuery(queryArg);
 
   const paginated = paymentsData?.data;
@@ -72,10 +85,8 @@ export default function AdminPayments() {
   const totalPages = typeof paginated?.totalPages === "number" ? paginated.totalPages : 0;
   const hasNextPage = Boolean(paginated?.hasNextPage);
   const hasPrevPage = Boolean(paginated?.hasPrevPage);
-
-  const pageSum = docs.reduce((sum, d) => sum + (Number(d.totalAmount) || 0), 0);
-
   const [exportPaymentsXlsx] = useExportPaymentsXlsxMutation();
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
   const handleExport = async () => {
     try {
@@ -93,6 +104,94 @@ export default function AdminPayments() {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.log("Export error:", err);
+    }
+  };
+  const exportPaymentPdf = async (payment: PaymentDoc, rowKey: string) => {
+    try {
+      setDownloadingId(rowKey);
+      const { jsPDF } = await import("jspdf");
+
+      const doc = new jsPDF("p", "pt", "a4");
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const margin = 36;
+      const contentWidth = pageWidth - margin * 2;
+      let y = 42;
+
+      const fullName = learnerDisplayName(payment.user);
+      const paymentType = paymentTypeLabel(payment.type);
+      const amount = formatUsd(payment.totalAmount);
+      const status = payment.isPaid ? "Completed" : "Pending";
+      const chargeId = payment.chargeId ?? "—";
+      const subscriptionId = payment.subscription ?? "—";
+      const createdAt = payment.createdAt ? new Date(payment.createdAt).toLocaleString() : "—";
+      const updatedAt = payment.updatedAt ? new Date(payment.updatedAt).toLocaleString() : "—";
+
+      doc.setFillColor(15, 23, 42);
+      doc.roundedRect(margin, y, contentWidth, 62, 10, 10, "F");
+      doc.setTextColor(255, 255, 255);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(17);
+      doc.text("Payment Details", margin + 16, y + 26);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.text(`Generated: ${new Date().toLocaleString()}`, margin + 16, y + 46);
+      y += 80;
+
+      const drawSection = (title: string, rows: Array<[string, string]>) => {
+        doc.setTextColor(17, 24, 39);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text(title, margin, y);
+        y += 12;
+
+        doc.setDrawColor(226, 232, 240);
+        doc.setFillColor(255, 255, 255);
+        const rowHeight = 24;
+        const boxHeight = rows.length * rowHeight + 8;
+        doc.roundedRect(margin, y, contentWidth, boxHeight, 8, 8, "FD");
+        y += 18;
+
+        rows.forEach(([label, value]) => {
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(10);
+          doc.setTextColor(71, 85, 105);
+          doc.text(label, margin + 12, y);
+          doc.setFont("helvetica", "normal");
+          doc.setTextColor(17, 24, 39);
+          const wrapped = doc.splitTextToSize(value || "—", contentWidth - 190);
+          doc.text(wrapped, margin + 160, y);
+          y += rowHeight;
+        });
+
+        y += 10;
+      };
+
+      drawSection("Payment", [
+        ["Amount", amount],
+        ["Status", status],
+        ["Type", paymentType],
+        ["Charge ID", chargeId],
+        ["Subscription ID", subscriptionId],
+        ["Created", createdAt],
+        ["Updated", updatedAt],
+      ]);
+
+      drawSection("User", [
+        ["Name", fullName],
+        ["Email", payment.user?.email ?? "—"],
+        ["Role", payment.user?.role ?? "—"],
+        ["User Status", payment.user?.status ?? "—"],
+        ["Organization", payment.user?.organizationName ?? "—"],
+        ["Phone", payment.user?.phoneNumber ?? "—"],
+      ]);
+
+      const base = `${fullName || "user"}-${paymentType || "payment"}-${chargeId}`.replace(/[^a-zA-Z0-9-_ ]/g, "");
+      doc.save(`${base.replace(/\s+/g, "-").toLowerCase()}.pdf`);
+      toast.success("Payment PDF downloaded.");
+    } catch {
+      toast.error("Could not export payment PDF.");
+    } finally {
+      setDownloadingId(null);
     }
   };
 
@@ -177,12 +276,13 @@ export default function AdminPayments() {
                   <TableHead>Method</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Date</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {docs.length === 0 && !isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
+                    <TableCell colSpan={9} className="h-24 text-center text-muted-foreground">
                       No payments found
                       {debouncedKeyword ? ` for “${debouncedKeyword}”.` : "."}
                     </TableCell>
@@ -195,7 +295,7 @@ export default function AdminPayments() {
                     const statusLabel = paid ? "completed" : "pending";
                     const created = p.createdAt ? new Date(p.createdAt).toLocaleString() : "—";
                     const refLabel = [p.type].filter(Boolean).join(" · ") || "—";
-                    const type = refLabel === 'SUBSCRIPTION' ? 'Course Fees' : refLabel === 'QUIZ_RETAKE' ? 'Quiz Retake' : refLabel === 'UPGRADE_SUBSCRIPTION' ? 'Upgrade Plan' : refLabel;
+                    const type = paymentTypeLabel(refLabel);
 
                     return (
                       <TableRow key={rowKey}>
@@ -228,6 +328,18 @@ export default function AdminPayments() {
                           </Badge>
                         </TableCell>
                         <TableCell className="text-muted-foreground">{created}</TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            type="button"
+                            onClick={() => exportPaymentPdf(p, rowKey)}
+                            disabled={downloadingId === rowKey}
+                          >
+                            <Download className="h-4 w-4 mr-1.5" />
+                            {downloadingId === rowKey ? "Exporting…" : "PDF"}
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     );
                   })

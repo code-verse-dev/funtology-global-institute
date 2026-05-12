@@ -67,7 +67,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
   const isLearner = variant === "learner";
   const navigate = useNavigate();
   const location = useLocation();
-  const user = useSelector((state: RootState) => state.user.userData);
+  const user = useSelector((state: any) => state.user.userData);
 
   const { data: courseRes, isLoading: courseLoading, isError: courseError } = useGetCourseByIdQuery(courseId!, {
     skip: !courseId,
@@ -724,7 +724,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
         <CardHeader>
           <CardTitle className="font-heading text-base">About this course</CardTitle>
           <CardDescription>
-            {course.ceHours} CE hours
+            {course.ceHours} Ongoing hours
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 text-sm">

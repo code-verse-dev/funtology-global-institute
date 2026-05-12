@@ -6,7 +6,6 @@ export const subscriptionSlice = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Subscription"],
   endpoints: (builder) => ({
-    
     getMySubscription: builder.query<any, void>({
       query: () => ({
         url: "/subscription/my",
@@ -14,8 +13,15 @@ export const subscriptionSlice = createApi({
       }),
       providesTags: ["Subscription"],
     }),
-   
+
+    getAdminOrganizationActiveSubscription: builder.query<any, string>({
+      query: (organizationId) => ({
+        url: `/subscription/admin/${organizationId}/active`,
+        method: "GET",
+      }),
+      providesTags: ["Subscription"],
+    }),
   }),
 });
 
-export const { useGetMySubscriptionQuery } = subscriptionSlice;
+export const { useGetMySubscriptionQuery, useGetAdminOrganizationActiveSubscriptionQuery } = subscriptionSlice;

@@ -351,7 +351,7 @@ const CourseLearn = () => {
               <h2 className="font-heading font-semibold text-foreground text-sm line-clamp-1">
                 {courseContent.title}
               </h2>
-              <p className="text-xs text-muted-foreground">{courseContent.ceHours} CE Hours</p>
+              <p className="text-xs text-muted-foreground">{courseContent.ceHours} Ongoing hours</p>
             </div>
           </div>
         </div>
@@ -496,7 +496,7 @@ const CourseLearn = () => {
                 </p>
                 <div className="inline-flex items-center gap-2 px-6 py-3 bg-secondary/20 rounded-full mb-6">
                   <Award className="w-5 h-5 text-secondary" />
-                  <span className="font-heading font-bold text-lg text-secondary">{courseContent.ceHours} CE Hours</span>
+                  <span className="font-heading font-bold text-lg text-secondary">{courseContent.ceHours} Ongoing hours</span>
                 </div>
                 <div className="grid grid-cols-2 gap-8 mt-8 pt-8 border-t border-border">
                   <div>

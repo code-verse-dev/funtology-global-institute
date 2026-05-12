@@ -14,6 +14,7 @@ export type ApiCourse = {
   status: CourseStatus;
   createdAt?: string;
   updatedAt?: string;
+  ongoingHours?: number;
 };
 
 export type PaginatedCourses = {

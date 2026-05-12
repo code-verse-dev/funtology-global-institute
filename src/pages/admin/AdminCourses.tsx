@@ -184,7 +184,7 @@ const AdminCourses = () => {
       return;
     }
     if (!Number.isFinite(ceHours) || ceHours < 1) {
-      toast.error("CE hours must be at least 1");
+      toast.error("Ongoing hours must be at least 1");
       return;
     }
     if (!Number.isFinite(sortOrder) || sortOrder < 1 || sortOrder > 4) {
@@ -281,7 +281,7 @@ const AdminCourses = () => {
                   <TableHead>Course</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Sort order</TableHead>
-                  <TableHead>CE hours</TableHead>
+                  <TableHead>Ongoing hours</TableHead>
                   <TableHead>Objectives</TableHead>
                   <TableHead>Updated</TableHead>
                   <TableHead className="w-12"></TableHead>
@@ -304,7 +304,7 @@ const AdminCourses = () => {
                         <Badge variant={statusBadgeVariant(course.status)}>{course.status}</Badge>
                       </TableCell>
                       <TableCell>{course.sortOrder}</TableCell>
-                      <TableCell>{course.ceHours}</TableCell>
+                      <TableCell>{course.ongoingHours ? course.ongoingHours + '.0' : '—'}</TableCell>
                       <TableCell>{course.learningObjectives?.length ?? 0}</TableCell>
                       <TableCell className="text-muted-foreground text-sm whitespace-nowrap">
                         {formatDate(course.updatedAt)}
@@ -440,7 +440,7 @@ const AdminCourses = () => {
                   <h3 className="font-heading text-xl font-semibold">{previewCourse.title}</h3>
                   <div className="flex flex-wrap gap-2 mt-2">
                     <Badge variant={statusBadgeVariant(previewCourse.status)}>{previewCourse.status}</Badge>
-                    <span className="text-sm text-muted-foreground">{previewCourse.ceHours} CE hours</span>
+                    <span className="text-sm text-muted-foreground">{previewCourse.ongoingHours ? previewCourse.ongoingHours + '.0' : '—'} Ongoing hours</span>
                     <span className="text-sm text-muted-foreground">Order {previewCourse.sortOrder}</span>
                   </div>
                 </div>
@@ -521,7 +521,7 @@ const AdminCourses = () => {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="edit-ce">CE hours</Label>
+                  <Label htmlFor="edit-ce">Ongoing hours</Label>
                   <Input
                     id="edit-ce"
                     type="number"

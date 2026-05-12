@@ -236,7 +236,7 @@ export default function AdminComplaints() {
                         <span className="line-clamp-2">{t.subject}</span>
                       </TableCell>
                       <TableCell className="text-muted-foreground text-xs font-mono" title={t.user}>
-                        {t.user.firstName} {t.user.lastName}
+                        {t?.user?.firstName} {t?.user?.lastName}
                       </TableCell>
                       <TableCell>
                         <Badge variant={statusBadgeVariant(t.status)} className="gap-1 whitespace-nowrap">

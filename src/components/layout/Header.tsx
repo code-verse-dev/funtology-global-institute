@@ -24,6 +24,7 @@ const navItems = [
   },
   { label: "Policies", href: "/policies" },
   { label: "Contact", href: "/contact" },
+  { label: "Non Profit Login", href: "https://nonprofit.funtologyglobalinstitute.com", target: "_blank" },
 ];
 
 const Header = () => {
@@ -87,6 +88,8 @@ const Header = () => {
               >
                 <Link
                   to={item.href}
+                  target={item?.target || "_self"}
+                  rel={item?.target === "_blank" ? "noopener noreferrer" : undefined}
                   className={`flex items-center gap-1 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${isActive(item.href)
                     ? "text-primary bg-primary/5"
                     : "text-foreground/70 hover:text-primary hover:bg-primary/5"
@@ -113,7 +116,7 @@ const Header = () => {
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
                     >
-                      {item.children.map((child, index) => (
+                      {item.children.map((child: any, index) => (
                         <motion.div
                           key={child.label}
                           initial={{ opacity: 0, x: -10 }}
@@ -123,6 +126,7 @@ const Header = () => {
                           <Link
                             to={child.href}
                             className="block px-4 py-2.5 text-sm text-foreground/80 hover:text-primary hover:bg-muted transition-colors"
+                            target={child?.target || "_self"}
                           >
                             {child.label}
                           </Link>
@@ -214,6 +218,8 @@ const Header = () => {
                 >
                   <Link
                     to={item.href}
+                    target={item?.target || "_self"}
+                    rel={item?.target === "_blank" ? "noopener noreferrer" : undefined}
                     className={`block py-3 px-4 rounded-lg font-medium transition-colors ${isActive(item.href)
                       ? "text-primary bg-primary/5"
                       : "text-foreground/80 hover:text-primary hover:bg-muted"

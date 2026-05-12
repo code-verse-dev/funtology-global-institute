@@ -2,11 +2,25 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
+import { useChangePasswordMutation } from "@/redux/services/apiSlices/userSlice";
 import type { RootState } from "@/redux/store";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import swal from "sweetalert";
 
 function displayName(user: Record<string, unknown> | undefined) {
   if (!user) return "User";
@@ -42,6 +56,14 @@ function profileImageSrc(raw: unknown): string | undefined {
 const Profile = () => {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.userData) as Record<string, unknown> | undefined;
+  const [openChangePassword, setOpenChangePassword] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [changePassword, { isLoading: changingPassword }] = useChangePasswordMutation();
   const name = displayName(user);
   const email = typeof user?.email === "string" ? user.email : "";
   const role = typeof user?.role === "string" ? user.role : "";
@@ -61,6 +83,52 @@ const Profile = () => {
     { label: "Status", value: status },
     { label: "Member since", value: createdAt ?? "" },
   ].filter((r) => r.value);
+
+  const closeChangePasswordModal = () => {
+    setOpenChangePassword(false);
+    setOldPassword("");
+    setPassword("");
+    setConfirmPassword("");
+    setShowOldPassword(false);
+    setShowNewPassword(false);
+    setShowConfirmPassword(false);
+  };
+
+  const onChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("Missing user email.");
+      return;
+    }
+    if (!oldPassword.trim() || !password.trim()) {
+      toast.error("Old password and new password are required.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast.error("New password and confirm password do not match.");
+      return;
+    }
+    try {
+      const res = await changePassword({
+        email,
+        oldPassword: oldPassword.trim(),
+        password: password.trim(),
+        type: "learner",
+      }).unwrap();
+      if (res?.status) {
+        swal("Success", res?.message || "Password changed successfully.", "success");
+        closeChangePasswordModal();
+      } else {
+        toast.error(res?.message || "Could not change password.");
+      }
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "data" in err && err.data && typeof err.data === "object" && "message" in err.data
+          ? String((err.data as { message: string }).message)
+          : "Could not change password.";
+      toast.error(msg);
+    }
+  };
 
   return (
     <div className="container-wide py-8 max-w-2xl mx-auto space-y-6">
@@ -98,8 +166,104 @@ const Profile = () => {
               ))}
             </dl>
           )}
+          {role === "learner" ? (
+            <div className="pt-2 flex justify-end">
+              <Button type="button" variant="outline" onClick={() => setOpenChangePassword(true)}>
+                Change Password
+              </Button>
+            </div>
+          ) : null}
         </CardContent>
       </Card>
+
+      <Dialog open={openChangePassword} onOpenChange={(open) => (!open ? closeChangePasswordModal() : setOpenChangePassword(true))}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Change password</DialogTitle>
+            <DialogDescription>Update your learner account password.</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={onChangePassword} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="cp-email">Email</Label>
+              <Input id="cp-email" value={email} disabled readOnly />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cp-old">Old password</Label>
+              <div className="relative">
+                <Input
+                  id="cp-old"
+                  type={showOldPassword ? "text" : "password"}
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  disabled={changingPassword}
+                  required
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-3 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowOldPassword((v) => !v)}
+                  aria-label={showOldPassword ? "Hide old password" : "Show old password"}
+                >
+                  {showOldPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cp-new">New password</Label>
+              <div className="relative">
+                <Input
+                  id="cp-new"
+                  type={showNewPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={changingPassword}
+                  required
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-3 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowNewPassword((v) => !v)}
+                  aria-label={showNewPassword ? "Hide new password" : "Show new password"}
+                >
+                  {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cp-confirm">Confirm new password</Label>
+              <div className="relative">
+                <Input
+                  id="cp-confirm"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={changingPassword}
+                  required
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-3 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowConfirmPassword((v) => !v)}
+                  aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                >
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={closeChangePasswordModal} disabled={changingPassword}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={changingPassword}>
+                {changingPassword ? "Updating..." : "Update Password"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

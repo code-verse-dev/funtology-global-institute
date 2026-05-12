@@ -18,7 +18,7 @@ const heroFeatures = [
   },
   {
     title: "Explore Career Pathways",
-    subheading: "Cosmetology • Barbering • Nails • Skincare • Entrepreneurship",
+    subheading: "Professional Development • Cosmetology • Plumbing • Automotive • Fitness & more",
   },
   {
     title: "Advance Your Learning Journey",
@@ -195,7 +195,7 @@ const HeroSection = () => {
             >
               {[
                 // { value: "10K+", label: "Certified Professionals" },
-                { value: "09+", label: "Courses Available" },
+                { value: "15+", label: "Courses Available" },
                 { value: "98%", label: "Satisfaction Rate" },
               ].map((stat, index) => (
                 <motion.div

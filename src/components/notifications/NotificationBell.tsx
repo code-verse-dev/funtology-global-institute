@@ -27,28 +27,33 @@ type NotificationBellProps = {
 
 export function NotificationBell({ triggerClassName, panelClassName }: NotificationBellProps) {
   const role = useSelector((s: RootState) => s.user.userData?.role as string | undefined);
+  const isRoleReady = typeof role === "string" && role.trim().length > 0;
   const nonprofitAdmin = useNonprofitAdminMode();
   const listPath = notificationsListPathForRole(role, nonprofitAdmin && role === "admin");
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { data: notificationsData, refetch } = useRoleBasedNotificationsQuery({
-    isRead: false,
-    limit: 3,
-  });
+  const { data: notificationsData, refetch } = useRoleBasedNotificationsQuery(
+    {
+      isRead: false,
+      limit: 3,
+    },
+    { skip: !isRoleReady },
+  );
 
   const unreadCount: number = notificationsData?.data?.unreadCount ?? 0;
   const topNotifs: NotificationDoc[] =
     notificationsData?.data?.notifications?.docs?.slice(0, 3) ?? [];
 
   useEffect(() => {
+    if (!isRoleReady) return;
     socket.on("notification", () => {
       refetch();
     });
     return () => {
       socket.off("notification");
     };
-  }, [refetch]);
+  }, [refetch, isRoleReady]);
 
   const clearCloseTimer = () => {
     if (closeTimer.current) {

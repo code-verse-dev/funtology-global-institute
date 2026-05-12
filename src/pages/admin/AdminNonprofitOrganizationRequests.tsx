@@ -41,6 +41,7 @@ type CourseRef = { title?: string };
 type RequestDoc = {
   _id?: string;
   status?: string;
+  requestType?: string;
   totalLearners?: number;
   createdAt?: string;
   organization?: OrgRef | OrgRef[];
@@ -97,6 +98,12 @@ function formatDate(iso?: string) {
   if (!iso) return "—";
   const d = new Date(iso);
   return Number.isNaN(d.getTime()) ? "—" : d.toLocaleString();
+}
+
+function requestTypeLabel(requestType?: string): string {
+  if (requestType === "ADD_COURSES") return "Update subscription (add new courses)";
+  if (requestType === "NEW_SUBSCRIPTION") return "New subscription request";
+  return requestType ? requestType.split("_").join(" ").toLowerCase() : "—";
 }
 
 const PAGE_SIZE = 10;
@@ -183,7 +190,6 @@ export default function AdminNonprofitOrganizationRequests() {
 
   const dialogTitles = coursesDialogDoc ? requestCourseTitles(coursesDialogDoc) : [];
   const dialogCourseIds = coursesDialogDoc ? requestCourseIdStrings(coursesDialogDoc) : [];
-
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       <div>
@@ -250,6 +256,7 @@ export default function AdminNonprofitOrganizationRequests() {
                 <TableRow>
                   <TableHead>Organization</TableHead>
                   <TableHead>Contact email</TableHead>
+                  <TableHead>Request type</TableHead>
                   <TableHead>Learners</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Requested</TableHead>
@@ -260,7 +267,7 @@ export default function AdminNonprofitOrganizationRequests() {
               <TableBody>
                 {docs.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={8} className="text-center py-12 text-muted-foreground">
                       No requests match your filters.
                     </TableCell>
                   </TableRow>
@@ -273,6 +280,7 @@ export default function AdminNonprofitOrganizationRequests() {
                       <TableRow key={r._id ?? String(r.createdAt)}>
                         <TableCell className="font-medium">{orgDisplay(r.organization)}</TableCell>
                         <TableCell className="text-muted-foreground text-sm">{orgEmail(r.organization)}</TableCell>
+                        <TableCell className="text-sm">{requestTypeLabel(r.requestType)}</TableCell>
                         <TableCell>{typeof r.totalLearners === "number" ? r.totalLearners : "—"}</TableCell>
                         <TableCell>
                           <Badge variant="outline" className="font-normal">

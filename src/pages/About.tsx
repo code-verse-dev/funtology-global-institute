@@ -19,6 +19,9 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Fredrick from "@/assets/Fredrick.png";
 import Tequilla from "@/assets/Tequilla.png";
+import aboutone from "@/assets/about-one.png";
+import aboutPartnership from "@/assets/about-partnership.png";
+import aboutWorkforce from "@/assets/about-workforce.png";
 
 const team = [
   // {
@@ -146,6 +149,8 @@ const whyFuntologyItems = [
   "Trusted by Schools Since 2016",
   "Scalable for Large Implementations",
   "Built for Workforce Readiness",
+  "Entrepreneurship & Business Building Built In",
+  "Turnkey Implementation & Teacher-Friendly Design",
 ];
 
 const aboutImagery = {
@@ -270,7 +275,7 @@ const About = () => {
                   </h2>
                 </div>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Funtology Global Institute is committed to delivering high-quality, ongoing education programs designed to enhance workforce competency, promote career advancement, and support lifelong learning
+                  Funtology Global Institute is committed to delivering high-quality, ongoing education programs designed to enhance workforce competency, promote career advancement, and support lifelong learning.
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
                   We believe that education should be accessible, engaging, and directly applicable to real-world professional challenges. Our courses are developed by industry experts and designed to meet the highest standards of individuals continuing their education.
@@ -303,7 +308,8 @@ const About = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop"
+                  // src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop"
+                  src={aboutone}
                   alt="Team collaboration"
                   className="rounded-2xl shadow-gold"
                 />
@@ -319,14 +325,14 @@ const About = () => {
         {/* Master Vetting & Funding Portfolio — workforce narrative */}
         <section id="workforce-readiness" className="scroll-mt-24 border-b border-border bg-muted/20 py-16 md:py-24">
           <div className="container-wide">
-            <motion.p
+            {/* <motion.p
               className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-secondary"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
               Master Vetting &amp; Funding Portfolio
-            </motion.p>
+            </motion.p> */}
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 className="order-2 lg:order-1"
@@ -350,8 +356,9 @@ const About = () => {
               </motion.div>
               <div className="order-1 lg:order-2">
                 <AboutPhoto
-                  src={aboutImagery.workforce.src}
-                  alt={aboutImagery.workforce.alt}
+                  // src={aboutImagery.workforce.src}
+                  src={aboutWorkforce}
+                  alt="Workforce Readiness"
                   aspectClassName="aspect-[4/5] w-full max-w-md mx-auto lg:max-w-none lg:mx-0"
                 />
               </div>
@@ -528,7 +535,8 @@ const About = () => {
             </motion.div>
             <div className="grid items-start gap-12 lg:grid-cols-12">
               <div className="lg:col-span-5">
-                <AboutPhoto src={aboutImagery.partnership.src} alt={aboutImagery.partnership.alt} aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" />
+                {/* <AboutPhoto src={aboutImagery.partnership.src} alt={aboutImagery.partnership.alt} aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" /> */}
+                <AboutPhoto src={aboutPartnership} alt="Partnership Opportunities" aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" />
               </div>
               <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
                 <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -538,7 +546,7 @@ const About = () => {
                 <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }}>
                   <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">What We Provide</h3>
                   <BulletList items={whatWeProvideItems} />
-                </motion.div>What Sets Us Apart?
+                </motion.div>
               </div>
             </div>
           </div>
@@ -608,7 +616,7 @@ const About = () => {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 { icon: GraduationCap, title: "Excellence", description: "We maintain the highest standards in educational content and delivery" },
-                { icon: Users, title: "Accessibility", description: "Quality education should be available to all professionals" },
+                { icon: Users, title: "Accessibility", description: "Quality education should be available to everyone" },
                 { icon: Shield, title: "Integrity", description: "We uphold ethical practices in all our operations" },
               ].map((value, index) => (
                 <motion.div

@@ -29,7 +29,7 @@ export const nonprofitAdminApiSlice = createApi({
   tagTypes: ["NpOrgRequest", "NpUser", "NpEvaluation", "NpTickets", "NpNotifications"],
   endpoints: (builder) => ({
     getNonprofitOrganizationRequests: builder.query<any, NonprofitOrgRequestsQueryArgs | void>({
-      query: (params) => {
+      query: (params:any) => {
         const p = params ?? {};
         const { page = 1, limit = 10, keyword, status, from, to } = p;
         return {

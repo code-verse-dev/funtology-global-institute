@@ -31,6 +31,13 @@ export const notificationSlice = createApi({
         }),
         markAllRead: builder.mutation<any, void>({
             query: () => ({
+                url: "/notification/mark-all-read",
+                method: "PUT",
+            }),
+            invalidatesTags: ["Notifications"],
+        }),
+        markAllAdminRead: builder.mutation<any, void>({
+            query: () => ({
                 url: "/notification/admin/mark-all-read",
                 method: "PUT",
             }),
@@ -39,4 +46,10 @@ export const notificationSlice = createApi({
     }),
 });
 
-export const { useGetAdminNotificationsQuery, useGetAllNotificationsQuery, useToggleNotificationMutation, useMarkAllReadMutation } = notificationSlice;
+export const {
+    useGetAdminNotificationsQuery,
+    useGetAllNotificationsQuery,
+    useToggleNotificationMutation,
+    useMarkAllReadMutation,
+    useMarkAllAdminReadMutation,
+} = notificationSlice;
