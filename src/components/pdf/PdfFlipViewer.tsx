@@ -447,7 +447,6 @@ export default function PdfFlipViewer({
       const available = containerRef.current.clientWidth;
 
       const mobile = available < 768;
-      console.log('running', mobile)
       setIsMobile(mobile);
 
       // Mobile = single page
@@ -469,20 +468,6 @@ export default function PdfFlipViewer({
       ro.observe(containerRef.current);
     }
 
-    return () => ro.disconnect();
-  }, [maxPageWidth, fileUrl, fileData]);
-
-  React.useEffect(() => {
-    const measure = () => {
-      if (!containerRef.current) return;
-      const available = containerRef.current.clientWidth;
-      const w = Math.max(Math.floor((available - 40) / 2), 200);
-      setPageWidth(Math.min(w, maxPageWidth));
-    };
-
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (containerRef.current) ro.observe(containerRef.current);
     return () => ro.disconnect();
   }, [maxPageWidth, fileUrl, fileData]);
 
