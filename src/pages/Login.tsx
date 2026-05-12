@@ -17,6 +17,7 @@ const roleOptions = [
   { id: "learner" as LoginRole, label: "Learner", icon: GraduationCap, desc: "Access Courses & Certificates", route: "/dashboard" },
   { id: "organization" as LoginRole, label: "Organization", icon: Building2, desc: "Manage Team Learning", route: "/organization" },
   { id: "admin" as LoginRole, label: "Administrator", icon: Shield, desc: "System Administration", route: "/admin" },
+  { id: "nonprofit" as LoginRole, label: "Non Profit", icon: GraduationCap, desc: "Non Profit Platform", link: "https://nonprofit.funtologyglobalinstitute.com/" },
 ];
 
 const Login = () => {
@@ -75,11 +76,18 @@ const Login = () => {
           </p>
 
           {/* Role Selection */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
+          <div className="grid grid-cols-4 gap-1 mb-6">
             {roleOptions.map((role) => (
               <button
                 key={role.id}
-                onClick={() => setSelectedRole(role.id)}
+                onClick={() => {
+                  if (role.link) {
+                    window.open(role.link, "_blank", "noopener,noreferrer");
+                    return;
+                  }
+          
+                  setSelectedRole(role.id);
+                }}
                 className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 text-center transition-all ${selectedRole === role.id
                   ? "border-secondary bg-secondary/10"
                   : "border-border hover:border-secondary/40"
