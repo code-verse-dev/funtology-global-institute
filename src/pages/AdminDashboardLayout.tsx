@@ -63,8 +63,8 @@ const AdminDashboardLayout = () => {
   const pageTitle = pageTitleForAdminPath(location.pathname);
 
   return (
-    <div className="min-h-screen bg-muted flex">
-      <aside className="hidden lg:flex w-64 bg-primary flex-col fixed inset-y-0 left-0 z-40">
+    <div className="flex min-h-dvh bg-background">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-primary-foreground/10 bg-primary lg:flex">
         <div className="p-6 border-b border-primary-foreground/10">
           <Link to="/" className="flex items-center gap-3">
             <img src={fgiLogo} alt="FGI" className="h-10 w-10" />
@@ -88,22 +88,22 @@ const AdminDashboardLayout = () => {
         </div>
       </aside>
 
-      <main className="flex-1 lg:ml-64">
-        <header className="sticky top-0 z-30 bg-background border-b border-border">
-          <div className="flex items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-4">
-              <div className="lg:hidden">
+      <main className="flex min-h-dvh min-w-0 flex-1 flex-col bg-background lg:ml-64">
+        <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
+            <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
+              <div className="shrink-0 lg:hidden">
                 <Link to="/">
                   <img src={fgiLogo} alt="FGI" className="h-8 w-8" />
                 </Link>
               </div>
-              <h1 className="font-heading text-xl font-bold text-foreground">{pageTitle}</h1>
+              <h1 className="font-heading min-w-0 flex-1 truncate text-lg font-bold text-foreground sm:text-xl">{pageTitle}</h1>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
               <Button variant="outline" size="sm" className="shrink-0 gap-1.5" asChild>
-                <Link to="/admin/nonprofit/organization-requests">
-                  <HeartHandshake className="h-4 w-4" />
-                  Non-profit
+                <Link to="/admin/nonprofit/organization-requests" aria-label="Non-profit organization requests">
+                  <HeartHandshake className="h-4 w-4 shrink-0" />
+                  <span className="hidden sm:inline">Non-profit</span>
                 </Link>
               </Button>
               <NotificationBell />
@@ -130,12 +130,12 @@ const AdminDashboardLayout = () => {
                       Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
+                  {/* <DropdownMenuItem asChild>
                     <Link to="/admin/settings" className="cursor-pointer">
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="text-destructive" asChild>
                     <button type="button" className="cursor-pointer w-full" onClick={onLogout}>
@@ -149,11 +149,13 @@ const AdminDashboardLayout = () => {
           </div>
         </header>
 
-        <div className="p-6 space-y-6">
-          <div className="lg:hidden">
-            <AdminDashboardSidebarNav orientation="horizontal" />
+        <div className="flex flex-1 flex-col space-y-6 p-4 sm:p-6">
+          <div className="lg:hidden -mx-4 border-b border-border px-4 pb-3 sm:-mx-6 sm:px-6">
+            <AdminDashboardSidebarNav orientation="horizontal" className="-mx-1 px-1" />
           </div>
-          <Outlet />
+          <div className="min-w-0 flex-1">
+            <Outlet />
+          </div>
         </div>
       </main>
     </div>

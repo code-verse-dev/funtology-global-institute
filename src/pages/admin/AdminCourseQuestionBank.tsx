@@ -366,7 +366,7 @@ const AdminCourseQuestionBank = () => {
                 ) : questions.length === 0 ? (
                   <p className="text-sm text-muted-foreground py-10 px-6">No questions yet. Add one to build the quiz.</p>
                 ) : (
-                  <Table>
+                  <Table className="min-w-[720px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead className="w-12">#</TableHead>
@@ -436,7 +436,7 @@ const AdminCourseQuestionBank = () => {
                 ) : responseRows.length === 0 ? (
                   <p className="text-sm text-muted-foreground py-10 px-6">No quiz responses yet.</p>
                 ) : (
-                  <Table>
+                  <Table className="min-w-[720px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>Learner</TableHead>

@@ -275,7 +275,7 @@ const AdminCourses = () => {
               Loading courses…
             </div>
           ) : (
-            <Table>
+            <Table className="min-w-[780px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>Course</TableHead>

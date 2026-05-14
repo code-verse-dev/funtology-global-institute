@@ -265,7 +265,7 @@ export default function AdminPayments() {
                 <p className="text-sm text-muted-foreground">Loading payments…</p>
               </div>
             )}
-            <Table>
+            <Table className="min-w-[960px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>S.no</TableHead>

@@ -689,43 +689,42 @@ const Policies = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
 
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="bg-gradient-hero py-16 md:py-24">
+        <section className="bg-gradient-hero py-8 sm:py-12 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="text-center max-w-3xl mx-auto"
+              className="mx-auto max-w-3xl min-w-0 px-0 text-center sm:px-2 md:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
+              <h1 className="mb-3 font-heading text-3xl font-bold leading-tight text-primary-foreground text-balance sm:mb-4 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl">
                 Policies & Compliance
               </h1>
-              <p className="text-lg md:text-xl text-primary-foreground/80">
+              <p className="text-base leading-relaxed text-primary-foreground/85 sm:text-lg md:text-xl">
                 Our Commitment to Transparency, Accessibility, and Ethical Practices
               </p>
-              <h2 className="font-heading text-3xl font-bold text-foreground mb-3 text-white mt-2">
+              <h2 className="mt-5 font-heading text-xl font-bold leading-snug text-primary-foreground text-balance sm:mt-6 sm:text-2xl md:mt-8 md:text-3xl">
                 Have Questions About Our Policies?
               </h2>
-              <p className="text-lg md:text-xl text-primary-foreground/80">
+              <p className="mt-2 text-base leading-relaxed text-primary-foreground/85 sm:mt-3 sm:text-lg md:text-xl">
                 Our Compliance Team is Here to Help Clarify Any Policy Questions.
-                <br />
-                <a
-                  href="mailto:info@funtologyglobalinstitute.com"
-                  className="font-medium text-secondary underline underline-offset-4 hover:text-primary-foreground"
-                >
-                  Info@FuntologyGlobalInstitute.com
-                </a>
               </p>
+              <a
+                href="mailto:info@funtologyglobalinstitute.com"
+                className="mt-3 inline-block max-w-full break-words text-sm font-medium text-secondary underline underline-offset-4 transition-colors hover:text-primary-foreground sm:mt-4 sm:text-base md:text-lg"
+              >
+                Info@FuntologyGlobalInstitute.com
+              </a>
             </motion.div>
           </div>
         </section>
 
         {/* Policies Section */}
-        <section className="py-16 md:py-24">
+        <section className="py-10 md:py-24">
           <div className="container-wide max-w-4xl">
-            <Accordion type="single" collapsible className="space-y-4">
+            <Accordion type="single" collapsible className="space-y-3 sm:space-y-4">
               {policies.map((policy, index) => (
                 <motion.div
                   key={policy.id}
@@ -735,75 +734,95 @@ const Policies = () => {
                 >
                   <AccordionItem
                     value={policy.id}
-                    className="bg-card border border-border rounded-xl px-6 overflow-hidden"
+                    className="overflow-hidden rounded-xl border border-border bg-card px-3 sm:px-6"
                   >
-                    <AccordionTrigger className="hover:no-underline py-6">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                          <policy.icon className="w-6 h-6 text-primary" />
+                    <AccordionTrigger className="hover:no-underline py-4 text-left sm:py-6 [&[data-state=open]]:pb-2">
+                      <div className="flex min-w-0 flex-1 items-center gap-3 pr-2 sm:gap-4 sm:pr-4">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 sm:h-12 sm:w-12">
+                          <policy.icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
                         </div>
-                        <span className="font-heading text-xl font-bold text-foreground text-left">
+                        <span className="min-w-0 flex-1 break-words font-heading text-base font-bold text-foreground sm:text-xl">
                           {policy.title}
                         </span>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="pb-6">
-                      <div className="pl-16 pr-4">
+                    <AccordionContent className="pb-4 sm:pb-6">
+                      <div className="min-w-0 px-0 sm:px-1 md:pl-4">
                         {policy.id === "On-going Education Hours-administration" ? (
                           <>
-                            <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-line">
+                            <div className="prose prose-sm max-w-none break-words text-muted-foreground prose-p:leading-relaxed prose-headings:text-foreground whitespace-pre-line">
                               {policy.content.split("[[On-going Education Hours_TABLE]]")[0]}
                             </div>
-                            <div className="overflow-x-auto mt-4 mb-6">
-                              <table className="min-w-full border border-gray-300 text-sm">
-                                <thead>
-                                  <tr className="bg-primary text-primary-foreground">
-                                    <th className="px-4 py-2 text-left">Program Level</th>
-                                    <th className="px-4 py-2 text-left">Contact Hours</th>
-                                    <th className="px-4 py-2 text-left">On-going Education Hours Awarded</th>
-                                    <th className="px-4 py-2 text-left">Price</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="bg-muted/50">
-                                  <tr>
-                                    <td className="px-4 py-2">Level 1 – Career Foundations</td>
-                                    <td className="px-4 py-2">10 hours</td>
-                                    <td className="px-4 py-2">1.0 On-going Education Hours</td>
-                                    <td className="px-4 py-2">$25</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-2">Level 2 – Professional Advancement</td>
-                                    <td className="px-4 py-2">50 hours</td>
-                                    <td className="px-4 py-2">5.0 On-going Education Hours</td>
-                                    <td className="px-4 py-2">$49</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-2">Level 3 – Career Leadership</td>
-                                    <td className="px-4 py-2">30 hours</td>
-                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
-                                    <td className="px-4 py-2">$59</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-2">Level 4 – Executive Strategy</td>
-                                    <td className="px-4 py-2">30 hours</td>
-                                    <td className="px-4 py-2">3.0 On-going Education Hours</td>
-                                    <td className="px-4 py-2">$69</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-2">Level 5 – Fellowship of Distinction</td>
-                                    <td className="px-4 py-2">50 hours</td>
-                                    <td className="px-4 py-2">5.0 On-going Education Hours</td>
-                                    <td className="px-4 py-2">$79</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                            <div className="my-4 -mx-1 overflow-hidden rounded-lg border border-border sm:mx-0">
+                              <div className="overflow-x-auto overscroll-x-contain">
+                                <table className="w-full min-w-[640px] border-collapse border-0 text-left text-xs sm:text-sm">
+                                  <thead>
+                                    <tr className="bg-primary text-primary-foreground">
+                                      <th className="whitespace-normal px-2 py-2.5 font-semibold sm:px-4 sm:py-3">
+                                        Program level
+                                      </th>
+                                      <th className="whitespace-nowrap px-2 py-2.5 font-semibold sm:px-4 sm:py-3">
+                                        Contact hours
+                                      </th>
+                                      <th className="whitespace-normal px-2 py-2.5 font-semibold sm:px-4 sm:py-3">
+                                        On-going Education Hours awarded
+                                      </th>
+                                      <th className="whitespace-nowrap px-2 py-2.5 font-semibold sm:px-4 sm:py-3">
+                                        Price
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-border bg-muted/40">
+                                    <tr>
+                                      <td className="max-w-[11rem] break-words px-2 py-2 align-top sm:max-w-none sm:px-4 sm:py-3">
+                                        Level 1 – Career Foundations
+                                      </td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">10 hours</td>
+                                      <td className="break-words px-2 py-2 align-top sm:px-4 sm:py-3">1.0 On-going Education Hours</td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">$25</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="max-w-[11rem] break-words px-2 py-2 align-top sm:max-w-none sm:px-4 sm:py-3">
+                                        Level 2 – Professional Advancement
+                                      </td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">50 hours</td>
+                                      <td className="break-words px-2 py-2 align-top sm:px-4 sm:py-3">5.0 On-going Education Hours</td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">$49</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="max-w-[11rem] break-words px-2 py-2 align-top sm:max-w-none sm:px-4 sm:py-3">
+                                        Level 3 – Career Leadership
+                                      </td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">30 hours</td>
+                                      <td className="break-words px-2 py-2 align-top sm:px-4 sm:py-3">3.0 On-going Education Hours</td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">$59</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="max-w-[11rem] break-words px-2 py-2 align-top sm:max-w-none sm:px-4 sm:py-3">
+                                        Level 4 – Executive Strategy
+                                      </td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">30 hours</td>
+                                      <td className="break-words px-2 py-2 align-top sm:px-4 sm:py-3">3.0 On-going Education Hours</td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">$69</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="max-w-[11rem] break-words px-2 py-2 align-top sm:max-w-none sm:px-4 sm:py-3">
+                                        Level 5 – Fellowship of Distinction
+                                      </td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">50 hours</td>
+                                      <td className="break-words px-2 py-2 align-top sm:px-4 sm:py-3">5.0 On-going Education Hours</td>
+                                      <td className="whitespace-nowrap px-2 py-2 align-top sm:px-4 sm:py-3">$79</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
                             </div>
-                            <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-line">
+                            <div className="prose prose-sm max-w-none break-words text-muted-foreground prose-p:leading-relaxed prose-headings:text-foreground whitespace-pre-line">
                               {policy.content.split("[[On-going Education Hours_TABLE]]")[1]}
                             </div>
                           </>
                         ) : (
-                          <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-line">
+                          <div className="prose prose-sm max-w-none break-words text-muted-foreground prose-p:leading-relaxed prose-headings:text-foreground whitespace-pre-line">
                             {policy.content}
                           </div>
                         )}
@@ -816,7 +835,7 @@ const Policies = () => {
 
             {/* Contact for Questions */}
             <motion.div
-              className="mt-12 p-8 bg-muted/50 rounded-2xl text-center"
+              className="mt-8 rounded-2xl bg-muted/50 p-5 text-center sm:mt-12 sm:p-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}

@@ -180,23 +180,26 @@ const LearnerQuizAttempt = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
             type="button"
+            className="shrink-0"
             aria-label="Submit quiz to unlock navigation"
             disabled={shouldBlockNavigation}
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <div>
+          <div className="min-w-0">
             <h2 className="font-heading text-lg font-bold">Attempt quiz</h2>
-            <p className="text-sm text-muted-foreground">{course?.title ?? "Course quiz"}</p>
+            <p className="break-words text-sm text-muted-foreground">{course?.title ?? "Course quiz"}</p>
           </div>
         </div>
-        <Badge variant="outline">{questions.length} question{questions.length === 1 ? "" : "s"}</Badge>
+        <Badge variant="outline" className="w-fit shrink-0">
+          {questions.length} question{questions.length === 1 ? "" : "s"}
+        </Badge>
       </div>
 
       {questions.length === 0 ? (
@@ -208,7 +211,7 @@ const LearnerQuizAttempt = () => {
           {questions.map((q, index) => (
             <Card key={q._id}>
               <CardHeader>
-                <CardTitle className="text-base">
+                <CardTitle className="text-base break-words">
                   Q{index + 1}. {q.question}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
@@ -221,16 +224,17 @@ const LearnerQuizAttempt = () => {
                     {q.options.map((opt, idx) => (
                       <label
                         key={`${q._id}-${idx}`}
-                        className="flex items-center gap-2 rounded-md border border-border px-3 py-2 cursor-pointer"
+                        className="flex cursor-pointer items-start gap-2 rounded-md border border-border px-3 py-2"
                       >
                         <input
                           type="radio"
                           name={`q-${q._id}`}
                           value={opt}
+                          className="mt-1 shrink-0"
                           checked={answers[q._id] === opt}
                           onChange={(e) => setAnswer(q._id, e.target.value)}
                         />
-                        <span className="text-sm">{opt}</span>
+                        <span className="min-w-0 flex-1 break-words text-sm">{opt}</span>
                       </label>
                     ))}
                   </div>

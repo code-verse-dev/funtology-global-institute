@@ -238,9 +238,9 @@ const About = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
 
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="bg-gradient-hero py-16 md:py-24">
+        <section className="bg-gradient-hero py-10 md:py-24">
           <div className="container-wide">
             <motion.div
               className="text-center max-w-3xl mx-auto"
@@ -248,7 +248,7 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4 md:mb-6">
                 About Funtology Global Institute
               </h1>
               <p className="text-lg md:text-xl text-primary-foreground/80">
@@ -259,9 +259,9 @@ const About = () => {
         </section>
 
         {/* Mission Section */}
-        <section id="mission" className="scroll-mt-24 py-16 md:py-24">
+        <section id="mission" className="scroll-mt-20 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid items-center gap-8 md:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -323,7 +323,7 @@ const About = () => {
         </section>
 
         {/* Master Vetting & Funding Portfolio — workforce narrative */}
-        <section id="workforce-readiness" className="scroll-mt-24 border-b border-border bg-muted/20 py-16 md:py-24">
+        <section id="workforce-readiness" className="scroll-mt-20 border-b border-border bg-muted/20 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             {/* <motion.p
               className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-secondary"
@@ -333,7 +333,7 @@ const About = () => {
             >
               Master Vetting &amp; Funding Portfolio
             </motion.p> */}
-            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 className="order-2 lg:order-1"
                 initial={{ opacity: 0, x: -16 }}
@@ -350,7 +350,7 @@ const About = () => {
                 <p className="text-lg text-muted-foreground">
                   Serving 50,000+ students across 30+ states and nearly 500 organizations, Funtology delivers engaging, hands-on learning experiences that build confidence, creativity, and career pathways.
                 </p>
-                <blockquote className="mt-8 border-l-4 border-secondary pl-6 font-heading text-xl italic text-foreground md:text-2xl">
+                <blockquote className="mt-6 border-l-4 border-secondary pl-4 font-heading text-xl italic text-foreground md:mt-8 md:pl-6 md:text-2xl">
                   “Where Creativity Meets Career Building.”
                 </blockquote>
               </motion.div>
@@ -366,10 +366,10 @@ const About = () => {
           </div>
         </section>
 
-        <section id="impact" className="scroll-mt-24 py-16 md:py-24">
+        <section id="impact" className="scroll-mt-20 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 flex items-center gap-3"
+              className="mb-6 flex items-center gap-3 md:mb-10"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -377,7 +377,7 @@ const About = () => {
               <BarChart3 className="h-8 w-8 text-secondary" aria-hidden />
               <h2 className="font-heading text-3xl font-bold text-foreground md:text-4xl">Proven National Reach &amp; Measurable Impact</h2>
             </motion.div>
-            <div className="grid gap-12 lg:grid-cols-2">
+            <div className="grid gap-8 md:gap-12 lg:grid-cols-2">
               <motion.div initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
                 <h3 className="mb-4 font-heading text-lg font-semibold text-foreground">Reach</h3>
                 <BulletList items={nationalImpactItems} />
@@ -390,10 +390,10 @@ const About = () => {
           </div>
         </section>
 
-        <section id="program-in-action" className="scroll-mt-24 bg-muted/30 py-16 md:py-24">
+        <section id="program-in-action" className="scroll-mt-20 bg-muted/30 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 text-center"
+              className="mb-6 text-center md:mb-10"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -408,7 +408,7 @@ const About = () => {
               </p>
             </motion.div>
             <motion.div
-              className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-8 shadow-lg"
+              className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 shadow-lg md:p-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -419,10 +419,10 @@ const About = () => {
           </div>
         </section>
 
-        <section id="trusted-proven" className="scroll-mt-24 py-16 md:py-24">
+        <section id="trusted-proven" className="scroll-mt-20 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 flex items-center justify-center gap-2"
+              className="mb-6 flex items-center justify-center gap-2 md:mb-10"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -430,7 +430,7 @@ const About = () => {
               <CalendarCheck className="h-8 w-8 text-secondary" aria-hidden />
               <h2 className="font-heading text-3xl font-bold text-foreground md:text-4xl">Trusted &amp; Proven</h2>
             </motion.div>
-            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-14">
+            <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-2 lg:gap-14">
               <div>
                 <motion.p className="mb-6 max-w-2xl text-lg text-muted-foreground" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
                   Long-Term Program Implementation
@@ -444,10 +444,10 @@ const About = () => {
           </div>
         </section>
 
-        <section id="program-ecosystem" className="scroll-mt-24 bg-muted/30 py-16 md:py-24">
+        <section id="program-ecosystem" className="scroll-mt-20 bg-muted/30 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 flex items-center gap-3"
+              className="mb-6 flex items-center gap-3 md:mb-10"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -458,8 +458,8 @@ const About = () => {
                 <p className="mt-2 text-muted-foreground">Comprehensive Career Pathways</p>
               </div>
             </motion.div>
-            <p className="mb-8 text-lg text-muted-foreground">Funtology Offers a Full Ecosystem of Programs:</p>
-            <div className="grid items-start gap-12 lg:grid-cols-12">
+            <p className="mb-6 text-lg text-muted-foreground md:mb-8">Funtology Offers a Full Ecosystem of Programs:</p>
+            <div className="grid items-start gap-8 md:gap-12 lg:grid-cols-12">
               <motion.ul
                 className="space-y-4 lg:col-span-5"
                 initial={{ opacity: 0, y: 12 }}
@@ -494,10 +494,10 @@ const About = () => {
           </div>
         </section>
 
-        <section id="compliance-quality" className="scroll-mt-24 py-16 md:py-24">
+        <section id="compliance-quality" className="scroll-mt-20 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 flex items-center gap-3"
+              className="mb-6 flex items-center gap-3 md:mb-10"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -505,7 +505,7 @@ const About = () => {
               <Shield className="h-8 w-8 text-secondary" aria-hidden />
               <h2 className="font-heading text-3xl font-bold text-foreground md:text-4xl">Compliance &amp; Quality</h2>
             </motion.div>
-            <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-14">
+            <div className="grid items-start gap-8 md:gap-10 lg:grid-cols-2 lg:gap-14">
               <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 {/* <h3 className="mb-2 font-heading text-xl font-semibold text-foreground">Standards-Aligned Education</h3>
                 <p className="mb-6 text-muted-foreground">
@@ -513,7 +513,7 @@ const About = () => {
                 </p> */}
                 <p className="mb-4 font-medium text-foreground">Our Programs Are:</p>
                 <BulletList items={complianceQualityItems} />
-                <blockquote className="mt-10 rounded-2xl border border-secondary/30 bg-secondary/5 p-6 font-medium leading-relaxed text-foreground">
+                <blockquote className="mt-6 rounded-2xl border border-secondary/30 bg-secondary/5 p-4 font-medium leading-relaxed text-foreground md:mt-10 md:p-6">
                   “Our Commitment to Quality is Aligned with Continuing Educational Standards to Ensure Structured, Measurable Learning Experiences.”
                 </blockquote>
               </motion.div>
@@ -522,10 +522,10 @@ const About = () => {
           </div>
         </section>
 
-        <section id="partnerships" className="scroll-mt-24 bg-muted/30 py-16 md:py-24">
+        <section id="partnerships" className="scroll-mt-20 bg-muted/30 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 flex items-center gap-3"
+              className="mb-6 flex items-center gap-3 md:mb-10"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -533,12 +533,12 @@ const About = () => {
               <Handshake className="h-8 w-8 text-secondary" aria-hidden />
               <h2 className="font-heading text-3xl font-bold text-foreground md:text-4xl">Partnership Opportunities</h2>
             </motion.div>
-            <div className="grid items-start gap-12 lg:grid-cols-12">
+            <div className="grid items-start gap-8 md:gap-12 lg:grid-cols-12">
               <div className="lg:col-span-5">
                 {/* <AboutPhoto src={aboutImagery.partnership.src} alt={aboutImagery.partnership.alt} aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" /> */}
                 <AboutPhoto src={aboutPartnership} alt="Partnership Opportunities" aspectClassName="aspect-[4/5] max-w-md mx-auto lg:mx-0" />
               </div>
-              <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
+              <div className="grid gap-6 sm:grid-cols-2 sm:gap-10 lg:col-span-7">
                 <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                   <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">Who We Serve</h3>
                   <BulletList items={whoWeServeItems} />
@@ -552,10 +552,10 @@ const About = () => {
           </div>
         </section>
 
-        <section id="why-funtology" className="scroll-mt-24 py-16 md:py-24">
+        <section id="why-funtology" className="scroll-mt-20 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="mb-10 text-center"
+              className="mb-6 text-center md:mb-10"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -580,7 +580,7 @@ const About = () => {
               ))}
             </motion.div>
             <motion.div
-              className="mt-14 overflow-hidden rounded-2xl border border-border shadow-gold"
+              className="mt-8 overflow-hidden rounded-2xl border border-border shadow-gold md:mt-14"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -597,10 +597,10 @@ const About = () => {
         </section>
 
         {/* Values Section */}
-        <section className="py-16 bg-muted/30">
+        <section className="py-10 md:py-16 bg-muted/30">
           <div className="container-wide">
             <motion.div
-              className="text-center max-w-2xl mx-auto mb-12"
+              className="text-center max-w-2xl mx-auto mb-8 md:mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -613,7 +613,7 @@ const About = () => {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid gap-6 md:grid-cols-3 md:gap-8">
               {[
                 { icon: GraduationCap, title: "Excellence", description: "We maintain the highest standards in educational content and delivery" },
                 { icon: Users, title: "Accessibility", description: "Quality education should be available to everyone" },
@@ -621,7 +621,7 @@ const About = () => {
               ].map((value, index) => (
                 <motion.div
                   key={value.title}
-                  className="text-center p-8 bg-card rounded-2xl border border-border"
+                  className="text-center rounded-2xl border border-border bg-card p-5 md:p-8"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -641,10 +641,10 @@ const About = () => {
         </section>
 
         {/* Accreditation Section */}
-        <section id="accreditation" className="py-16 md:py-24 scroll-mt-24">
+        <section id="accreditation" className="scroll-mt-20 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="text-center max-w-2xl mx-auto mb-12"
+              className="text-center max-w-2xl mx-auto mb-8 md:mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -657,11 +657,11 @@ const About = () => {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid gap-6 md:grid-cols-3 md:gap-8">
               {accreditations.map((item, index) => (
                 <motion.div
                   key={item.title}
-                  className="p-8 bg-gradient-hero rounded-2xl text-center"
+                  className="rounded-2xl bg-gradient-hero p-5 text-center md:p-8"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -681,10 +681,10 @@ const About = () => {
         </section>
 
         {/* Team Section */}
-        <section id="team" className="py-16 md:py-24 bg-muted/30 scroll-mt-24">
+        <section id="team" className="scroll-mt-20 bg-muted/30 py-10 md:scroll-mt-24 md:py-24">
           <div className="container-wide">
             <motion.div
-              className="text-center max-w-2xl mx-auto mb-12"
+              className="text-center max-w-2xl mx-auto mb-8 md:mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -697,7 +697,7 @@ const About = () => {
               </p>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8">
+            <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-2">
               {team.map((member, index) => (
                 <motion.div
                   key={member.name}

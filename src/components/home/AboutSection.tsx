@@ -16,7 +16,7 @@ const AboutSection = () => {
   return (
     <section className="py-24 bg-background">
       <div className="container-wide">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -57,7 +57,7 @@ const AboutSection = () => {
 
           {/* Visual Grid */}
           <motion.div
-            className="grid grid-cols-2 gap-6"
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -65,46 +65,46 @@ const AboutSection = () => {
           >
             {/* Card 1 */}
             <motion.div
-              className="bg-primary rounded-2xl p-6 text-primary-foreground"
+              className="min-w-0 rounded-2xl bg-primary p-4 text-primary-foreground sm:p-6"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
-              <Target className="w-10 h-10 text-secondary mb-4" />
-              <h3 className="font-heading text-xl font-semibold mb-2">Our Mission</h3>
-              <p className="text-sm text-primary-foreground/80">
+              <Target className="mb-3 h-8 w-8 text-secondary sm:mb-4 sm:h-10 sm:w-10" />
+              <h3 className="mb-2 font-heading text-lg font-semibold sm:text-xl">Our Mission</h3>
+              <p className="text-sm leading-relaxed text-primary-foreground/80">
                 Empowering Professionals with Measurable Skills and Recognized Credentials.
               </p>
             </motion.div>
 
             {/* Card 2 */}
             <motion.div
-              className="bg-secondary rounded-2xl p-6 text-primary mt-8"
+              className="min-w-0 rounded-2xl bg-secondary p-4 text-primary sm:mt-8 sm:p-6"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
-              <Shield className="w-10 h-10 text-primary mb-4" />
-              <h3 className="font-heading text-xl font-semibold mb-2">Standards-Aligned</h3>
-              <p className="text-sm text-primary/80">
+              <Shield className="mb-3 h-8 w-8 text-primary sm:mb-4 sm:h-10 sm:w-10" />
+              <h3 className="mb-2 font-heading text-lg font-semibold sm:text-xl">Standards-Aligned</h3>
+              <p className="text-sm leading-relaxed text-primary/80">
                 Our Programs are Thoughtfully Designed to Align with Industry Best Practices, Ensuring High-Quality, Engaging, and Impactful Learning Experiences for Every Participant.
               </p>
             </motion.div>
 
             {/* Card 3 */}
             <motion.div
-              className="bg-muted rounded-2xl p-6 text-foreground"
+              className="min-w-0 rounded-2xl bg-muted p-4 text-foreground sm:p-6"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
-              <Award className="w-10 h-10 text-secondary mb-4" />
-              <h3 className="font-heading text-xl font-semibold mb-2">Certified</h3>
-              <p className="text-sm text-muted-foreground">
+              <Award className="mb-3 h-8 w-8 text-secondary sm:mb-4 sm:h-10 sm:w-10" />
+              <h3 className="mb-2 font-heading text-lg font-semibold sm:text-xl">Certified</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 Earn Professional Certificates Upon Successful Course Completion.
               </p>
             </motion.div>
 
             {/* Stats Card */}
             <motion.div
-              className="bg-gradient-to-br from-primary to-navy-light rounded-2xl p-6 text-primary-foreground mt-8"
+              className="min-w-0 rounded-2xl bg-gradient-to-br from-primary to-navy-light p-4 text-primary-foreground sm:mt-8 sm:p-6"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
@@ -114,8 +114,8 @@ const AboutSection = () => {
                   <p className="text-sm text-primary-foreground/70">CE Hours Awarded</p>
                 </div> */}
                 <div>
-                  <p className="font-heading text-3xl font-bold text-secondary">450+</p>
-                  <p className="text-sm text-primary-foreground/70">Partner Organizations</p>
+                  <p className="font-heading text-2xl font-bold text-secondary sm:text-3xl">450+</p>
+                  <p className="text-sm leading-snug text-primary-foreground/70">Partner Organizations</p>
                 </div>
               </div>
             </motion.div>

@@ -207,7 +207,7 @@ export default function AdminComplaints() {
               Loading tickets…
             </div>
           ) : (
-            <Table>
+            <Table className="min-w-[760px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>Ticket</TableHead>

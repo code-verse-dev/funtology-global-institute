@@ -117,7 +117,7 @@ const AdminReports = () => {
                 <p className="text-sm text-muted-foreground">Loading reports…</p>
               </div>
             )}
-            <Table>
+            <Table className="min-w-[800px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>S.no</TableHead>

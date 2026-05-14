@@ -59,7 +59,7 @@ const Login = () => {
       {/* Left Side - Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <motion.div
-          className="w-full max-w-md"
+          className="w-full max-w-lg"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
@@ -76,27 +76,28 @@ const Login = () => {
           </p>
 
           {/* Role Selection */}
-          <div className="grid grid-cols-4 gap-1 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6">
             {roleOptions.map((role) => (
               <button
                 key={role.id}
+                type="button"
                 onClick={() => {
                   if (role.link) {
                     window.open(role.link, "_blank", "noopener,noreferrer");
                     return;
                   }
-          
+
                   setSelectedRole(role.id);
                 }}
-                className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 text-center transition-all ${selectedRole === role.id
+                className={`flex h-full min-w-0 flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-xl border-2 p-2.5 text-center transition-all sm:p-3 ${selectedRole === role.id
                   ? "border-secondary bg-secondary/10"
                   : "border-border hover:border-secondary/40"
                   }`}
               >
-                <role.icon className={`w-5 h-5 shrink-0 ${selectedRole === role.id ? "text-secondary" : "text-muted-foreground"}`} />
-                <div>
-                  <p className={`text-sm font-medium ${selectedRole === role.id ? "text-foreground" : "text-muted-foreground"}`}>{role.label}</p>
-                  <p className="text-xs text-muted-foreground hidden sm:block">{role.desc}</p>
+                <role.icon className={`h-5 w-5 shrink-0 ${selectedRole === role.id ? "text-secondary" : "text-muted-foreground"}`} />
+                <div className="min-w-0 w-full">
+                  <p className={`text-xs font-medium leading-tight sm:text-sm ${selectedRole === role.id ? "text-foreground" : "text-muted-foreground"}`}>{role.label}</p>
+                  <p className="mt-0.5 hidden text-[11px] text-muted-foreground sm:block sm:text-xs">{role.desc}</p>
                 </div>
               </button>
             ))}

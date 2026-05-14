@@ -189,7 +189,7 @@ export default function MySupportTickets() {
               Loading…
             </div>
           ) : (
-            <Table>
+            <Table className="min-w-[700px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>Ticket</TableHead>

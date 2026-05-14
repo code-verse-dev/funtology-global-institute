@@ -63,7 +63,7 @@ const HeroSection = () => {
       </div>
 
       <div className="container-wide relative z-10 pt-28 md:pt-32 pb-16 md:pb-20">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-6 md:pt-0">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -73,7 +73,7 @@ const HeroSection = () => {
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/20 border border-secondary/30 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/20 border border-secondary/30 mb-6 "
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -188,7 +188,7 @@ const HeroSection = () => {
 
             {/* Stats */}
             <motion.div
-              className="grid grid-cols-3 gap-4 md:gap-8"
+               className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 md:gap-8 mb-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}

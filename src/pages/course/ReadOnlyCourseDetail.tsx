@@ -390,7 +390,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
               {/* <p className="text-sm text-muted-foreground">{course.ceHours} CE hours</p> */}
             </div>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
             <Badge variant="outline" className="capitalize">
               {course.status}
             </Badge>
@@ -398,6 +398,7 @@ export function ReadOnlyCourseDetail({ listPath, variant = "organization" }: Rea
               <Button
                 type="button"
                 variant="secondary"
+                className="min-w-0 flex-1 sm:flex-initial"
                 onClick={onLearnerAttemptButtonClick}
                 disabled={requestingRetake || Boolean(eligibility?.lastPassed)}
               >

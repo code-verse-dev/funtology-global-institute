@@ -209,7 +209,7 @@ const AdminUsers = () => {
 
       <Card>
         <CardContent className="p-0">
-          <Table>
+          <Table className="min-w-[560px]">
             <TableHeader>
               <TableRow>
                 <TableHead>User</TableHead>

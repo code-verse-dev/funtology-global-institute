@@ -57,23 +57,21 @@ const Header = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container-wide">
-        <div className="flex items-center justify-between h-28">
+        <div className="flex h-24 items-center justify-between gap-2 sm:h-28 sm:gap-3">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="group flex min-w-0 flex-1 items-center gap-2 sm:gap-3 lg:flex-initial">
             <motion.img
               src={fgiLogo}
               alt="FGI Logo"
-              className="h-12 w-12 md:h-28 md:w-28 object-contain"
+              className="h-10 w-10 shrink-0 object-contain sm:h-12 sm:w-12 md:h-28 md:w-28"
               whileHover={{ scale: 1.05, rotate: 5 }}
               transition={{ duration: 0.2 }}
             />
-            <div className="hidden sm:block">
-              <p className="font-heading font-bold text-lg text-primary leading-tight group-hover:text-secondary transition-colors">
+            <div className="min-w-0">
+              <p className="font-heading text-sm font-bold leading-tight text-primary transition-colors group-hover:text-secondary sm:text-lg">
                 Funtology Global
               </p>
-              <p className="font-heading text-sm text-secondary leading-tight">
-                Institute
-              </p>
+              <p className="font-heading text-xs leading-tight text-secondary sm:text-sm">Institute</p>
             </div>
           </Link>
 

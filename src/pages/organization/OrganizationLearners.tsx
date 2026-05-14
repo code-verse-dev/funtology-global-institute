@@ -12,13 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { ApiCourse } from "@/redux/services/apiSlices/courseSlice";
 import { useGetCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
@@ -31,9 +24,22 @@ import {
   useGetLearnersQuery,
   useInviteLearnerMutation,
   useRemoveCourseFromLearnerMutation,
+  useUpdateLearnerNameMutation,
 } from "@/redux/services/apiSlices/learnerSlice";
 import { motion } from "framer-motion";
-import { BookOpen, CheckCircle2, ChevronLeft, ChevronRight, Clock, Loader2, Mail, Plus, Search, Trash2 } from "lucide-react";
+import {
+  BookOpen,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Loader2,
+  Mail,
+  Pencil,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -126,6 +132,9 @@ const OrganizationLearners = () => {
   const [coursesLearner, setCoursesLearner] = useState<ApiLearner | null>(null);
   const [pendingCourseIds, setPendingCourseIds] = useState<string[]>([]);
 
+  const [nameEditLearner, setNameEditLearner] = useState<ApiLearner | null>(null);
+  const [nameEditForm, setNameEditForm] = useState({ firstName: "", lastName: "" });
+
   const { data: listRes, isLoading, isFetching, isError, error, refetch } = useGetLearnersQuery(query);
   const { data: allCoursesRes, isLoading: coursesLoading } = useGetCoursesQuery({});
   const { data: assignedRes, isLoading: assignedLoading } = useGetAssignedCoursesQuery(
@@ -135,7 +144,7 @@ const OrganizationLearners = () => {
   const [inviteLearner, { isLoading: inviting }] = useInviteLearnerMutation();
   const [assignCourses, { isLoading: assigning }] = useAssignCourseToLearnerMutation();
   const [removeCourse, { isLoading: removingCourse }] = useRemoveCourseFromLearnerMutation();
-
+  const [updateLearnerName, { isLoading: updatingName }] = useUpdateLearnerNameMutation();
   const pageData = useMemo(() => {
     const d = listRes?.data as LearnersPaginated | ApiLearner[] | undefined;
     if (!d) return undefined;
@@ -271,6 +280,43 @@ const OrganizationLearners = () => {
     }
   };
 
+  const openNameEditDialog = (learner: ApiLearner) => {
+    setNameEditLearner(learner);
+    setNameEditForm({
+      firstName: (learner.firstName ?? "").trim(),
+      lastName: (learner.lastName ?? "").trim(),
+    });
+  };
+
+  const submitUpdateName = async () => {
+    if (!nameEditLearner) return;
+    const firstName = nameEditForm.firstName.trim();
+    const lastName = nameEditForm.lastName.trim();
+    if (!firstName || !lastName) {
+      toast.error("Please enter first and last name.");
+      return;
+    }
+    const learnerId = nameEditLearner._id;
+    try {
+      const res = await updateLearnerName({
+        learnerId,
+        firstName,
+        lastName,
+      }).unwrap();
+      if (res.status) {
+        toast.success(res.message || "Name updated.");
+        setNameEditLearner(null);
+        setCoursesLearner((prev) =>
+          prev && prev._id === learnerId ? { ...prev, firstName, lastName } : prev,
+        );
+      } else {
+        toast.error(res.message || "Could not update name.");
+      }
+    } catch (err: unknown) {
+      toast.error(rtkErrorMessage(err, "Could not update name."));
+    }
+  };
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
@@ -314,13 +360,13 @@ const OrganizationLearners = () => {
                   <TableHead>Learner</TableHead>
                   <TableHead>Courses</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
+                  <TableHead className="text-right min-w-[200px]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {learners.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center text-muted-foreground py-12">
+                    <TableCell colSpan={4} className="text-center text-muted-foreground py-12">
                       {query.keyword ? "No learners match your search." : "No learners yet. Invite someone to get started."}
                     </TableCell>
                   </TableRow>
@@ -339,7 +385,7 @@ const OrganizationLearners = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        {learner.assignments.length?? "—"}
+                        {learner.assignments?.length ?? "—"}
                       </TableCell>
                   
                       <TableCell>
@@ -350,11 +396,25 @@ const OrganizationLearners = () => {
                           {formatStatus(learner.status)}
                         </Badge>
                       </TableCell>
-                      <TableCell>
-                        <Button variant="outline" size="sm" className="gap-1" onClick={() => openCoursesDialog(learner)}>
-                          <BookOpen className="w-3.5 h-3.5" />
-                          Courses
-                        </Button>
+                      <TableCell className="text-right">
+                        <div className="flex flex-wrap items-center justify-end gap-2">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="gap-1"
+                            aria-label="Edit learner name"
+                            onClick={() => openNameEditDialog(learner)}
+                          >
+                            <Pencil className="h-3.5 w-3.5" aria-hidden />
+                            <span className="hidden sm:inline">Edit name</span>
+                            <span className="sm:hidden">Name</span>
+                          </Button>
+                          <Button variant="outline" size="sm" className="gap-1" onClick={() => openCoursesDialog(learner)}>
+                            <BookOpen className="w-3.5 h-3.5" />
+                            Courses
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
@@ -456,6 +516,63 @@ const OrganizationLearners = () => {
                   <Plus className="w-4 h-4 mr-2" />
                   Send invite
                 </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={!!nameEditLearner}
+        onOpenChange={(open) => {
+          if (!open) setNameEditLearner(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-heading">Update learner name</DialogTitle>
+            <DialogDescription>
+              {nameEditLearner ? (
+                <>
+                  Change the display name for <span className="font-medium text-foreground">{nameEditLearner.email}</span>.
+                </>
+              ) : null}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-2">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="grid gap-2">
+                <Label htmlFor="rename-first">First name</Label>
+                <Input
+                  id="rename-first"
+                  autoComplete="given-name"
+                  value={nameEditForm.firstName}
+                  onChange={(e) => setNameEditForm((f) => ({ ...f, firstName: e.target.value }))}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="rename-last">Last name</Label>
+                <Input
+                  id="rename-last"
+                  autoComplete="family-name"
+                  value={nameEditForm.lastName}
+                  onChange={(e) => setNameEditForm((f) => ({ ...f, lastName: e.target.value }))}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button type="button" variant="outline" onClick={() => setNameEditLearner(null)}>
+              Cancel
+            </Button>
+            <Button type="button" variant="secondary" disabled={updatingName} onClick={submitUpdateName}>
+              {updatingName ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
+                  Saving…
+                </>
+              ) : (
+                "Save name"
               )}
             </Button>
           </DialogFooter>

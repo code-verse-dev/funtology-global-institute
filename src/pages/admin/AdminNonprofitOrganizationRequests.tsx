@@ -251,7 +251,7 @@ export default function AdminNonprofitOrganizationRequests() {
               Loading requests…
             </div>
           ) : (
-            <Table>
+            <Table className="min-w-[960px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>Organization</TableHead>
