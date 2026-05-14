@@ -62,6 +62,15 @@ export type MutationResponse = {
   data?: unknown;
 };
 
+export type UpdateLearnerNameBody = {
+  firstName: string;
+  lastName: string;
+};
+
+export type UpdateLearnerNameArgs = {
+  learnerId: string;
+} & UpdateLearnerNameBody;
+
 export const learnerSlice = createApi({
   reducerPath: "learnerSlice",
   baseQuery: baseQueryWithReauth,
@@ -118,6 +127,18 @@ export const learnerSlice = createApi({
         { type: "Learners", id: `courses-${learnerId}` },
       ],
     }),
+
+    updateLearnerName: builder.mutation<MutationResponse, UpdateLearnerNameArgs>({
+      query: ({ learnerId, firstName, lastName }) => ({
+        url: `/learners/${learnerId}/name`,
+        method: "PATCH",
+        body: { firstName, lastName },
+      }),
+      invalidatesTags: (_r, _e, { learnerId }) => [
+        { type: "Learners", id: "LIST" },
+        { type: "Learners", id: `courses-${learnerId}` },
+      ],
+    }),
     getOrganizationStats: builder.query<any, void>({
       query: () => ({
         url: "/learners/stats",
@@ -139,6 +160,7 @@ export const {
   useAssignCourseToLearnerMutation,
   useGetAssignedCoursesQuery,
   useRemoveCourseFromLearnerMutation,
+  useUpdateLearnerNameMutation,
   useGetOrganizationStatsQuery,
   useGetLearnerStatsQuery,
 } = learnerSlice;

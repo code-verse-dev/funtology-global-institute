@@ -81,7 +81,7 @@ const OrganizationBilling = () => {
               Loading payments…
             </div>
           ) : (
-            <Table>
+            <Table className="min-w-[560px]">
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-14">#</TableHead>

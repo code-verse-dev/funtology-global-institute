@@ -17,7 +17,7 @@ const AdminAudit = () => (
     </div>
     <Card>
       <CardContent className="p-0">
-        <Table>
+        <Table className="min-w-[640px]">
           <TableHeader>
             <TableRow>
               <TableHead>Action</TableHead>

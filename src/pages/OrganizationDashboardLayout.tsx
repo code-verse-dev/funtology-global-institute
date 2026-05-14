@@ -57,16 +57,27 @@ const OrganizationDashboardLayout = () => {
     <div className="min-h-screen bg-muted">
       <header className="sticky top-0 z-40 bg-primary">
         <div className="container-wide">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-3">
-              <img src={fgiLogo} alt="FGI" className="h-12 w-12" />
-              <div className="hidden sm:block">
-                <p className="font-heading font-bold text-primary-foreground leading-tight">FGI</p>
-                <p className="text-xs text-secondary">Organization Portal</p>
+          <div className="flex min-h-16 items-center justify-between gap-2 py-1 sm:h-16 sm:gap-3 sm:py-0">
+            <Link
+              to="/"
+              className="flex min-w-0 flex-1 items-center gap-2 sm:flex-initial sm:gap-3"
+            >
+              <img
+                src={fgiLogo}
+                alt="FGI"
+                className="h-14 w-14 shrink-0 object-contain"
+              />
+              <div className="min-w-0">
+                <p className="font-heading truncate text-sm font-bold leading-tight text-primary-foreground sm:text-base">
+                  FGI
+                </p>
+                <p className="truncate text-[11px] leading-tight text-secondary sm:text-xs">
+                  Organization Portal
+                </p>
               </div>
             </Link>
 
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <Badge variant="secondary" className="hidden sm:flex gap-1">
                 <Building2 className="w-3 h-3" />
                 {user?.organizationName}
@@ -98,12 +109,12 @@ const OrganizationDashboardLayout = () => {
                     <p className="text-xs text-muted-foreground">{user?.email}</p>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
+                  {/* <DropdownMenuItem asChild>
                     <Link to="/profile" className="cursor-pointer">
                       <User className="mr-2 h-4 w-4" />
                       Profile
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                   <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />
                     Settings

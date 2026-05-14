@@ -42,7 +42,7 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section className="py-24 bg-background">
+    <section className="pt-24 bg-background">
       <div className="container-wide">
         {/* Section Header */}
         <motion.div

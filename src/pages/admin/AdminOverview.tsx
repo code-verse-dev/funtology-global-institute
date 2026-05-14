@@ -36,7 +36,7 @@ const AdminOverview = () => {
     }> | undefined) ?? [];
   return (
   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
       {/* {systemStats.map((stat, i) => (
         <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
           <Card className="hover:shadow-md transition-shadow">
@@ -53,65 +53,65 @@ const AdminOverview = () => {
           </Card>
         </motion.div>
       ))} */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
-          <Card className="hover:shadow-md transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-foreground">{adminStats?.data?.totalUsers}</p>
-                  <p className="text-sm text-muted-foreground">Total Users</p>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }} className="min-w-0">
+          <Card className="hover:shadow-md transition-shadow h-full">
+            <CardContent className="p-4 pt-5 sm:p-6 sm:pt-6">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-xl font-bold text-foreground sm:text-2xl md:text-3xl tabular-nums">{adminStats?.data?.totalUsers}</p>
+                  <p className="text-[11px] leading-snug text-muted-foreground sm:text-sm">Total Users</p>
                 </div>
-                <Users className={`w-8 h-8 text-primary`} />
+                <Users className={`h-6 w-6 shrink-0 text-primary sm:h-8 sm:w-8`} />
               </div>
               {/* <p className="text-xs text-green-600 font-medium mt-2">+8.2% from last month</p> */}
             </CardContent>
           </Card>
         </motion.div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
-          <Card className="hover:shadow-md transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-foreground">{adminStats?.data?.totalActiveCourses}</p>
-                  <p className="text-sm text-muted-foreground">Total Active Courses</p>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }} className="min-w-0">
+          <Card className="hover:shadow-md transition-shadow h-full">
+            <CardContent className="p-4 pt-5 sm:p-6 sm:pt-6">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-xl font-bold text-foreground sm:text-2xl md:text-3xl tabular-nums">{adminStats?.data?.totalActiveCourses}</p>
+                  <p className="text-[11px] leading-snug text-muted-foreground sm:text-sm">Total Active Courses</p>
                 </div>
-                <BookOpen className={`w-8 h-8 text-primary`} />
+                <BookOpen className="h-6 w-6 shrink-0 text-primary sm:h-8 sm:w-8" />
               </div>
             </CardContent>
           </Card>
         </motion.div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
-          <Card className="hover:shadow-md transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-foreground">{adminStats?.data?.totalCertificatesIssued}</p>
-                  <p className="text-sm text-muted-foreground">Certificates Issued</p>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }} className="min-w-0">
+          <Card className="hover:shadow-md transition-shadow h-full">
+            <CardContent className="p-4 pt-5 sm:p-6 sm:pt-6">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-xl font-bold text-foreground sm:text-2xl md:text-3xl tabular-nums">{adminStats?.data?.totalCertificatesIssued}</p>
+                  <p className="text-[11px] leading-snug text-muted-foreground sm:text-sm">Certificates Issued</p>
                 </div>
-                <Award className={`w-8 h-8 text-primary`} />
+                <Award className="h-6 w-6 shrink-0 text-primary sm:h-8 sm:w-8" />
               </div>
             </CardContent>
           </Card>
         </motion.div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }}>
-          <Card className="hover:shadow-md transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-foreground">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay:  0 * 0.1 }} className="min-w-0">
+          <Card className="hover:shadow-md transition-shadow h-full">
+            <CardContent className="p-4 pt-5 sm:p-6 sm:pt-6">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-xl font-bold text-foreground sm:text-2xl md:text-3xl tabular-nums">
                     ${formatTotalRevenue(adminStats?.data?.totalRevenue)}
                   </p>
-                  <p className="text-sm text-muted-foreground">Revenue (MTD)</p>
+                  <p className="text-[11px] leading-snug text-muted-foreground sm:text-sm">Revenue (MTD)</p>
                 </div>
-                <DollarSign className={`w-8 h-8 text-primary`} />
+                <DollarSign className="h-6 w-6 shrink-0 text-primary sm:h-8 sm:w-8" />
               </div>
             </CardContent>
           </Card>
         </motion.div>
     </div>
-    <div className="grid lg:grid-cols-3 gap-6">
-      <Card className="lg:col-span-2">
-        <CardHeader className="flex flex-row items-center justify-between">
+    <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
+      <Card className="min-w-0 lg:col-span-2">
+        <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="font-heading">Recent Activity</CardTitle>
           {/* <Button variant="ghost" size="sm" asChild>
             <Link to="/admin/notifications">View All</Link>
@@ -125,15 +125,20 @@ const AdminOverview = () => {
               <p className="text-sm text-muted-foreground py-6 text-center">No notifications yet.</p>
             ) : (
               recentNotifications.slice(0, 5).map((n) => (
-                <div key={n._id} className="flex items-start gap-3 p-3 bg-muted rounded-lg">
-                  <Activity className="w-4 h-4 text-secondary mt-1 shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">{n.title ?? "Notification"}</p>
-                    {n.content ? (
-                      <p className="text-xs text-muted-foreground line-clamp-2">{n.content}</p>
-                    ) : null}
+                <div
+                  key={n._id}
+                  className="flex flex-col gap-2 rounded-lg bg-muted p-3 sm:flex-row sm:items-start sm:gap-3"
+                >
+                  <div className="flex min-w-0 items-start gap-3 sm:flex-1">
+                    <Activity className="mt-0.5 h-4 w-4 shrink-0 text-secondary sm:mt-1" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-foreground">{n.title ?? "Notification"}</p>
+                      {n.content ? (
+                        <p className="line-clamp-2 text-xs text-muted-foreground">{n.content}</p>
+                      ) : null}
+                    </div>
                   </div>
-                  <span className="text-xs text-muted-foreground whitespace-nowrap shrink-0">
+                  <span className="shrink-0 pl-7 text-xs text-muted-foreground sm:pl-0 sm:text-right">
                     {n.createdAt
                       ? formatDistanceToNow(new Date(n.createdAt), { addSuffix: true })
                       : "—"}

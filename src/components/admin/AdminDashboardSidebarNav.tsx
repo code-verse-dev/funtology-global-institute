@@ -4,10 +4,8 @@ import {
   Activity,
   BarChart3,
   BookOpen,
-  Briefcase,
   ClipboardList,
   DollarSign,
-  History,
   MessageSquare,
   Settings,
   Users,
@@ -68,36 +66,44 @@ export function AdminDashboardSidebarNav({
 }: AdminDashboardSidebarNavProps) {
   const isVertical = orientation === "vertical";
 
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    cn(
+      "flex shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium whitespace-nowrap transition-all sm:gap-3 sm:px-3 sm:py-2 sm:text-sm",
+      isActive
+        ? "border-primary bg-primary text-primary-foreground"
+        : "border-border bg-card text-muted-foreground hover:bg-muted",
+    );
+
+  const verticalLinkClass = ({ isActive }: { isActive: boolean }) =>
+    cn(
+      "flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium whitespace-nowrap transition-all",
+      isActive
+        ? "bg-secondary text-secondary-foreground"
+        : "text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground",
+    );
+
   return (
     <nav
-      className={cn(
-        isVertical ? "flex-1 p-4 space-y-1 overflow-y-auto" : "flex gap-2 overflow-x-auto pb-2",
-        className
-      )}
+      className={cn(isVertical ? "flex-1 space-y-1 overflow-y-auto p-4" : "w-full", className)}
       aria-label="Admin sections"
     >
-      {ADMIN_NAV_ITEMS.map(({ segment, label, icon: Icon }) => (
-        <NavLink
-          key={segment}
-          to={adminRoutePath(segment)}
-          className={({ isActive }) =>
-            cn(
-              "flex items-center gap-3 rounded-xl text-sm font-medium transition-all whitespace-nowrap",
-              isVertical ? "w-full px-4 py-3" : "px-3 py-2 text-xs shrink-0 rounded-lg",
-              isActive
-                ? isVertical
-                  ? "bg-secondary text-secondary-foreground"
-                  : "bg-primary text-primary-foreground"
-                : isVertical
-                  ? "text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10"
-                  : "bg-card text-muted-foreground border border-border hover:bg-muted"
-            )
-          }
-        >
-          <Icon className={cn(isVertical ? "w-5 h-5" : "w-3 h-3 shrink-0")} />
-          {label}
-        </NavLink>
-      ))}
+      {isVertical ? (
+        ADMIN_NAV_ITEMS.map(({ segment, label, icon: Icon }) => (
+          <NavLink key={segment} to={adminRoutePath(segment)} className={verticalLinkClass}>
+            <Icon className="h-5 w-5 shrink-0" />
+            {label}
+          </NavLink>
+        ))
+      ) : (
+        <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {ADMIN_NAV_ITEMS.map(({ segment, label, icon: Icon }) => (
+            <NavLink key={segment} to={adminRoutePath(segment)} className={linkClass}>
+              <Icon className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
+              {label}
+            </NavLink>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

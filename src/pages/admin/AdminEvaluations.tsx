@@ -193,7 +193,7 @@ export default function AdminEvaluations() {
                 </div>
               )}
               <div className="overflow-x-auto">
-                <Table>
+                <Table className="min-w-[880px]">
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-[48px]">#</TableHead>

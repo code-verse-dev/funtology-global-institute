@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useGetAllCoursesQuery } from "@/redux/services/apiSlices/courseSlice";
 import { lessonFileUrl } from "@/pages/admin/lessonFileUrl";
+import { useSelector } from "react-redux";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&q=60";
@@ -67,6 +68,10 @@ const Courses = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
+
+  const user = useSelector((state: any) => state.user.userData);
+  const isLoggedIn = !!user?._id;
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -118,18 +123,21 @@ const Courses = () => {
               </p>
 
               {/* Search Bar */}
-              <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+              <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row sm:gap-4">
                 <div className="relative flex-1">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground sm:left-4 sm:h-5 sm:w-5" />
                   <Input
                     placeholder="Search courses..."
-                    className="pl-12 h-14 bg-background/95 border-0 text-lg"
+                    className="h-11 border-0 bg-background/95 pl-10 text-sm placeholder:text-muted-foreground/90 sm:h-14 sm:pl-12 sm:text-lg"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <Button variant="secondary" className="h-14 px-8 text-lg font-heading font-semibold">
-                  <Filter className="w-5 h-5 mr-2" />
+                <Button
+                  variant="secondary"
+                  className="h-11 shrink-0 px-4 text-sm font-heading font-semibold sm:h-14 sm:px-8 sm:text-lg"
+                >
+                  <Filter className="mr-1.5 h-4 w-4 sm:mr-2 sm:h-5 sm:w-5" />
                   Filters
                 </Button>
               </div>
@@ -353,9 +361,9 @@ const Courses = () => {
                 Join a growing network of learners who have completed, career-focused programs through Funtology Global Institute for Career Innovation (FGI).
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="secondary" size="lg" className="font-heading font-semibold" asChild>
+                {!isLoggedIn ? <Button variant="secondary" size="lg" className="font-heading font-semibold" asChild>
                   <Link to="/register">Get Started Today</Link>
-                </Button>
+                </Button>:<></>}
                 <Button
                   size="xl"
                   variant="outline"

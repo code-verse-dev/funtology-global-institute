@@ -115,7 +115,7 @@ const DashboardHome = () => {
         <p className="text-muted-foreground">Continue your learning journey. You&apos;re making great progress!</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
         {[
           { icon: BookOpen, label: "Enrolled Courses", value: learnerStats?.data?.assignedCourses, color: "text-primary" },
           { icon: CheckCircle2, label: "Completed", value: learnerStats?.data?.passedCourses, color: "text-green-600" },
@@ -127,15 +127,16 @@ const DashboardHome = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
+            className="min-w-0"
           >
-            <Card className="hover:shadow-md transition-shadow">
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl md:text-3xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
+            <Card className="hover:shadow-md transition-shadow h-full">
+              <CardContent className="p-4 pt-5 sm:p-6 sm:pt-6">
+                <div className="flex items-start justify-between gap-2 min-w-0">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tabular-nums">{stat.value}</p>
+                    <p className="text-[11px] leading-snug sm:text-sm text-muted-foreground mt-0.5">{stat.label}</p>
                   </div>
-                  <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                  <stat.icon className={`w-6 h-6 sm:w-8 sm:h-8 shrink-0 ${stat.color}`} />
                 </div>
               </CardContent>
             </Card>
@@ -145,7 +146,7 @@ const DashboardHome = () => {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="flex gap-2 p-1 bg-card rounded-lg border border-border">
+          <div className="flex min-w-0 gap-1 p-1 bg-card rounded-lg border border-border sm:gap-2">
             {[
               { id: "courses" as const, label: "My Courses", icon: BookOpen },
               { id: "certificates" as const, label: "Certificates", icon: Award },
@@ -154,15 +155,18 @@ const DashboardHome = () => {
               <button
                 key={tab.id}
                 type="button"
+                title={tab.label}
+                aria-label={tab.label}
+                aria-pressed={activeTab === tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-2 text-xs font-medium transition-all sm:gap-2 sm:px-4 sm:text-sm ${
                   activeTab === tab.id
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <tab.icon className="w-4 h-4" />
-                <span className="hidden sm:inline">{tab.label}</span>
+                <tab.icon className="h-4 w-4 shrink-0" />
+                <span className="hidden sm:inline truncate">{tab.label}</span>
               </button>
             ))}
           </div>
@@ -201,21 +205,21 @@ const DashboardHome = () => {
                       transition={{ delay: index * 0.1 }}
                     >
                       <Card className="hover:shadow-md transition-shadow">
-                        <CardContent className="p-6">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-start gap-4">
-                              <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
+                        <CardContent className="p-4 sm:p-6">
+                          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                            <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+                              <div className="w-12 h-12 rounded-full bg-secondary/20 flex shrink-0 items-center justify-center">
                                 <GraduationCap className="w-6 h-6 text-secondary" />
                               </div>
-                              <div>
-                                <h3 className="font-heading font-semibold text-foreground mb-1">{courseTitle}</h3>
+                              <div className="min-w-0">
+                                <h3 className="font-heading font-semibold text-foreground mb-1 break-words">{courseTitle}</h3>
                                 <p className="text-sm text-muted-foreground">Issued: {formatIssuedDate(cert.createdAt)}</p>
-                                <div className="flex items-center gap-4 mt-2 text-sm">
-                                  <span className="text-muted-foreground">ID: {cert._id}</span>
+                                <div className="mt-2 text-sm">
+                                  <span className="text-muted-foreground break-all text-xs sm:text-sm">ID: {cert._id}</span>
                                 </div>
                               </div>
                             </div>
-                            <Button variant="outline" size="sm" className="gap-2" asChild disabled={!downloadUrl}>
+                            <Button variant="outline" size="sm" className="w-full shrink-0 gap-2 sm:w-auto" asChild disabled={!downloadUrl}>
                               <a href={downloadUrl ?? "#"} target="_blank" rel="noopener noreferrer" download>
                                 <Download className="w-4 h-4" />
                                 Download
@@ -249,20 +253,23 @@ const DashboardHome = () => {
                       const score = Number(item.percentage ?? 0);
                       const image = lessonFileUrl(item.course?.image);
                       return (
-                        <div key={item.quizResponseId ?? item.lessonId ?? idx} className="flex items-center gap-3 rounded-lg border border-border p-3">
+                        <div
+                          key={item.quizResponseId ?? item.lessonId ?? idx}
+                          className="flex flex-wrap items-center gap-3 rounded-lg border border-border p-3 sm:flex-nowrap"
+                        >
                           {image ? (
-                            <img src={image} alt={title} className="h-12 w-16 rounded object-cover border border-border" />
+                            <img src={image} alt={title} className="h-12 w-16 shrink-0 rounded object-cover border border-border" />
                           ) : (
-                            <div className="h-12 w-16 rounded border border-border bg-muted flex items-center justify-center text-xs text-muted-foreground">
+                            <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded border border-border bg-muted text-xs text-muted-foreground">
                               No image
                             </div>
                           )}
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm text-foreground truncate">{title}</p>
+                          <div className="min-w-0 flex-1 basis-[min(100%,12rem)]">
+                            <p className="truncate text-sm font-medium text-foreground">{title}</p>
                             <p className="text-xs text-muted-foreground">Passed on {formatIssuedDate(item.passedAt)}</p>
                           </div>
-                          <Badge variant="secondary" className="whitespace-nowrap">
-                            {score}% 
+                          <Badge variant="secondary" className="ml-auto shrink-0 whitespace-nowrap sm:ml-0">
+                            {score}%
                             {/* (pass {passThresholdPercent}%) */}
                           </Badge>
                         </div>
@@ -319,15 +326,20 @@ const DashboardHome = () => {
                   <p className="text-sm text-muted-foreground py-6 text-center">No notifications yet.</p>
                 ) : (
                   recentNotifications.map((n) => (
-                    <div key={n._id} className="flex items-start gap-3 rounded-lg bg-muted p-3">
-                      <Activity className="mt-1 h-4 w-4 shrink-0 text-secondary" aria-hidden />
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium text-foreground">{n.title ?? "Notification"}</p>
-                        {n.content ? (
-                          <p className="line-clamp-2 text-xs text-muted-foreground">{n.content}</p>
-                        ) : null}
+                    <div
+                      key={n._id}
+                      className="flex flex-col gap-2 rounded-lg bg-muted p-3 sm:flex-row sm:items-start sm:gap-3"
+                    >
+                      <div className="flex min-w-0 items-start gap-3 sm:flex-1">
+                        <Activity className="mt-0.5 h-4 w-4 shrink-0 text-secondary sm:mt-1" aria-hidden />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-foreground">{n.title ?? "Notification"}</p>
+                          {n.content ? (
+                            <p className="line-clamp-2 text-xs text-muted-foreground">{n.content}</p>
+                          ) : null}
+                        </div>
                       </div>
-                      <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">
+                      <span className="shrink-0 pl-7 text-xs text-muted-foreground sm:pl-0 sm:text-right">
                         {n.createdAt
                           ? formatDistanceToNow(new Date(n.createdAt), { addSuffix: true })
                           : "—"}
